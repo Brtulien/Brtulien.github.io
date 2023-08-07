@@ -1,7 +1,7 @@
 ---
 title: python速成笔记
 date: 2023-07-22 23:19:03
-tags: study
+tags: [study, python]
 ---
 
 
@@ -18,7 +18,7 @@ lis = [chr(x) for x in num]
 print(lis)                  
 s = ''.join(lis)                    
 print(s)            
-``` 
+```
 * 二维[数组]
 ```
 via = [[0]*3 for _ in range(3)]                    

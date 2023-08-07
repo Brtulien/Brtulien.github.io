@@ -2,7 +2,7 @@
 title: python语法
 subtitle: 你笑什么啊~不许笑！我才刚看完语法啊，呜呜
 date: 2023-07-23 22:03:27
-tags: study python
+tags: [study, python]
 ---
 # python语法注意事项
 ~~啊，受不了了，写了几个题不是运错就是编错，还有一堆奇奇怪怪的报错，痛苦.jpg。~~    
