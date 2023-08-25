@@ -35,3 +35,5 @@ typora-root-url: ..
 汇报ppt
 
 ![汇报ppt](/images/$%7Bfiilename%7D/Myfirstblog2-16907767706092.png)
+
+还没写完，但是不想写了，嘿嘿。
