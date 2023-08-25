@@ -16,6 +16,23 @@
 # Global
 #---------------------------
 
+## Live2D看板娘
+live2d:
+  enable: true
+  pluginModelPath: assets/
+  model:
+    #模板目录，在node_modules里
+    use: live2d-widget-model-z16
+  display:
+    position: right
+    width: 300
+    height: 600
+  mobile:
+    # 在手机端显示
+    show: false
+  rect:
+    opacity:0.7
+
 # 用于浏览器标签的图标
 # Icon for browser tab
 favicon: /img/fluid.png
@@ -346,7 +363,7 @@ navbar:
     - { key: "category", link: "/categories/", icon: "iconfont icon-category-fill" }
     - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
-    #- { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
+    - { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
 
 # 搜索功能，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件
 # Search feature, based on hexo-generator-search. If you have installed other search plugins, please disable this feature to avoid generating redundant index files

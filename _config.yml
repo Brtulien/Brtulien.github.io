@@ -103,3 +103,24 @@ theme: fluid
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
+
+## Live2D看板娘
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  tagMode: false
+  debug: false
+  model: #模板目录，在node_modules里
+    use: live2d-widget-model-z16
+  display:
+    position: right
+    width: 300 
+    height: 600
+  mobile:
+  # 在手机端显示
+    show: true
+  rect:
+    opacity: 0.7

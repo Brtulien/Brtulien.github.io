@@ -23,6 +23,7 @@
     "hexo-renderer-stylus": "^2.1.0",
     "hexo-server": "^3.0.0",
     "hexo-theme-fluid": "^1.9.5-a",
-    "hexo-theme-landscape": "^1.0.0"
+    "hexo-theme-landscape": "^1.0.0",
+    "live2d-widget-model-z16": "^1.0.5"
   }
 }
