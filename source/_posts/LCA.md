@@ -74,3 +74,32 @@ for _ in range(m):
 
 ```
 
+```C++
+void dfs(int x, int father)
+{
+	fa[x] = father;
+	de[x] = de[father] + 1;
+	for (int i = head[x]; i; i = edge[i].next)
+	{
+		if (edge[i].to != father)
+		{
+			dfs(edge[i].to, x);
+		}
+	}
+}
+
+int lca(int x, int y)
+{
+	while (x != y)
+	{
+		if (de[x] >= de[y])
+		{
+			x = fa[x];
+		}
+		else
+			y = fa[y];
+	}
+	return x;
+}
+```
+
