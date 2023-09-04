@@ -1,0 +1,708 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Brtulien">
+  <meta name="keywords" content="blog">
+  
+    <meta name="description" content="5166. 对称山脉 - AcWing题库1234567891011121314151617181920# DP 状态转移为 第i到k的答案是 第i+1到第k-1个的答案再加上 abs(h[i] - h[i + j - 1])# 用ans记录每个长度j下的最小值n &#x3D; int(input())nums &#x3D; list(map(int, input().split()))s &#x3D; [[0] * 5010">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每日一题题解">
+<meta property="og:url" content="https://chasestar1.github.io/2023/08/26/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Brtulien">
+<meta property="og:description" content="5166. 对称山脉 - AcWing题库1234567891011121314151617181920# DP 状态转移为 第i到k的答案是 第i+1到第k-1个的答案再加上 abs(h[i] - h[i + j - 1])# 用ans记录每个长度j下的最小值n &#x3D; int(input())nums &#x3D; list(map(int, input().split()))s &#x3D; [[0] * 5010">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-26T14:27:27.000Z">
+<meta property="article:modified_time" content="2023-09-04T04:07:23.114Z">
+<meta property="article:author" content="Brtulien">
+<meta property="article:tag" content="Ans">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>每日一题题解 - Brtulien</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chasestar1.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="每日一题题解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Brtulien
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-26 22:27" pubdate>
+          2023年8月26日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          57 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">每日一题题解</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="5166-对称山脉-AcWing题库"><a href="#5166-对称山脉-AcWing题库" class="headerlink" title="5166. 对称山脉 - AcWing题库"></a><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/5169/">5166. 对称山脉 - AcWing题库</a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># DP 状态转移为 第i到k的答案是 第i+1到第k-1个的答案再加上 abs(h[i] - h[i + j - 1])</span><br><span class="hljs-comment"># 用ans记录每个长度j下的最小值</span><br>n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>nums = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br><br>s = [[<span class="hljs-number">0</span>] * <span class="hljs-number">5010</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5010</span>)]<br>ans = [<span class="hljs-number">0x3f3f3f3f</span>] * <span class="hljs-number">5010</span><br>h = [<span class="hljs-number">0</span>] * <span class="hljs-number">5010</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>    h[i+<span class="hljs-number">1</span>] =  nums[i]   <br><br><span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>,n + <span class="hljs-number">1</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,n-j+<span class="hljs-number">2</span>):<br>        s[i][i + j - <span class="hljs-number">1</span>] = s[i + <span class="hljs-number">1</span>][i + j - <span class="hljs-number">2</span>] + <span class="hljs-built_in">abs</span>(h[i] - h[i + j - <span class="hljs-number">1</span>])<br>        ans[j] = <span class="hljs-built_in">min</span>(ans[j], s[i][i + j - <span class="hljs-number">1</span>])<br><br>ans[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span><br><span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,n + <span class="hljs-number">1</span>):<br>    <span class="hljs-built_in">print</span>(ans[j],end=<span class="hljs-string">&#x27; &#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h1 id="5180-正方形泳池-AcWing题库"><a href="#5180-正方形泳池-AcWing题库" class="headerlink" title="5180. 正方形泳池 - AcWing题库"></a><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/5183/">5180. 正方形泳池 - AcWing题库</a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">枚举n太复杂，枚举t，枚举每棵树的位置（按顺序）然后不断更新 ans和上下距离 ans和水平距离</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br>n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>t = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>tree = []<br>tree.append([-<span class="hljs-number">1</span>,-<span class="hljs-number">1</span>]) <span class="hljs-comment"># 占位</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,t + <span class="hljs-number">1</span>):<br>    a, b = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>,<span class="hljs-built_in">input</span>().split())<br>    tree.append([a, b])<br><br>tree.append([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>])<br>tree.append([<span class="hljs-number">0</span>, n + <span class="hljs-number">1</span>])<br>tree.append([n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>])<br>tree.append([n + <span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>])<br>t += <span class="hljs-number">4</span> <span class="hljs-comment"># 四个顶点插入树 树的个数要加上</span><br><br>ans = -<span class="hljs-number">1</span><br>tree.sort(key=<span class="hljs-keyword">lambda</span> x:x[<span class="hljs-number">0</span>]) <span class="hljs-comment">#  对x排序</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">先初始化最低点最高点d,u 为0 和 n + 1 然后枚举tree[i] 右边的tree[j]</span><br><span class="hljs-string">不断向右枚举 当i j的水平距离大于 上下的最大距离（u-d-1）的时候 退出（因为被上下距离限制了，再往右的话 水平距离增大，但是没有用，正方形就看最短的边）</span><br><span class="hljs-string">更新ans为x-a-1 然后更新上下的最短距离（每一次都更新，因为中间有树挡着了，就会减小泳池的面积）更新u和d</span><br><span class="hljs-string"></span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, t + <span class="hljs-number">1</span>):<br>    d, u = <span class="hljs-number">0</span>, n + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i + <span class="hljs-number">1</span>, t + <span class="hljs-number">1</span>):<br>        x, y = tree[j]<br>        a, b = tree[i]<br>        <span class="hljs-keyword">if</span> x - a - <span class="hljs-number">1</span> &gt; u - d - <span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">break</span><br>        ans = <span class="hljs-built_in">max</span>(ans, x - a - <span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">if</span> y &gt;= b:<br>            u = <span class="hljs-built_in">min</span>(u, y)<br>        <span class="hljs-keyword">if</span> y &lt;= b:<br>            d = <span class="hljs-built_in">max</span>(d, y)<br><br>tree.sort(key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">1</span>])<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, t + <span class="hljs-number">1</span>):<br>    l, r = <span class="hljs-number">0</span>, n + <span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i + <span class="hljs-number">1</span>, t + <span class="hljs-number">1</span>):<br>        x, y = tree[j]<br>        a, b = tree[i]<br>        <span class="hljs-keyword">if</span> y - b - <span class="hljs-number">1</span> &gt; r - l - <span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">break</span><br>        ans = <span class="hljs-built_in">max</span>(ans, y - b - <span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">if</span> x &gt;= a:<br>            r = <span class="hljs-built_in">min</span>(r, x)<br>        <span class="hljs-keyword">if</span> x &lt;= a:<br>            l = <span class="hljs-built_in">max</span>(l, x)<br><br><span class="hljs-built_in">print</span>(ans)<br><br></code></pre></td></tr></table></figure>
+
+<h1 id="1654-到家的最少跳跃次数-力扣（LeetCode）"><a href="#1654-到家的最少跳跃次数-力扣（LeetCode）" class="headerlink" title="1654. 到家的最少跳跃次数 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-jumps-to-reach-home/description/">1654. 到家的最少跳跃次数 - 力扣（LeetCode）</a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># BFS 搜索</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">minimumJumps</span>(<span class="hljs-params">self, forbidden: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], a: <span class="hljs-built_in">int</span>, b: <span class="hljs-built_in">int</span>, x: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>    	q,vis = deque([[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>]]), <span class="hljs-built_in">set</span>([<span class="hljs-number">0</span>])<br>        lower, upper = <span class="hljs-number">0</span>,<span class="hljs-built_in">max</span>(<span class="hljs-built_in">max</span>(forbidden) + a, x) + b<br>        forbiddenSet = <span class="hljs-built_in">set</span>(forbidden)<br>        <span class="hljs-keyword">while</span> q:<br>            position, direction, step = q.popleft()<br>            <span class="hljs-keyword">if</span> x == position:<br>                <span class="hljs-keyword">return</span> step<br>            nextposition = position + a<br>            nextdirection = <span class="hljs-number">1</span><br>            <span class="hljs-keyword">if</span> lower &lt;= nextposition &lt;= upper <span class="hljs-keyword">and</span> nextposition * nextdirection <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> vis <span class="hljs-keyword">and</span> nextposition <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> forbiddenSet:<br>                vis.add(nextposition * nextdirection)<br>                q.append([nextposition, nextdirection, step + <span class="hljs-number">1</span>])<br>            <span class="hljs-comment"># 不能两次退后</span><br>            <span class="hljs-keyword">if</span> direction == <span class="hljs-number">1</span>:<br>                nextposition = position - b<br>                nextdirection = -<span class="hljs-number">1</span><br>                <span class="hljs-keyword">if</span> lower &lt;= nextposition &lt;= upper <span class="hljs-keyword">and</span> nextposition * nextdirection <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> vis <span class="hljs-keyword">and</span> nextposition <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> forbiddenSet:<br>                    vis.add(nextposition * nextdirection)<br>                    q.append([nextposition, nextdirection, step + <span class="hljs-number">1</span>])<br>    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="823-带因子的二叉树-力扣（LeetCode）"><a href="#823-带因子的二叉树-力扣（LeetCode）" class="headerlink" title="823. 带因子的二叉树 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-trees-with-factors/">823. 带因子的二叉树 - 力扣（LeetCode）</a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">dfs 先找到val的答案的个数 然后找val的左子树（x）的答案的个数 再找val的右子树（val//x）的答案 用@cache 变为记忆化搜索</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">numFactoredBinaryTrees</span>(<span class="hljs-params">self, arr: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        s = <span class="hljs-built_in">set</span>(arr)<br><span class="hljs-meta">        @cache</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">val</span>):<br>            ans = <span class="hljs-number">1</span><br>            <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> arr:<br>                <span class="hljs-keyword">if</span> val % x == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> val // x <span class="hljs-keyword">in</span> s:<br>                    ans += dfs(x) * dfs(val // x)<br>            <span class="hljs-keyword">return</span> ans<br>       	<span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(dfs(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> arr) % (<span class="hljs-number">10</span> ** <span class="hljs-number">9</span> + <span class="hljs-number">7</span>)<br>    <br><span class="hljs-comment"># 递推 用f表示这个点作为根节点的时候有多少种情况 用idx反向查询这个点的下标</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">numFactoredBinaryTrees</span>(<span class="hljs-params">self, arr: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        arr.sort()<br>        idx = &#123;x: i <span class="hljs-keyword">for</span> i, x <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(arr)&#125;<br>        f = [<span class="hljs-number">1</span>] * <span class="hljs-built_in">len</span>(arr)<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(arr)):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i):<br>                val = arr[i]<br>                x = arr[j]<br>                <span class="hljs-keyword">if</span> val % x == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> val // x <span class="hljs-keyword">in</span> idx:<br>                    f[i] += f[j] * f[idx[val // x]]<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(f) % (<span class="hljs-number">10</span> ** <span class="hljs-number">9</span> + <span class="hljs-number">7</span>)<br>					<br></code></pre></td></tr></table></figure>
+
+<h1 id="1761-一个图中连通三元组的最小度数-力扣（LeetCode）"><a href="#1761-一个图中连通三元组的最小度数-力扣（LeetCode）" class="headerlink" title="1761. 一个图中连通三元组的最小度数 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-degree-of-a-connected-trio-in-a-graph/solutions/2417898/yi-ge-tu-zhong-lian-tong-san-yuan-zu-de-wuv8o/">1761. 一个图中连通三元组的最小度数 - 力扣（LeetCode）</a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 枚举每一个三元组，然后求度数，可以预处理度数 注意最后出度要减6 因为三元组内每条相连的边被算了两次</span><br><span class="hljs-comment"># 用邻接矩阵来储存 </span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">minTrioDegree</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span>, edges: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        g = [[<span class="hljs-number">0</span>] * n <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n)]<br>        degree = [<span class="hljs-number">0</span>] * n<br>        <br>        <span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> edges:<br>            x, y = x - <span class="hljs-number">1</span>, y - <span class="hljs-number">1</span><br>            g[x][y] = g[y][x] = <span class="hljs-number">1</span><br>            degree[x] += <span class="hljs-number">1</span><br>            degree[y] += <span class="hljs-number">1</span><br>        <br>        ans = inf<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i, n):<br>                <span class="hljs-keyword">if</span> g[i][j] == <span class="hljs-number">1</span>:<br>                    <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(j, n):<br>                        <span class="hljs-keyword">if</span> g[i][k] == g[j][k] == <span class="hljs-number">1</span>:<br>                            ans = <span class="hljs-built_in">min</span>(ans, degree[i] + degree[j] + degree[k] - <span class="hljs-number">6</span>)<br>      	<span class="hljs-keyword">return</span> -<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> ans == inf <span class="hljs-keyword">else</span> ans<br>				<br></code></pre></td></tr></table></figure>
+
+<h1 id="5183-好三元组-AcWing题库"><a href="#5183-好三元组-AcWing题库" class="headerlink" title="5183. 好三元组 - AcWing题库"></a><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/5186/">5183. 好三元组 - AcWing题库</a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">由于直接算不好算，所以先算出所有三元组的情况，之后再减去不符合的情况。</span><br><span class="hljs-string">所有情况为n * (n - 1) * (n - 2) // 6</span><br><span class="hljs-string">当三个数在同一点上时 不合规</span><br><span class="hljs-string">两个点在同一点上 不合规</span><br><span class="hljs-string">三个点在同一个半圆内时 不合规</span><br><span class="hljs-string">同一个半圆内的点即距离（i，i + c/2]的点 这里面的每个点和Pi点都不合规</span><br><span class="hljs-string">所以要预处理出前缀和，前缀和要处理到2 * c，因为环要变成链来处理的话就需要cnt不仅计数0~c-1还要计数c~2c-1</span><br><span class="hljs-string">最后，当c为偶数的时候，i和i+c/2是对称的，会多减，要加回来</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br>N = <span class="hljs-number">2000100</span><br>n, c = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>p = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>,<span class="hljs-built_in">input</span>().split()))<br>cnt = [<span class="hljs-number">0</span>] * N<br>s = [<span class="hljs-number">0</span>] * N<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>    cnt[p[i - <span class="hljs-number">1</span>]] += <span class="hljs-number">1</span><br>    cnt[p[i - <span class="hljs-number">1</span>] + c] += <span class="hljs-number">1</span><br><br>res = n * (n - <span class="hljs-number">1</span>) * (n - <span class="hljs-number">2</span>) // <span class="hljs-number">6</span><br><br>s[<span class="hljs-number">0</span>] = cnt[<span class="hljs-number">0</span>]<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span> * c):<br>    s[i] = s[i - <span class="hljs-number">1</span>] + cnt[i]<br>    <br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(c):<br>    <span class="hljs-keyword">if</span> cnt[i] == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">continue</span><br>    t = cnt[i]<br>    d = s[i + c // <span class="hljs-number">2</span>] - s[i]<br>    <br>    <span class="hljs-comment"># 其实不需要判断也行</span><br>    <span class="hljs-keyword">if</span> t &gt;= <span class="hljs-number">2</span>:<br>        <span class="hljs-keyword">if</span> t &gt;= <span class="hljs-number">3</span>:<br>            res -= t * (t - <span class="hljs-number">1</span>) * (t - <span class="hljs-number">2</span>) // <span class="hljs-number">6</span><br>        res -= t * (t - <span class="hljs-number">1</span>) // <span class="hljs-number">2</span> * d<br>    res -= t * d * (d - <span class="hljs-number">1</span>) // <span class="hljs-number">2</span><br><br><span class="hljs-keyword">if</span> c % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(c // <span class="hljs-number">2</span>):<br>        u, v = cnt[i], cnt[i + c // <span class="hljs-number">2</span>]<br>        <span class="hljs-keyword">if</span> u &gt;= <span class="hljs-number">2</span>:<br>            res += u * (u - <span class="hljs-number">1</span>) // <span class="hljs-number">2</span> * v<br>        <span class="hljs-keyword">if</span> v &gt;= <span class="hljs-number">2</span>:<br>            res += v * (v - <span class="hljs-number">1</span>) // <span class="hljs-number">2</span> * u<br><br><span class="hljs-built_in">print</span>(res)<br></code></pre></td></tr></table></figure>
+
+<h1 id="5145-同色环-AcWing题库"><a href="#5145-同色环-AcWing题库" class="headerlink" title="5145. 同色环 - AcWing题库"></a><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/5148/">5145. 同色环 - AcWing题库</a></h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">// 判断环 那就是不能往回退 一直走到下一次遇见一个vis  注意设计dfs的时候要加上 ox oy 用于判断初始情况  注意什么时候用ox 什么时候用x  </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">100</span>;<br><span class="hljs-type">int</span> n, m;<br><span class="hljs-type">char</span> nums[N][N];<br><span class="hljs-type">bool</span> vis[N][N];<br><span class="hljs-type">int</span> dx[<span class="hljs-number">4</span>] = &#123; <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span> &#125;;<br><span class="hljs-type">int</span> dy[<span class="hljs-number">4</span>] = &#123; <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span> &#125;;<br><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y, <span class="hljs-type">int</span> ox, <span class="hljs-type">int</span> oy)</span></span><br><span class="hljs-function"></span>&#123;<br>    vis[x][y] = <span class="hljs-literal">true</span>;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++)<br>    &#123;<br>        <span class="hljs-type">int</span> nx = x + dx[i];<br>        <span class="hljs-type">int</span> ny = y + dy[i];<br><br>        <span class="hljs-keyword">if</span> (nx &gt;= <span class="hljs-number">0</span> &amp;&amp; nx &lt; n &amp;&amp; ny &gt;= <span class="hljs-number">0</span> &amp;&amp; ny &lt; m<br>            <span class="hljs-comment">// 这一句的意思是 不能退回</span><br>            &amp;&amp; !(nx == ox &amp;&amp; ny == oy)<br>            <span class="hljs-comment">// 颜色相同</span><br>            &amp;&amp; nums[nx][ny] == nums[x][y])<br>        &#123;<br>            <span class="hljs-comment">// 再不可退回的情况下 只有存在首尾相接的环才可能碰到vis=true的情况</span><br>            <span class="hljs-keyword">if</span> (vis[nx][ny] || <span class="hljs-built_in">dfs</span>(nx, ny, x, y))<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j++)<br>        &#123;<br>            cin &gt;&gt; nums[i][j];<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (!vis[i][j])<br>            &#123;<br>                <span class="hljs-keyword">if</span> (<span class="hljs-built_in">dfs</span>(i, j, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>))<br>                &#123;<br>                    cout &lt;&lt; <span class="hljs-string">&quot;Yes&quot;</span> &lt;&lt; endl;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-string">&quot;No&quot;</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="1921-消灭怪物的最大数量-力扣（LeetCode）"><a href="#1921-消灭怪物的最大数量-力扣（LeetCode）" class="headerlink" title="1921. 消灭怪物的最大数量 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/eliminate-maximum-number-of-monsters/description/?envType=daily-question&envId=2023-09-03">1921. 消灭怪物的最大数量 - 力扣（LeetCode）</a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 看起来很简单 但是有几个点一直过不了 主要是怪物到达的时间有问题 应该是上取整  如果直接用//的话是下取整（突然觉得好傻）</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">eliminateMaximum</span>(<span class="hljs-params">self, dist: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], speed: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        n = <span class="hljs-built_in">len</span>(dist)<br>        <span class="hljs-comment"># 上取整</span><br>        arrivetime = [math.ceil(dist[i] / speed[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n)]<br><br>        arrivetime.sort()<br>        <span class="hljs-keyword">for</span> attacktime, arrivetime <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(arrivetime):<br>            <span class="hljs-keyword">if</span> attacktime &gt;= arrivetime:<br>                <span class="hljs-keyword">return</span> attacktime<br>        <span class="hljs-keyword">return</span> n<br></code></pre></td></tr></table></figure>
+
+<h1 id="统计一个字符串的-k-子序列美丽值最大的数目-力扣-LeetCode-竞赛"><a href="#统计一个字符串的-k-子序列美丽值最大的数目-力扣-LeetCode-竞赛" class="headerlink" title="统计一个字符串的 k 子序列美丽值最大的数目 - 力扣 (LeetCode) 竞赛"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/contest/biweekly-contest-112/problems/count-k-subsequences-of-a-string-with-maximum-beauty/">统计一个字符串的 k 子序列美丽值最大的数目 - 力扣 (LeetCode) 竞赛</a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Counter 返回字典 每个元素是键 出现次数为值</span><br><span class="hljs-comment"># dfs</span><br><span class="hljs-comment"># 首先是dfs找到k子序列 在子序列满足长度为k的同时比较其美丽值是否为最大 当美丽值更新时（此时为第一个最大美丽值 所以直接让ans = mul）否则ans+mul  之后就是选或不选 add为当前这个子序列的美丽值 mul为当前这个子序列的美丽值的个数 （因为重复的元素）</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">countKSubsequencesWithMaxBeauty</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, k: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        c = Counter(s)<br>        <span class="hljs-keyword">if</span> k &gt; <span class="hljs-built_in">len</span>(c):<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>        Mod = <span class="hljs-number">10</span> ** <span class="hljs-number">9</span> + <span class="hljs-number">7</span><br>        mx = -<span class="hljs-number">1</span><br>        ans = <span class="hljs-number">0</span><br>        keys = <span class="hljs-built_in">list</span>(c.keys())<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">i, count, add, mul</span>):<br>            <span class="hljs-keyword">nonlocal</span> mx, ans<br>            <span class="hljs-keyword">if</span> count == k:<br>                <span class="hljs-keyword">if</span> add &gt; mx:<br>                    mx = add<br>                    ans = mul<br>                <span class="hljs-keyword">elif</span> add == mx:<br>                    ans += mul<br>                ans %= Mod<br>                <span class="hljs-keyword">return</span><br>            <span class="hljs-keyword">if</span> i + k - count &gt; <span class="hljs-built_in">len</span>(keys):<br>                <span class="hljs-keyword">return</span><br>            dfs(i + <span class="hljs-number">1</span>, count + <span class="hljs-number">1</span>, add + c[keys[i]], mul * c[keys[i]] % Mod)<br>            dfs(i + <span class="hljs-number">1</span>, count, add, mul)<br>        dfs(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">return</span> ans<br><br><br><span class="hljs-comment"># 数学</span><br><span class="hljs-comment"># 求出出现频率前k高的字母 最大的美丽值就在这里面 需要注意的是 最后一个出现频率（k-1位）可能有多个字母（这样组成的子序列美丽值都相同且最大 ） 所以需要再次计算 算出重复的字母数量 然后进行组合计算C（n,k）n为相同的字母的个数 c为可以选的个数（前k个里面 去掉大于的 还要在等于的里面选c个 凑k子序列）</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">countKSubsequencesWithMaxBeauty</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, k: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        c = Counter(s)<br>        <span class="hljs-keyword">if</span> k &gt; <span class="hljs-built_in">len</span>(c):<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">from</span> math <span class="hljs-keyword">import</span> comb<br>            Mod = <span class="hljs-number">10</span> ** <span class="hljs-number">9</span> + <span class="hljs-number">7</span><br>            values = <span class="hljs-built_in">sorted</span>(c.values(), reverse=<span class="hljs-literal">True</span>)<br>            ans = <span class="hljs-number">1</span><br>            c = <span class="hljs-number">0</span><br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(k):<br>                <span class="hljs-keyword">if</span> values[i] &gt; values[k - <span class="hljs-number">1</span>]:<br>                    ans *= values[i]<br>                    ans %= Mod<br>                <span class="hljs-keyword">elif</span> values[i] == values[k - <span class="hljs-number">1</span>]:<br>                    c += <span class="hljs-number">1</span><br>                    ans *= values[i]<br>                    ans %= Mod<br>            <span class="hljs-keyword">return</span> ans * comb(values.count(values[k - <span class="hljs-number">1</span>]),c) % Mod<br><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Ans/" class="print-no-link">#Ans</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>每日一题题解</div>
+      <div>https://chasestar1.github.io/2023/08/26/每日一题题解/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Brtulien</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月26日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年9月4日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/08/26/%E5%9B%BE%E8%AE%BA%E5%85%A5%E9%97%A8%E9%A2%98%E8%A7%A3/" title="图论入门题解">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">图论入门题解</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/22/LCA/" title="LCA">
+                        <span class="hidden-mobile">LCA</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"chasestar1/chasestar1.github.io","repo-id":"R_kgDOJ-WRYw","category":"Announcements","category-id":"DIC_kwDOJ-WRY84CYKx3","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","shortname":"fluid"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

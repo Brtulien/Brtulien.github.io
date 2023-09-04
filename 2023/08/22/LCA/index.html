@@ -24,7 +24,7 @@
 <meta property="og:description" content="·最近公共祖先 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465root &#x3D; 1num &#x3D; 0dep &#x3D; [0] * 1000010f &#x3D; [[0] * 21 for _ in range(1000001)">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-22T04:24:01.000Z">
-<meta property="article:modified_time" content="2023-08-25T09:14:43.225Z">
+<meta property="article:modified_time" content="2023-09-04T04:07:23.114Z">
 <meta property="article:author" content="Brtulien">
 <meta property="article:tag" content="algorithm">
 <meta property="article:tag" content="lca">
@@ -239,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          929 字
+          1.2k 字
         
       </span>
     
@@ -250,7 +250,7 @@
         
         
         
-          8 分钟
+          11 分钟
         
       </span>
     
@@ -294,6 +294,8 @@
                 
                 <p>·最近公共祖先</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs python">root = <span class="hljs-number">1</span><br>num = <span class="hljs-number">0</span><br>dep = [<span class="hljs-number">0</span>] * <span class="hljs-number">1000010</span><br>f = [[<span class="hljs-number">0</span>] * <span class="hljs-number">21</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1000001</span>)]<br>head = [-<span class="hljs-number">1</span>] * <span class="hljs-number">10000010</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Edge</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, to, <span class="hljs-built_in">next</span></span>):<br>		self.to = to<br>         self.<span class="hljs-built_in">next</span> = <span class="hljs-built_in">next</span><br>            <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">addedge</span>(<span class="hljs-params">from_,to</span>):<br>	<span class="hljs-keyword">global</span> num<br>    num += <span class="hljs-number">1</span><br>    e[num] = Edge(to, head[from_])<br>    head[from_] = num<br>    <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">v, father</span>):<br>	dep[v] = dep[father] + <span class="hljs-number">1</span><br>    f[v][<span class="hljs-number">0</span>] = father<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">21</span>):<br>        f[v][i] = f[f[v][i-<span class="hljs-number">1</span>]][i-<span class="hljs-number">1</span>]<br>        <br>    i = head[v]<br>    <span class="hljs-keyword">while</span> i != -<span class="hljs-number">1</span>:<br>        p1 = e[i].to<br>        <span class="hljs-keyword">if</span> p1 == father:<br>            i = e[i].<span class="hljs-built_in">next</span><br>            <span class="hljs-keyword">continue</span><br>        dfs(p1,v)<br>        i = e[i].<span class="hljs-built_in">next</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">lca</span>(<span class="hljs-params">x, y</span>):<br>	<span class="hljs-keyword">if</span> dep[x] &lt; dep[y]:<br>        x, y = y, x<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">20</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>		<span class="hljs-keyword">if</span> dep[f[x][i]] &gt;= dep[y]:<br>            x = f[x][i]<br>         <span class="hljs-keyword">if</span> x == y:<br>			<span class="hljs-keyword">return</span> x<br>        <br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">20</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>        <span class="hljs-keyword">if</span> f[x][i] != f[y][i]:<br>            x = f[x][i]<br>            y = f[y][i]<br>            <br>    <span class="hljs-keyword">return</span> f[x][<span class="hljs-number">0</span>]<br><br><br>n, m, root = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>e = [Edge(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1000001</span>)]<br><span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n-<span class="hljs-number">1</span>):<br>    u, v = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>    addedge(u, v)<br>    addedge(v, u)<br><br><span class="hljs-comment"># 建立 LCA 预处理</span><br>dfs(root, <span class="hljs-number">0</span>)<br><br><span class="hljs-comment"># 查询 LCA</span><br><span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m):<br>    x, y = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>    result = lca(x, y)<br>    <span class="hljs-built_in">print</span>(result)<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> father)</span></span><br><span class="hljs-function"></span>&#123;<br>	fa[x] = father;<br>	de[x] = de[father] + <span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = head[x]; i; i = edge[i].next)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (edge[i].to != father)<br>		&#123;<br>			<span class="hljs-built_in">dfs</span>(edge[i].to, x);<br>		&#125;<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lca</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">while</span> (x != y)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (de[x] &gt;= de[y])<br>		&#123;<br>			x = fa[x];<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>			y = fa[y];<br>	&#125;<br>	<span class="hljs-keyword">return</span> x;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -342,7 +344,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年8月25日</div>
+          <div>2023年9月4日</div>
         </div>
       
       
@@ -372,6 +374,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/08/26/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E9%A2%98%E8%A7%A3/" title="每日一题题解">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">每日一题题解</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
