@@ -16,24 +16,22 @@
   <meta name="author" content="Brtulien">
   <meta name="keywords" content="blog">
   
-    <meta name="description" content="·最近公共祖先 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465root &#x3D; 1num &#x3D; 0dep &#x3D; [0] * 1000010f &#x3D; [[0] * 21 for _ in range(1000001)">
+    <meta name="description" content="[First week](PTA | 程序设计类实验辅助教学平台 (pintia.cn))减一运算12345678910111213141516171819202122232425262728293031323334353637383940414243444546&#x2F;&#x2F;超级抽象的C语言题 不仅要动态申请内存 还要高精度运算int* MinusOne(int* digits, int digitsSi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LCA">
-<meta property="og:url" content="https://chasestar1.github.io/2023/08/22/LCA/index.html">
+<meta property="og:title" content="数据结构习题">
+<meta property="og:url" content="https://chasestar1.github.io/2023/09/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%A0%E9%A2%98/index.html">
 <meta property="og:site_name" content="Brtulien">
-<meta property="og:description" content="·最近公共祖先 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465root &#x3D; 1num &#x3D; 0dep &#x3D; [0] * 1000010f &#x3D; [[0] * 21 for _ in range(1000001)">
+<meta property="og:description" content="[First week](PTA | 程序设计类实验辅助教学平台 (pintia.cn))减一运算12345678910111213141516171819202122232425262728293031323334353637383940414243444546&#x2F;&#x2F;超级抽象的C语言题 不仅要动态申请内存 还要高精度运算int* MinusOne(int* digits, int digitsSi">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-22T04:24:01.000Z">
+<meta property="article:published_time" content="2023-09-12T02:00:13.000Z">
 <meta property="article:modified_time" content="2023-09-17T16:27:30.030Z">
 <meta property="article:author" content="Brtulien">
-<meta property="article:tag" content="algorithm">
-<meta property="article:tag" content="lca">
-<meta property="article:tag" content="Tree">
+<meta property="article:tag" content="Ans">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>LCA - Brtulien</title>
+  <title>数据结构习题 - Brtulien</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -211,7 +209,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LCA"></span>
+            <span id="subtitle" data-typed-text="数据结构习题"></span>
           
         </div>
 
@@ -227,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-22 12:24" pubdate>
-          2023年8月22日 中午
+        <time datetime="2023-09-12 10:00" pubdate>
+          2023年9月12日 上午
         </time>
       </span>
     
@@ -239,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          1.5k 字
         
       </span>
     
@@ -250,7 +248,7 @@
         
         
         
-          11 分钟
+          13 分钟
         
       </span>
     
@@ -287,15 +285,16 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">LCA</h1>
+            <h1 id="seo-header">数据结构习题</h1>
             
             
               <div class="markdown-body">
                 
-                <p>·最近公共祖先</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs python">root = <span class="hljs-number">1</span><br>num = <span class="hljs-number">0</span><br>dep = [<span class="hljs-number">0</span>] * <span class="hljs-number">1000010</span><br>f = [[<span class="hljs-number">0</span>] * <span class="hljs-number">21</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1000001</span>)]<br>head = [-<span class="hljs-number">1</span>] * <span class="hljs-number">10000010</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Edge</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, to, <span class="hljs-built_in">next</span></span>):<br>		self.to = to<br>         self.<span class="hljs-built_in">next</span> = <span class="hljs-built_in">next</span><br>            <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">addedge</span>(<span class="hljs-params">from_,to</span>):<br>	<span class="hljs-keyword">global</span> num<br>    num += <span class="hljs-number">1</span><br>    e[num] = Edge(to, head[from_])<br>    head[from_] = num<br>    <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">v, father</span>):<br>	dep[v] = dep[father] + <span class="hljs-number">1</span><br>    f[v][<span class="hljs-number">0</span>] = father<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">21</span>):<br>        f[v][i] = f[f[v][i-<span class="hljs-number">1</span>]][i-<span class="hljs-number">1</span>]<br>        <br>    i = head[v]<br>    <span class="hljs-keyword">while</span> i != -<span class="hljs-number">1</span>:<br>        p1 = e[i].to<br>        <span class="hljs-keyword">if</span> p1 == father:<br>            i = e[i].<span class="hljs-built_in">next</span><br>            <span class="hljs-keyword">continue</span><br>        dfs(p1,v)<br>        i = e[i].<span class="hljs-built_in">next</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">lca</span>(<span class="hljs-params">x, y</span>):<br>	<span class="hljs-keyword">if</span> dep[x] &lt; dep[y]:<br>        x, y = y, x<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">20</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>		<span class="hljs-keyword">if</span> dep[f[x][i]] &gt;= dep[y]:<br>            x = f[x][i]<br>         <span class="hljs-keyword">if</span> x == y:<br>			<span class="hljs-keyword">return</span> x<br>        <br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">20</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>        <span class="hljs-keyword">if</span> f[x][i] != f[y][i]:<br>            x = f[x][i]<br>            y = f[y][i]<br>            <br>    <span class="hljs-keyword">return</span> f[x][<span class="hljs-number">0</span>]<br><br><br>n, m, root = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>e = [Edge(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1000001</span>)]<br><span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n-<span class="hljs-number">1</span>):<br>    u, v = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>    addedge(u, v)<br>    addedge(v, u)<br><br><span class="hljs-comment"># 建立 LCA 预处理</span><br>dfs(root, <span class="hljs-number">0</span>)<br><br><span class="hljs-comment"># 查询 LCA</span><br><span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m):<br>    x, y = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>    result = lca(x, y)<br>    <span class="hljs-built_in">print</span>(result)<br><br></code></pre></td></tr></table></figure>
+                <h1 id="First-week-PTA-程序设计类实验辅助教学平台-pintia-cn"><a href="#First-week-PTA-程序设计类实验辅助教学平台-pintia-cn" class="headerlink" title="[First week](PTA | 程序设计类实验辅助教学平台 (pintia.cn))"></a>[First week](<a target="_blank" rel="noopener" href="https://pintia.cn/problem-sets/1700336300474802176/exam/problems/1700336300504162305?type=6&page=0">PTA | 程序设计类实验辅助教学平台 (pintia.cn)</a>)</h1><h2 id="减一运算"><a href="#减一运算" class="headerlink" title="减一运算"></a>减一运算</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-comment">//超级抽象的C语言题 不仅要动态申请内存 还要高精度运算</span><br><br><span class="hljs-type">int</span>* <span class="hljs-title function_">MinusOne</span><span class="hljs-params">(<span class="hljs-type">int</span>* digits, <span class="hljs-type">int</span> digitsSize, <span class="hljs-type">int</span>* returnSize)</span><br>&#123;<br>    <span class="hljs-type">int</span> num[<span class="hljs-number">2000</span>];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; digitsSize; i++)<br>    &#123;<br>        num[i] = *(digits + i);<br>    &#125;<br>    <span class="hljs-type">int</span>* res = (<span class="hljs-type">int</span>*)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">1001</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<span class="hljs-comment">// 因为外面有free 所以要malloc</span><br><br>    <span class="hljs-keyword">if</span> (num[<span class="hljs-number">0</span>] == <span class="hljs-number">1</span> &amp;&amp; digitsSize == <span class="hljs-number">1</span>)<br>    &#123;<br>        *res = <span class="hljs-number">0</span>;<br>        *returnSize = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = digitsSize - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (num[i] &gt;= <span class="hljs-number">1</span>)<br>        &#123;<br>            num[i] -= <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            num[i] = <span class="hljs-number">9</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-type">int</span> flag = <span class="hljs-number">0</span>;<br>    *returnSize = digitsSize;<br>    <span class="hljs-keyword">if</span> (num[<span class="hljs-number">0</span>] == <span class="hljs-number">0</span>)<br>    &#123;<br>        *returnSize -= <span class="hljs-number">1</span>; <span class="hljs-comment">// 记得更新returnSize</span><br>        flag = <span class="hljs-number">1</span>;<br>    &#125;<br><br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = flag, j = <span class="hljs-number">0</span>; i &lt;= *returnSize; i++, j++)<br>    &#123;<br>        *(res + j) = num[i];<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> father)</span></span><br><span class="hljs-function"></span>&#123;<br>	fa[x] = father;<br>	de[x] = de[father] + <span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = head[x]; i; i = edge[i].next)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (edge[i].to != father)<br>		&#123;<br>			<span class="hljs-built_in">dfs</span>(edge[i].to, x);<br>		&#125;<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lca</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">while</span> (x != y)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (de[x] &gt;= de[y])<br>		&#123;<br>			x = fa[x];<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>			y = fa[y];<br>	&#125;<br>	<span class="hljs-keyword">return</span> x;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="最大子列和"><a href="#最大子列和" class="headerlink" title="最大子列和"></a>最大子列和</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">// 在线算法 O(n) </span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1000010</span>;<br><span class="hljs-type">int</span> nums[N];<br><span class="hljs-type">int</span> qzh[N];<br><span class="hljs-type">int</span> n;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cin &gt;&gt; n;<br>	<span class="hljs-type">int</span> now = <span class="hljs-number">0</span>;<br>	<span class="hljs-type">int</span> maxi = -(<span class="hljs-number">1e9</span>+<span class="hljs-number">7</span>);<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>	&#123;<br>		cin &gt;&gt; nums[i];<br>	&#125;<br>    <span class="hljs-comment">// 当now为当前子列和 如果当前子列和大于maxi就更新   注意一点 当now&lt;0的时候now=0 即可以之间不选</span><br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>	&#123;<br>		now += nums[i];<br>		<span class="hljs-keyword">if</span> (now &gt; maxi)<br>			maxi = now;<br>		<span class="hljs-keyword">if</span> (now &lt; <span class="hljs-number">0</span>)<br>			now = <span class="hljs-number">0</span>;<br>	&#125;<br>	cout &lt;&lt; maxi;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="最长连续递增子序列"><a href="#最长连续递增子序列" class="headerlink" title="最长连续递增子序列"></a>最长连续递增子序列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 跟上一个一样。。</span><br>n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>nums = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br><br>maxi, maxn = <span class="hljs-number">0</span>, <span class="hljs-number">0</span><br>cnt = <span class="hljs-number">1</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n):<br>    <span class="hljs-keyword">if</span> nums[i] &gt; nums[i - <span class="hljs-number">1</span>]:<br>        cnt += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">if</span> maxn &lt; cnt:<br>            maxi = i<br>            maxn = cnt<br>        cnt = <span class="hljs-number">1</span><br><br><span class="hljs-keyword">if</span> maxn &lt; cnt:<br>    maxi = n<br>    maxn = cnt<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(maxi - maxn, maxi):<br>    <span class="hljs-keyword">if</span> i != maxi - <span class="hljs-number">1</span>:<br>        <span class="hljs-built_in">print</span>(nums[i], end=<span class="hljs-string">&#x27; &#x27;</span>)<br>    <span class="hljs-keyword">else</span>:<br>         <span class="hljs-built_in">print</span>(nums[i],end=<span class="hljs-string">&#x27;&#x27;</span>)<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -309,11 +308,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/algorithm/" class="print-no-link">#algorithm</a>
-      
-        <a href="/tags/lca/" class="print-no-link">#lca</a>
-      
-        <a href="/tags/Tree/" class="print-no-link">#Tree</a>
+        <a href="/tags/Ans/" class="print-no-link">#Ans</a>
       
     </div>
   
@@ -325,8 +320,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LCA</div>
-      <div>https://chasestar1.github.io/2023/08/22/LCA/</div>
+      <div>数据结构习题</div>
+      <div>https://chasestar1.github.io/2023/09/12/数据结构习题/</div>
     </div>
     <div class="license-meta">
       
@@ -338,7 +333,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年8月22日</div>
+          <div>2023年9月12日</div>
         </div>
       
       
@@ -375,9 +370,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/08/26/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E9%A2%98%E8%A7%A3/" title="每日一题题解">
+                      <a href="/2023/09/15/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" title="前端学习">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">每日一题题解</span>
+                        <span class="hidden-mobile">前端学习</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -385,8 +380,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/08/21/%E5%9B%BE%E8%AE%BA%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95/" title="图论相关算法">
-                        <span class="hidden-mobile">图论相关算法</span>
+                      <a href="/2023/09/11/Math/" title="Math">
+                        <span class="hidden-mobile">Math</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
