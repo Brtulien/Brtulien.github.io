@@ -16,24 +16,22 @@
   <meta name="author" content="Brtulien">
   <meta name="keywords" content="blog">
   
-    <meta name="description" content="·最近公共祖先 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465root &#x3D; 1num &#x3D; 0dep &#x3D; [0] * 1000010f &#x3D; [[0] * 21 for _ in range(1000001)">
+    <meta name="description" content="分享｜从集合论到位运算，常见位运算技巧分类总结！ - 力扣（LeetCode）压缩表示集合用二进制表示，从高到低第i位为1表示i在集合中。如{0,2,3}可以表示为1101，压缩成一个数字 13 集合与集合集合的交并补差 集合与元素“&lt;&lt;”代表左移，相当于乘2 ^ i “&gt;&gt;”代表右移， 相当于除2 ^ i 补集~s 全集 (1&lt;&lt;n) - 1 属于  (s &amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LCA">
-<meta property="og:url" content="https://chasestar1.github.io/2023/08/22/LCA/index.html">
+<meta property="og:title" content="位运算">
+<meta property="og:url" content="https://chasestar1.github.io/2023/10/09/%E4%BD%8D%E8%BF%90%E7%AE%97/index.html">
 <meta property="og:site_name" content="Brtulien">
-<meta property="og:description" content="·最近公共祖先 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465root &#x3D; 1num &#x3D; 0dep &#x3D; [0] * 1000010f &#x3D; [[0] * 21 for _ in range(1000001)">
+<meta property="og:description" content="分享｜从集合论到位运算，常见位运算技巧分类总结！ - 力扣（LeetCode）压缩表示集合用二进制表示，从高到低第i位为1表示i在集合中。如{0,2,3}可以表示为1101，压缩成一个数字 13 集合与集合集合的交并补差 集合与元素“&lt;&lt;”代表左移，相当于乘2 ^ i “&gt;&gt;”代表右移， 相当于除2 ^ i 补集~s 全集 (1&lt;&lt;n) - 1 属于  (s &amp;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-22T04:24:01.000Z">
+<meta property="article:published_time" content="2023-10-09T08:18:08.000Z">
 <meta property="article:modified_time" content="2023-10-15T23:52:55.332Z">
 <meta property="article:author" content="Brtulien">
 <meta property="article:tag" content="algorithm">
-<meta property="article:tag" content="lca">
-<meta property="article:tag" content="Tree">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>LCA - Brtulien</title>
+  <title>位运算 - Brtulien</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -211,7 +209,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LCA"></span>
+            <span id="subtitle" data-typed-text="位运算"></span>
           
         </div>
 
@@ -227,8 +225,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-08-22 12:24" pubdate>
-          2023年8月22日 中午
+        <time datetime="2023-10-09 16:18" pubdate>
+          2023年10月9日 下午
         </time>
       </span>
     
@@ -239,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          2.4k 字
         
       </span>
     
@@ -250,7 +248,7 @@
         
         
         
-          11 分钟
+          21 分钟
         
       </span>
     
@@ -287,15 +285,52 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">LCA</h1>
+            <h1 id="seo-header">位运算</h1>
             
             
               <div class="markdown-body">
                 
-                <p>·最近公共祖先</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs python">root = <span class="hljs-number">1</span><br>num = <span class="hljs-number">0</span><br>dep = [<span class="hljs-number">0</span>] * <span class="hljs-number">1000010</span><br>f = [[<span class="hljs-number">0</span>] * <span class="hljs-number">21</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1000001</span>)]<br>head = [-<span class="hljs-number">1</span>] * <span class="hljs-number">10000010</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Edge</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, to, <span class="hljs-built_in">next</span></span>):<br>		self.to = to<br>         self.<span class="hljs-built_in">next</span> = <span class="hljs-built_in">next</span><br>            <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">addedge</span>(<span class="hljs-params">from_,to</span>):<br>	<span class="hljs-keyword">global</span> num<br>    num += <span class="hljs-number">1</span><br>    e[num] = Edge(to, head[from_])<br>    head[from_] = num<br>    <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">v, father</span>):<br>	dep[v] = dep[father] + <span class="hljs-number">1</span><br>    f[v][<span class="hljs-number">0</span>] = father<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">21</span>):<br>        f[v][i] = f[f[v][i-<span class="hljs-number">1</span>]][i-<span class="hljs-number">1</span>]<br>        <br>    i = head[v]<br>    <span class="hljs-keyword">while</span> i != -<span class="hljs-number">1</span>:<br>        p1 = e[i].to<br>        <span class="hljs-keyword">if</span> p1 == father:<br>            i = e[i].<span class="hljs-built_in">next</span><br>            <span class="hljs-keyword">continue</span><br>        dfs(p1,v)<br>        i = e[i].<span class="hljs-built_in">next</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">lca</span>(<span class="hljs-params">x, y</span>):<br>	<span class="hljs-keyword">if</span> dep[x] &lt; dep[y]:<br>        x, y = y, x<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">20</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>		<span class="hljs-keyword">if</span> dep[f[x][i]] &gt;= dep[y]:<br>            x = f[x][i]<br>         <span class="hljs-keyword">if</span> x == y:<br>			<span class="hljs-keyword">return</span> x<br>        <br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">20</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>        <span class="hljs-keyword">if</span> f[x][i] != f[y][i]:<br>            x = f[x][i]<br>            y = f[y][i]<br>            <br>    <span class="hljs-keyword">return</span> f[x][<span class="hljs-number">0</span>]<br><br><br>n, m, root = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>e = [Edge(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1000001</span>)]<br><span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n-<span class="hljs-number">1</span>):<br>    u, v = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>    addedge(u, v)<br>    addedge(v, u)<br><br><span class="hljs-comment"># 建立 LCA 预处理</span><br>dfs(root, <span class="hljs-number">0</span>)<br><br><span class="hljs-comment"># 查询 LCA</span><br><span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m):<br>    x, y = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>    result = lca(x, y)<br>    <span class="hljs-built_in">print</span>(result)<br><br></code></pre></td></tr></table></figure>
+                <h1 id="分享｜从集合论到位运算，常见位运算技巧分类总结！-力扣（LeetCode）"><a href="#分享｜从集合论到位运算，常见位运算技巧分类总结！-力扣（LeetCode）" class="headerlink" title="分享｜从集合论到位运算，常见位运算技巧分类总结！ - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/circle/discuss/CaOJ45/">分享｜从集合论到位运算，常见位运算技巧分类总结！ - 力扣（LeetCode）</a></h1><h2 id="压缩表示"><a href="#压缩表示" class="headerlink" title="压缩表示"></a>压缩表示</h2><p>集合用二进制表示，从高到低第i位为1表示i在集合中。如{0,2,3}可以表示为1101，压缩成一个数字 13</p>
+<h2 id="集合与集合"><a href="#集合与集合" class="headerlink" title="集合与集合"></a>集合与集合</h2><p>集合的交并补差</p>
+<h2 id="集合与元素"><a href="#集合与元素" class="headerlink" title="集合与元素"></a>集合与元素</h2><p>“&lt;&lt;”代表左移，相当于乘2 ^ i</p>
+<p>“&gt;&gt;”代表右移， 相当于除2 ^ i</p>
+<p>补集~s</p>
+<p>全集 (1&lt;&lt;n) - 1</p>
+<p>属于  (s &gt;&gt; i) &amp; 1 &#x3D; 1</p>
+<p>不属于 (s &gt;&gt; i) &amp; 1 &#x3D; 0</p>
+<p>添加元素 s | (1 &lt;&lt; i)</p>
+<p>删除元素 s &amp; ~ (1 &lt;&lt; i)  (比如i &#x3D; 2 变成0100 取反变成 1011 然后和s并起来  这样才可以保证 只删除目标位而不影响其他位)</p>
+<p>删除最小元素 s &amp; (s - 1) ((s - 1)可以使得最低位的1变为0 并且其右边的所有0变为1  然后&amp;s 使得 最低位的1以及后面的所有0全部变成0)</p>
+<p>lowbit  &#x3D; s &amp; (-s)  </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">     s = <span class="hljs-number">101100</span><br>    ~s = <span class="hljs-number">010011</span><br>(~s)+<span class="hljs-number">1</span> = <span class="hljs-number">010100</span> <span class="hljs-regexp">//</span> 根据补码的定义，这就是 -s   最低 <span class="hljs-number">1</span> 左侧取反，右侧不变<br>s &amp; -s = <span class="hljs-number">000100</span> <span class="hljs-regexp">//</span> lowbit<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> father)</span></span><br><span class="hljs-function"></span>&#123;<br>	fa[x] = father;<br>	de[x] = de[father] + <span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = head[x]; i; i = edge[i].next)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (edge[i].to != father)<br>		&#123;<br>			<span class="hljs-built_in">dfs</span>(edge[i].to, x);<br>		&#125;<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">lca</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">while</span> (x != y)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (de[x] &gt;= de[y])<br>		&#123;<br>			x = fa[x];<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>			y = fa[y];<br>	&#125;<br>	<span class="hljs-keyword">return</span> x;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="部分库函数"><a href="#部分库函数" class="headerlink" title="部分库函数"></a>部分库函数</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs py">s.bit_count() <span class="hljs-comment"># 集合大小</span><br>s.bit_length() <span class="hljs-comment"># 二进制长度</span><br>(s&amp;-s).bit_length()-<span class="hljs-number">1</span> <span class="hljs-comment"># 集合中的最小元素</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="遍历集合"><a href="#遍历集合" class="headerlink" title="遍历集合"></a>遍历集合</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>    <span class="hljs-comment"># 如果i在s中</span><br>    <span class="hljs-keyword">if</span> (s &gt;&gt; i) &amp; <span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="枚举集合"><a href="#枚举集合" class="headerlink" title="枚举集合"></a>枚举集合</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-comment"># 从空集枚举到全集U</span><br><span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span> &lt;&lt; n):<br>    <span class="hljs-keyword">pass</span><br><br><span class="hljs-comment"># 设集合为s 从大到小枚举s的所有非空子集sub</span><br>sub = s<br><span class="hljs-keyword">while</span> sub:<br>    <span class="hljs-comment"># pass</span><br>    <br>    sub = (sub - <span class="hljs-number">1</span>) &amp; s <span class="hljs-comment"># （如何证明？）</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">跳过非子集的集合！</span><br><span class="hljs-string">意思是，把10100 的最低位1变0，它的后面有两位 00， 都是0。这时候按照普通二进制，会把这两个 00 都变成 11，如果按照压缩版，就只把原来集合里有的 1 变成 1 （因为求的是子集），其余的还是 0，原有的集合是 10101，最后两位是 01，所以只保留 01。综合起来就是 10100 先变 10000，然后保留 01，变成 10001。</span><br><span class="hljs-string"></span><br><span class="hljs-string">这样做的效果是从 10100 直接跳到 10001，把中间的 10011 和10010 忽略掉了（普通减法顺序是 10100 - 10011 - 10010 - 10001），因为10011 和 10010不是有效的子集。</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-comment"># 所有子集</span><br><span class="hljs-keyword">while</span> sub:<br>    sub = (sub - <span class="hljs-number">1</span>) &amp; s<br>    <span class="hljs-keyword">if</span> sub == s:<br>        <span class="hljs-keyword">break</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h1><h1 id="136-只出现一次的数字-力扣（LeetCode）"><a href="#136-只出现一次的数字-力扣（LeetCode）" class="headerlink" title="136. 只出现一次的数字 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/single-number/">136. 只出现一次的数字 - 力扣（LeetCode）</a></h1><p>一个数字出现一次 其他数字出现两次   用异或操作 因为a^0 &#x3D; a a ^ a &#x3D; 0 所以两个一样的数异或就为0 </p>
+<p>并且a ^ b ^ c 满足交换律  </p>
+<p>即所有的数都是相同的凑成一对 变为0   然后剩下的目标数字^0 &#x3D; 目标  输出即可</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">singleNumber</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        ret = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> nums:<br>            ret ^= x<br>        <span class="hljs-keyword">return</span> ret<br></code></pre></td></tr></table></figure>
+
+<h1 id="137-只出现一次的数字-II-力扣（LeetCode）"><a href="#137-只出现一次的数字-II-力扣（LeetCode）" class="headerlink" title="137. 只出现一次的数字 II - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/single-number-ii/description/">137. 只出现一次的数字 II - 力扣（LeetCode）</a></h1><p>一个数字出现三次  目标数字出现三次</p>
+<p>所以每个比特位的1的数量必定是3的倍数  不是3的倍数的 就是ans的比特位 </p>
+<p>注意python这种对有符号整型和无符号整型不区分的语言 需要特判最高位</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">singleNumber</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        ret = [<span class="hljs-number">0</span>] * <span class="hljs-number">33</span><br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> nums:<br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">32</span>):<br>                ret[i] += ((x&gt;&gt;i) &amp; <span class="hljs-number">1</span>)<br>        ans = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">32</span>):<br>            <span class="hljs-keyword">if</span> ret[i] % <span class="hljs-number">3</span> != <span class="hljs-number">0</span>:<br>                <span class="hljs-keyword">if</span> i == <span class="hljs-number">31</span>:<br>                    ans -= (<span class="hljs-number">1</span> &lt;&lt; i)<br>                <span class="hljs-keyword">else</span>:<br>                    ans |= (<span class="hljs-number">1</span> &lt;&lt; i)<br>        <span class="hljs-keyword">return</span> ans<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">singleNumber</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> ret[<span class="hljs-number">32</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : nums)<br>        &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i++)<br>            &#123;<br>                ret[i] += ((x &gt;&gt; i) &amp; <span class="hljs-number">1</span>);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (ret[i] % <span class="hljs-number">3</span> != <span class="hljs-number">0</span>)<br>                ans += (<span class="hljs-number">1</span> &lt;&lt; i);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h1 id="260-只出现一次的数字-III-力扣（LeetCode）"><a href="#260-只出现一次的数字-III-力扣（LeetCode）" class="headerlink" title="260. 只出现一次的数字 III - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/single-number-iii/description/">260. 只出现一次的数字 III - 力扣（LeetCode）</a></h1><p>每个元素只出现两次  有两个只出现一次的数 要找出这两个数 </p>
+<p>由于这两个数不同  必然有一个(以上)的比特位不同  那么就求这个比特位 </p>
+<p>然后把所有在这个比特位上 是1 的 异或到一起 （包含所有 这个比特位上是1 的两个两个的数  和 这个比特位上是1 的目标数）  把所有这个比特位上是0 的异或到一起…</p>
+<p>注意取  lowbit   lowbit &#x3D;  a &amp; (-a)</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">singleNumber</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:<br>        xorsum = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> nums:<br>            xorsum ^= x<br>        ans1 = ans2 = <span class="hljs-number">0</span><br>        lb = xorsum &amp; (-xorsum)<br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> nums:<br>            <span class="hljs-keyword">if</span> lb &amp; x:<br>                ans1 ^= x<br>            <span class="hljs-keyword">else</span>:<br>                ans2 ^= x<br><br>        <span class="hljs-keyword">return</span> [ans1, ans2]<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -311,10 +346,6 @@
       
         <a href="/tags/algorithm/" class="print-no-link">#algorithm</a>
       
-        <a href="/tags/lca/" class="print-no-link">#lca</a>
-      
-        <a href="/tags/Tree/" class="print-no-link">#Tree</a>
-      
     </div>
   
 </div>
@@ -325,8 +356,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LCA</div>
-      <div>https://chasestar1.github.io/2023/08/22/LCA/</div>
+      <div>位运算</div>
+      <div>https://chasestar1.github.io/2023/10/09/位运算/</div>
     </div>
     <div class="license-meta">
       
@@ -338,7 +369,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年8月22日</div>
+          <div>2023年10月9日</div>
         </div>
       
       
@@ -375,9 +406,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/08/26/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98%E9%A2%98%E8%A7%A3/" title="每日一题题解">
+                      <a href="/2023/10/11/%E8%AF%BE%E9%A2%98%E7%BB%84%E5%AD%A6%E4%B9%A0/" title="课题组学习">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">每日一题题解</span>
+                        <span class="hidden-mobile">课题组学习</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -385,8 +416,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/08/21/%E5%9B%BE%E8%AE%BA%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95/" title="图论相关算法">
-                        <span class="hidden-mobile">图论相关算法</span>
+                      <a href="/2023/10/07/pytorch%E7%8E%AF%E5%A2%83/" title="pytorch环境">
+                        <span class="hidden-mobile">pytorch环境</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
