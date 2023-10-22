@@ -24,7 +24,7 @@
 <meta property="og:description" content="分享｜从集合论到位运算，常见位运算技巧分类总结！ - 力扣（LeetCode）压缩表示集合用二进制表示，从高到低第i位为1表示i在集合中。如{0,2,3}可以表示为1101，压缩成一个数字 13 集合与集合集合的交并补差 集合与元素“&lt;&lt;”代表左移，相当于乘2 ^ i “&gt;&gt;”代表右移， 相当于除2 ^ i 补集~s 全集 (1&lt;&lt;n) - 1 属于  (s &amp;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-09T08:18:08.000Z">
-<meta property="article:modified_time" content="2023-10-15T23:58:11.137Z">
+<meta property="article:modified_time" content="2023-10-22T23:30:17.974Z">
 <meta property="article:author" content="Brtulien">
 <meta property="article:tag" content="algorithm">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          2.8k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          21 分钟
+          24 分钟
         
       </span>
     
@@ -332,6 +332,13 @@
 <p>注意取  lowbit   lowbit &#x3D;  a &amp; (-a)</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">singleNumber</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]:<br>        xorsum = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> nums:<br>            xorsum ^= x<br>        ans1 = ans2 = <span class="hljs-number">0</span><br>        lb = xorsum &amp; (-xorsum)<br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> nums:<br>            <span class="hljs-keyword">if</span> lb &amp; x:<br>                ans1 ^= x<br>            <span class="hljs-keyword">else</span>:<br>                ans2 ^= x<br><br>        <span class="hljs-keyword">return</span> [ans1, ans2]<br></code></pre></td></tr></table></figure>
 
+<h1 id="78-子集-力扣（LeetCode）"><a href="#78-子集-力扣（LeetCode）" class="headerlink" title="78. 子集 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subsets/description/">78. 子集 - 力扣（LeetCode）</a></h1><p>子集的形式与二进制数非常相似 可以考虑用二进制来写</p>
+<p>1 &lt; (1 &lt;&lt; n)就是小于2的n次方</p>
+<p>i&gt;&gt;j 就是把i这个二进制数往右移动j位</p>
+<p>比如0001  移动0位是1  移动1位是0 移动两位是0 三位是0</p>
+<p>就是用这种方式 代表每个位置上的数选或不选</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">subsets</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]:<br>        n = <span class="hljs-built_in">len</span>(nums)<br>        rets = []<br>        i = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">while</span> i &lt; (<span class="hljs-number">1</span>&lt;&lt;n):<br>            ret = []<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>                <span class="hljs-keyword">if</span> (i &gt;&gt; j) &amp; <span class="hljs-number">1</span> == <span class="hljs-number">1</span>:<br>                    ret.append(nums[j])<br>            rets.append(ret)<br>            i += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> rets<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -375,7 +382,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年10月16日</div>
+          <div>2023年10月23日</div>
         </div>
       
       
