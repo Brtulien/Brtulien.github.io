@@ -23,11 +23,13 @@
 <meta property="og:site_name" content="Brtulien">
 <meta property="og:description" content="人工智能的应用图像识别与分类什么是图像识别一般而言，传统图像识别系统主要由图像分割、图像特征提取以及图像识别分类构成。图像分割将图像划分成为多个有意义的区域，然后将每个区域的图像进行特征提取，最后根据提取的图像特征对图像进行分类。 ImageNet数据集是一个人工标定的数据集，包含1400多万张图片，2万多个类别。关于图像分类定位检测等研究大多基于此数据集展开，几乎成为目前深度学习图像领域算法性能">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://chasestar1.github.io/images/$%7Bfiilename%7D/image-20231030232144091.png">
 <meta property="article:published_time" content="2023-09-22T02:51:12.000Z">
-<meta property="article:modified_time" content="2023-10-22T23:30:17.974Z">
+<meta property="article:modified_time" content="2023-11-20T12:31:00.481Z">
 <meta property="article:author" content="Brtulien">
 <meta property="article:tag" content="class">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chasestar1.github.io/images/$%7Bfiilename%7D/image-20231030232144091.png">
   
   
   
@@ -237,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          11k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
         
-          11 分钟
+          95 分钟
         
       </span>
     
@@ -292,7 +294,7 @@
                 
                 <h1 id="人工智能的应用"><a href="#人工智能的应用" class="headerlink" title="人工智能的应用"></a>人工智能的应用</h1><h2 id="图像识别与分类"><a href="#图像识别与分类" class="headerlink" title="图像识别与分类"></a>图像识别与分类</h2><h3 id="什么是图像识别"><a href="#什么是图像识别" class="headerlink" title="什么是图像识别"></a>什么是图像识别</h3><p>一般而言，传统图像识别系统主要由图像分割、图像特征提取以及图像识别分类构成。图像分割将图像划分成为多个有意义的区域，然后将每个区域的图像进行特征提取，最后根据提取的图像特征对图像进行分类。</p>
 <h3 id="ImageNet数据集"><a href="#ImageNet数据集" class="headerlink" title="ImageNet数据集"></a>ImageNet数据集</h3><p>是一个人工标定的数据集，包含1400多万张图片，2万多个类别。关于图像分类定位检测等研究大多基于此数据集展开，几乎成为目前深度学习图像领域算法性能检验的标准数据集。</p>
-<h3 id="卷积神经网络工作过程"><a href="#卷积神经网络工作过程" class="headerlink" title="卷积神经网络工作过程"></a>卷积神经网络工作过程</h3><p>1、对输入的真是图像运用不同的图像算子（包括边缘检测等）进行扫描来提取图像当中的不同特征；</p>
+<h3 id="卷积神经网络工作过程"><a href="#卷积神经网络工作过程" class="headerlink" title="卷积神经网络工作过程"></a>卷积神经网络工作过程</h3><p>1、对输入的真实图像运用不同的图像算子（包括边缘检测等）进行扫描来提取图像当中的不同特征；</p>
 <p>2、通过采样对特征进行压缩（防止特征数量过于庞大）</p>
 <p>3、进行多次特征提取和采样</p>
 <p>4、全连接层为每个节点的输出指定一个标签</p>
@@ -308,31 +310,126 @@
 <li>语音输入</li>
 <li>语音助理</li>
 </ul>
-<h4 id="人脸识别和情感计算"><a href="#人脸识别和情感计算" class="headerlink" title="人脸识别和情感计算"></a>人脸识别和情感计算</h4><h4 id="人工智能与自动驾驶"><a href="#人工智能与自动驾驶" class="headerlink" title="人工智能与自动驾驶"></a>人工智能与自动驾驶</h4><ul>
+<p>语音识别的基本原理：<br>语音分帧  声学特征提取 把帧识别成状态 把状态组合成音素 把音素组合成单词</p>
+<p>判断某帧属于哪个状态的概率大（通过巨大数量的语音数据 经过神经网络监督训练得到声学模型 由此判概率）</p>
+<p>历史信息是一个序列 可以用递归神经网络RNN来建立声学模型</p>
+<h4 id="人脸识别和情感计算"><a href="#人脸识别和情感计算" class="headerlink" title="人脸识别和情感计算"></a>人脸识别和情感计算</h4><p>图像采集 人脸检测 特征处理 模型对比 输出结果</p>
+<p>图像采集 影响因素 图像分辨率 光照。。。</p>
+<p>人脸检测 准确标定人脸位置和大小提取有用的信息  如直方图特征 颜色特征 模板特征 结构特征</p>
+<p>基于检测出的特征 采用分类学习算法挑选代表性特征 按照加权的方式将弱分类器构造为强分类器 再将训练的若干强分类器 串联组成层叠分类器 提高检测速度</p>
+<p>图像预处理 早期阶段的灰度矫正和噪声过滤</p>
+<p> 人脸特征提取 基于神经网络方法 将输入的图像转换成向量的表示 基于传统知识表征方法 通过器官的形象描述和近距离特性来进行特征建模</p>
+<p>匹配识别 设定一个阈值 相似度大于阈值则输出</p>
+<p>情感计算  人脸检测人脸配准 特征提取 表情分类</p>
+<p>考虑精细化 多样化 精细表情识别 混合表情识别 非基本表情识别</p>
+<h4 id="人工智能与自动驾驶"><a href="#人工智能与自动驾驶" class="headerlink" title="人工智能与自动驾驶"></a>人工智能与自动驾驶</h4><ul>
 <li>包括模块， 决策模型：障碍物识别、交通标志识别、车道识别</li>
 </ul>
+<p>最重要的就是决策模块 深度学习用作环境感知 强化学习用作控制行为的决策模型</p>
+<p>障碍物识别 用传感器融合算法 利用多个传感器获取关于环境全面的信息 融合算法 实现障碍物识别跟踪躲避</p>
+<p>交通标志 深度学习 卷积神经网络 </p>
+<p>车道识别 神经网络图像处理 </p>
+<ul>
+<li>典型方案：以摄像头原始图像作为输入利用Autoencoder编码 用循环神经网络RNN从人类驾驶数据中进行转换学习 拟合逼近最优驾驶策略</li>
+</ul>
 <h1 id="人无法知道机器思考的具体过程"><a href="#人无法知道机器思考的具体过程" class="headerlink" title="人无法知道机器思考的具体过程"></a>人无法知道机器思考的具体过程</h1><h1 id="挑战"><a href="#挑战" class="headerlink" title="挑战"></a>挑战</h1><h2 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h2><ul>
-<li>能否保证人工智能的应用开发被用于正确目标。</li>
+<li>能否保证人工智能的应用开发被用于正确目标 如果用于错误目标 由于人工智能的强大能力 产生的负面影响可能是快速而大规模的</li>
 <li>智能系统开发时可能存在缺陷。人无法知道机器思考的具体过程 机器学习数据来源和质量问题可能教坏人工智能</li>
-<li>人工智能研发者多元化，以此满足不同人群的需求</li>
+<li>人工智能研发者多元化 在制作机器人时 会将自己的想法加入导机器人的思维系统中 从而使很多人工智能应用无法同时使所有用户满意</li>
+<li>用户不一定有充分使用这些应用  的知识和技能 如何对人工智能的服务群体进行指引和监管 将是一大难题</li>
 <li>对人工智能服务群体进行指引和监督</li>
-<li>让机器人和人类一样遵守伦理道德</li>
+<li>让机器人和人类一样遵守伦理道德 能否在技术上融入伦理道德 （把道德准则通过算法转换成人工智能的行为准则 让系统做出人类认为正确的道德决策 只是人工智能比人类更理性客观</li>
 </ul>
 <h2 id="人文"><a href="#人文" class="headerlink" title="人文"></a>人文</h2><ul>
 <li>对人的认知的冲击</li>
-<li>对人类思维的挑战</li>
-<li>人工智能高度模拟人的思维方式，让人类失去学习热情</li>
-<li>对人类社会结构和心理的冲击 机器人是否会取代人类</li>
-<li>对隐私保护的冲击，大数据的发展使人们的隐私暴露</li>
-<li>对经济市场的冲击</li>
 </ul>
-<h2 id="社会"><a href="#社会" class="headerlink" title="社会"></a>社会</h2><ul>
+<p>随着人工智能的发展 人们对自身的理解越来越去意义化和物化  如何对待机器与自身的关系 人有超越机器的东西吗 人们该如何应对</p>
+<ul>
+<li><p>对人类思维的挑战</p>
+</li>
+<li><p>人工智能高度模拟人的思维方式，让人类失去学习热情</p>
+</li>
+<li><p>对人类社会结构和心理的冲击 机器人是否会取代人类 </p>
+<p>一方面可以为解决贫困和不平等提供方案 </p>
+<p>另一方面可能由于技术壁垒 将一部分人永远的排斥在劳动市场外</p>
+<p>可以推动进一步的专业分化 和创造新的工作机会 但并非所有人都有能力迈过技术性和社会性的壁垒</p>
+<p>未来社会可能产生无用阶级 人对技术进步和快速经济社会转型所产生的无用感和无力感会磋商人的发展信心</p>
+</li>
+<li><p>对隐私保护的冲击，大数据的发展使人们的隐私暴露  合法获取和利用数据也会对隐私产生威胁 大数据揭示人的行为规律 使人前所未有地暴露在他人面前</p>
+</li>
+<li><p>对经济市场的冲击 知识经济时代有条件接触导大量数据的企业会拥有独特的竞争优势 这种垄断对于公共福祉的影响同样值得重视</p>
+</li>
+</ul>
+<p>如何看待 ？</p>
+<p>一方面带来极大的边界与财富 另一方面带来很大的社会焦虑 技术的革新无法阻挡 与其逃避问题 不如解决问题</p>
+<h2 id="社会"><a href="#社会" class="headerlink" title="社会"></a>社会</h2><p>人工智能的快车要加上刹车 也就是 伦理规范 只有符合社会伦理规范和公共政策的解决方案 才能设计出可信赖的人工智能</p>
+<p>公平安全保密包容是人工智能开发应用的道德原则  而透明和负责是其他四项基本原则的基石</p>
+<ul>
 <li>就业问题，人类是否会被机器取代</li>
-<li>安全问题，新技术失控或落入不法分子手中</li>
+</ul>
+<p>前三次工业革命旧机器取代人的体力劳动  人工智能革命  开始替代人的脑力劳动 这就导致劳动力市场的大变革</p>
+<ul>
+<li>安全问题，</li>
+</ul>
+<p>任何技术长信的最大应用前提都是安全 最大危险是人类对他失去控制 落入不法分子手中</p>
+<p>一方面得益于互联网的大数据发展资源优势 另一方面互联网人为因素 的黑客病毒有对人工智能的安全性构成巨大威胁</p>
+<ul>
 <li>责任于义务问题，人工智能事故由谁负责</li>
 </ul>
-<h1 id="AI艺术的定义"><a href="#AI艺术的定义" class="headerlink" title="AI艺术的定义"></a>AI艺术的定义</h1><p>捕获一定内容，通过机器学习或深度学习将其与某类风格进行融合</p>
-<p>AI没有先验数据缺乏独创能力，本质上是对海量作品积累形成的数据，没有灵感迸发没有主客体审美</p>
+<p>通过民法解决 </p>
+<p>高校和研究机构开展前瞻性科技伦理 人文 哲学研究</p>
+<p>人工智能领域开展广泛对话和持续合作 鼓励企业和行业协会成立科技伦理部门或委员会 </p>
+<p>风险投资机构和资本市场鼓励和引导企业进行负责任的产品开发</p>
+<p>公共政策</p>
+<p>明确人工智能开发应用的政策策略 加大人工智能领域的研究投入 成立人工智能研发和维护的专业协会 加强对人工智能开发应用的伦理和法律监管 促进充分隐私保护和安全前提下的数据共享合作 人工智能安全评估和管理 普及人工智能教育</p>
+<p>弱人工智能 单一 强人工智能 全面 </p>
+<p>递归的自我改进 一个运行在智能水平的人工智能 一般有自我改进的机制</p>
+<h1 id="人工智能的定义"><a href="#人工智能的定义" class="headerlink" title="人工智能的定义"></a>人工智能的定义</h1><p>类人思维系统 理性思维系统 类人行为系统 理性行为系统 </p>
+<p>研究用人工的方法和技术 模拟和拓展人的智能 实现机器智能</p>
+<p>长期目标 实现人类水平的智能 模拟或创造智能的目标被分解成很多次级方向</p>
+<p>认识和理解世界 推理和决策 学习能力 自我适应能力</p>
+<p> 研究应用领域  机器学习 数据挖掘 知识表示推理规划 计算机视觉 自然语言处理 移动和控制 情感计算</p>
+<h1 id="人工智能基础"><a href="#人工智能基础" class="headerlink" title="人工智能基础"></a>人工智能基础</h1><h2 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h2><p>研究计算机怎样模拟或实现人类的学习行为 以获取新的知识或技能 重新组织已有的知识结构 使之不断改善自身的性能 是人工智能的核心 是计算机具有智能的根本途径</p>
+<p>分为</p>
+<h3 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h3><p>通过已有的一部分输入数据与输出数据的对应关系 生成函数 将输入映射到合适的输出 例如分类 回归</p>
+<h3 id="无监督学习"><a href="#无监督学习" class="headerlink" title="无监督学习"></a>无监督学习</h3><p>只给机器训练数据 不给结果（标签） 计算机只能 分析数据特征得到一定成果  通常是一些集合 集合内的数在某些特征上相同或相似 例如聚类</p>
+<h3 id="半监督学习"><a href="#半监督学习" class="headerlink" title="半监督学习"></a>半监督学习</h3><p>是监督学习与无监督学习相结合的一种学习方法 半监督学习的训练一部分带有标签一部分没有标签  无标签的数量远大于有标签的数量 数据分布不完全随机 勇敢一些有标签的数据的局部特征 以及更多没标签的数据的整体分布 进行模式识别工作</p>
+<h3 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h3><p>智能体以试错的方式进行学习 通过与环境进行交互获得的奖赏指导行为 目标是使智能体获得最大的奖赏 </p>
+<p>做出行动 观察环境 计算收益</p>
+<h2 id="机器学习方法"><a href="#机器学习方法" class="headerlink" title="机器学习方法"></a>机器学习方法</h2><p>传统的机器学习方法有线性回归 逻辑回归 决策树 支持向量机 随机森林 贝叶斯模型 正则化模型 集成学习 神经网络 </p>
+<h3 id="交叉验证"><a href="#交叉验证" class="headerlink" title="交叉验证"></a>交叉验证</h3><p>统计学上将数据样本切割成较小子集的使用方法  将原始数据进行分组 一部分作为训练集 一部分作为验证集 首先用训练集对分类器进行训练 再利用验证集来测试训练得到的模型 以此作为评价分类器的性能指标</p>
+<p>常见的一种形式是K折交叉验证 初始采样分割成K个子样本 一个单独的子样本被保留为验证模型的数据 其他K-1个样本用来训练</p>
+<h2 id="人工神经网络"><a href="#人工神经网络" class="headerlink" title="人工神经网络"></a>人工神经网络</h2><p>仿生物神经网络 结构和功能的 数学模型或计算模型  用于对函数进行估计或近似  经典的包括输入层输出层隐藏层</p>
+<p>有大量神经元相互连接而成 每个神经元接受线性组合的输入后  最开始只是简单的线性加权 后来给每个神经元加上了非线性的激活函数 进行非线性变换后输出  每两个神经元之间 连接代表加权值 称之为权重 不同的权重和激活函数 会导致神经网络的不同输出</p>
+<p>神经元模型是一个包含输入输出计算功能的模型 输入可以类比为神经元的树突 输出可以类比为神经元的轴突 计算可以类比为细胞核 </p>
+<h2 id="深度学习"><a href="#深度学习" class="headerlink" title="深度学习"></a>深度学习</h2><p> 是机器学习的分支 动机在于建立模拟人脑进行分析学习的更复杂的神经网络 模仿人脑的机制来解释数据 例如图像声音和文本 深度学习在自然语言处理  图像识别语音识别语音合成 机器翻译等领域取得显著成果</p>
+<p>听说 - 语音识别 语音合成</p>
+<p>交流读写- NLP</p>
+<p>看-CV</p>
+<h3 id="语音识别-1"><a href="#语音识别-1" class="headerlink" title="语音识别"></a>语音识别</h3><p>人的语音内容转换成相应的文字 大多采用混合高斯模型GMM来描述每个建模单元的统计概率模型 实质上是浅层学习网络建模 状态的特征不能被充分描述   后 基于深度学习网络的语音识别系统</p>
+<h3 id="语音合成"><a href="#语音合成" class="headerlink" title="语音合成"></a>语音合成</h3><p> 将一般语言的文字转换成语音 </p>
+<h3 id="CV"><a href="#CV" class="headerlink" title="CV"></a>CV</h3><p>用摄影机和计算机代替人眼对目标进行识别 葛总测量等机器视觉 并进一步左图像处理 用计算机处理成为更适合人眼观察或传送给仪器检测的图像 包括图象识别 场景重现图像恢复等</p>
+<h3 id="NLP"><a href="#NLP" class="headerlink" title="NLP"></a>NLP</h3><p>人与机器之间使用自然语言进行有效通信的各种理论和方法 包括句法语义分析 信息抽取 文本挖掘 机器翻译 信息检索 问答系统 对话系统 </p>
+<h2 id="循环神经网络RNN"><a href="#循环神经网络RNN" class="headerlink" title="循环神经网络RNN"></a>循环神经网络RNN</h2><p>相较于静态神经网络 RNN增加了循环回馈部分 即状态记忆功能  在处理当前输入时 将历史状态作为输入 即对历史的记忆 行为模式更加接近人脑 传统RNN处理长期记忆力不从心LSTM解决了这个问题</p>
+<h2 id="卷积神经网络CNN"><a href="#卷积神经网络CNN" class="headerlink" title="卷积神经网络CNN"></a>卷积神经网络CNN</h2><p>是一种前馈神经网络  他的人工神经元可以相应一部分覆盖范围内的周围单元 对于大型图像处理效果好 由一个或多个卷积和顶端的全连接层组成 同时也包含关联权重和池化层 使之可以 利用输入数据的二维结构</p>
+<p>重要操作 卷积 和池化  卷积将一个二维矩阵转换成另一个更小的二维矩阵 降低网络模型复杂度 减少了神经网络需要训练参数的个数</p>
+<h3 id="基于CNN的艺术风格图像生成"><a href="#基于CNN的艺术风格图像生成" class="headerlink" title="基于CNN的艺术风格图像生成"></a>基于CNN的艺术风格图像生成</h3><p>由多层组成 每层是一些小计算单元 将每层计算单元理解成图像过滤器的集合  每个图象过滤器从输入图像提取一些特征  该卷积的高层提取抽象特征 用于输入图像的风格表示  低层提取具象特征 用于输入图像的内容表示</p>
+<h3 id="生成对抗网络GAN"><a href="#生成对抗网络GAN" class="headerlink" title="生成对抗网络GAN"></a>生成对抗网络GAN</h3><p>两个神经网络通过相互博弈的方式进行学习 由生成器和判别器组成   生成器从潜在空间随机采样输入  输出结果尽量模仿训练集中的真实样本 判别器输入为真是样本或生成网络的输出  目的将生成网络的输出从真是样本中尽可能分离出来  而生成网络 要尽可能欺骗判别网络 两个网络相互对抗不断调整参数 最忠实的判别网络无法判别</p>
+<h3 id="创意对抗网络CAN"><a href="#创意对抗网络CAN" class="headerlink" title="创意对抗网络CAN"></a>创意对抗网络CAN</h3><p>损失函数在生成对抗网络上加了多标签交叉熵损失 避免生成与现有数据过于类似的内容</p>
+<h1 id="类脑计算"><a href="#类脑计算" class="headerlink" title="类脑计算"></a>类脑计算</h1><p>认知科学涉及对认知过程的研究，这包括知觉、思考、记忆、语言理解等。人工智能脑和认知科学的结合旨在创造更智能、更自适应的系统，使机器能够更自然地与人类进行交互和理解人类需求。</p>
+<p>机器人伦理是研究人工智能系 统在社会中的道德和伦理问题的领域。这包括确保人工智能系统的使用是公正和透明的，避免对社会产生负面影响。伦理问题可能涉及隐私、歧视、安全等方面，需要制定相关政策和法规来规范人工智能的发展和使用。</p>
+<p>在认知科学中，认知是指获取、处理和理解信息的能力。这涉及到感知、思考、解决问题等一系列心理过程。认知研究帮助我们了解大脑如何处理信息，从而对人工智能的发展提供启示。</p>
+<p>记忆是认知过程中的一个重要方面，涉及信息的存储和检索。人工智能系统也在努力模拟这种记忆功能，以便更好地处理复杂的任务和适应不断变化的环境。</p>
+<p>注意力是认知过程中的另一个关键元素，指的是集中精力在特定信息或任务上的能力。在人工智能中，设计具有选择性注意力的系统可以使其更有效地处理信息，类似于人类在面对复杂环境时的注意力分配能力。</p>
+<h1 id="AI艺术的定义"><a href="#AI艺术的定义" class="headerlink" title="AI艺术的定义"></a>AI艺术的定义</h1><p>捕获一定内容，通过机器学习或深度学习将其与某类风格进行融合 从而形成迁移</p>
+<p>AI没有先验数据缺乏独创能力，本质上是对海量作品积累形成的数据，没有灵感迸发没有主客体审美 无法处理即生信息 作品缺乏惊喜</p>
+<p>具有强烈的失焦 是散点的一种表达 除了人类的第一人称视角 还具有第二人称和第三人称视角 在多种视角之下 每个点都可能成为焦点 也都可能不成为焦点</p>
+<p>AI艺术的精髓就是惊奇计算 将人类对01N之外的无极之境 突破想象力 人文艺术-社会科学文化-自然科学文化 </p>
+<p>而AI艺术恰恰突破 0以外  </p>
+<p>最开始AI艺术从CNN卷积神经网络产生风格的迁移再到GAN生成对抗网络的突破 再通过AI CAN创意对抗网络生成不一样的画风</p>
+<p>CAN的目标是希望生成的作品能与现有的作品 产生风格度的区分</p>
+<p>AI赋能文化遗产 保护和传承</p>
+<p>保护 数字视觉监测 AI安防预警</p>
 <h1 id="人类艺术审美的特点"><a href="#人类艺术审美的特点" class="headerlink" title="人类艺术审美的特点"></a>人类艺术审美的特点</h1><p>具有个体差异性；</p>
 <p>受到社会环境、文化和传统的深刻影响，是随着认知和思想不断发展变化的；</p>
 <p>是人类的内在想法的主观表达，具有个人喜好，受到情感影响</p>
@@ -355,6 +452,104 @@
 <li>思考</li>
 </ul>
 <p>都可以对数据进行分析，最终得出审美评价。</p>
+<p>GPT，或称为“生成式预训练模型”（Generative Pre-trained Transformer），是一种人工智能模型，采用了Transformer架构，通过大规模的文本数据预训练而来。GPT的主要功能是自然语言处理（NLP），它可以用于各种文本生成和理解任务。</p>
+<p>GPT的主要功能包括：</p>
+<ol>
+<li>文本生成：GPT可以生成文本，包括文章、故事、新闻摘要、诗歌等。它能够根据输入的文本或主题生成连贯、自然的文本内容。</li>
+<li>语言理解：GPT可以理解文本，包括自然语言问答、文本分类、情感分析等任务。它可以分析文本并提供相关信息或情感的解释。</li>
+<li>机器翻译：GPT可以用于自动翻译文本，将一种语言翻译成另一种语言，实现跨语言沟通。</li>
+<li>对话系统：GPT可以用于构建聊天机器人或虚拟助手，使其能够进行自然语言对话，并回应用户的问题和需求。</li>
+<li>文本摘要：GPT可以自动生成文本摘要，将长篇文章或文档压缩成简短的摘要，提供重要信息的概述。</li>
+<li>文本生成任务的个性化：GPT可以根据输入的上下文和特定要求生成个性化的文本，例如定制化推荐信、创作故事结局等。</li>
+<li>自动代码生成：一些变种的GPT模型，如GPT-3，可以用于生成编程代码，帮助程序员自动完成常见编码任务。</li>
+<li>媒体内容生成：GPT可以生成图片描述、视频字幕、广播稿件等各种媒体相关的内容。</li>
+<li>内容审核：GPT可以用于检测和审核文本内容，识别不当内容或违规言论。</li>
+<li>领域特定应用：GPT可以通过微调适应特定领域的需求，如医疗保健、法律、金融等。</li>
+</ol>
+<p>GPT模型在NLP领域广泛应用，因为它在大规模预训练的基础上，能够适应各种文本生成和理解任务，并在很多应用中取得了出色的性能。不过，需要注意的是，GPT模型需要大量的计算资源和数据进行训练和微调，以获得最佳的性能。</p>
+<h1 id="神经元和神经网络"><a href="#神经元和神经网络" class="headerlink" title="神经元和神经网络"></a>神经元和神经网络</h1><h2 id="人工神经元和神经网络"><a href="#人工神经元和神经网络" class="headerlink" title="人工神经元和神经网络"></a>人工神经元和神经网络</h2><p>输入信号 x1,x2..xn</p>
+<p>对输入信号进行加权处理确定强度 对输入信号求和确定组合效果 通过激励函数确定输出</p>
+<p>输出信号y1 y2…</p>
+<p>人工神经网络模仿神经元在人脑中的结构</p>
+<p>一个完整的神经网络由一层输入层多层隐藏层一层输出层构成</p>
+<h2 id="前馈型神经网络"><a href="#前馈型神经网络" class="headerlink" title="前馈型神经网络"></a>前馈型神经网络</h2><p>单项多层结构 各层神经元从输入开始 只接受上层输出并输出到下一层 直至输出层 整个网络无反馈</p>
+<p>常用于图像识别检测分割</p>
+<h2 id="反馈型神经网络"><a href="#反馈型神经网络" class="headerlink" title="反馈型神经网络"></a>反馈型神经网络</h2><p>从输出到输入有反馈连接的神经网络 当前的结果受先前所有结果的影响</p>
+<p>常用于语音文本处理 问答系统</p>
+<h2 id="训练算法"><a href="#训练算法" class="headerlink" title="训练算法"></a>训练算法</h2><p>以误差为主导的反向传播算法（BP算法）</p>
+<p>本质是通过前向传递的输入信号直至输出信号产生误差 再将误差信息反向传播去更新网络权重矩阵</p>
+<p>通过这种反馈机制 反馈越多 学习结果越准确（识别手写字体正确率99.8  imageNet图像分类优于人类）</p>
+<h1 id="手写数字识别过程"><a href="#手写数字识别过程" class="headerlink" title="手写数字识别过程"></a>手写数字识别过程</h1><p>MNIST是一个著名的手写数字识别数据集 </p>
+<p>训练集类似于学习资料 提升学习能力</p>
+<p>测试集类似于考卷 检验学习成果</p>
+<p>标签是人为给定 类似于参考答案</p>
+<p>样本为 0~9的数字的灰度图片 对应一个代表数字的标签  图片大小28*28 数字出现在正中间</p>
+<p>电脑得到一系列像素点的灰度值数据 </p>
+<p>(向量就是多个数字按顺序排成一组 数字的个数成为向量的维数  )</p>
+<p>每个样本图像的输入都是一个784维的向量 </p>
+<p>每个标签数据中把数字n表示为一个只有在第n维数字为1的10维向量</p>
+<p>如2[0,0,1,0,0,0,0,0,0,0]</p>
+<p>输入的784维向量经过两层中间计算 输出10维向量 每个维的值代表该数字的概率</p>
+<h2 id="隐藏层"><a href="#隐藏层" class="headerlink" title="隐藏层"></a>隐藏层</h2><p>相当于人类大脑提取特征的各个神经层 从一系列数据中提取特征 需要不同的隐藏层来实现</p>
+<p>隐藏层包括卷积层 全连接层 池化层 归一化数据层 激活层等</p>
+<p>通过多个顺序链接的隐藏层的组合 神经网络就可以讲原始图像便化成高层次的抽象的图像特征 从而认识其中的东西</p>
+<h3 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h3><p>提取图像的二维特征 通过不同的算子检测图像的不同边缘</p>
+<p>（垂直边缘算子-垂直边缘卷积层）</p>
+<h3 id="全连接层"><a href="#全连接层" class="headerlink" title="全连接层"></a>全连接层</h3><p>用来将所有的特征融合到一起  把计算得到的蕴含特征的大维度向量转换成 与输出层维度相同  每个点都与下一层链接</p>
+<h3 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h3><p>减少训练参数 对原始特征信号进行采样</p>
+<p>输入数据过大时卷积层计算量过大 这是需要减少参数 （通常出现在卷积层之后）</p>
+<h3 id="激活层"><a href="#激活层" class="headerlink" title="激活层"></a>激活层</h3><p>非线性激活层就是决定哪些神经元活跃程度高 哪些低</p>
+<p>ReLU线性整流函数</p>
+<h3 id="归一化指数层"><a href="#归一化指数层" class="headerlink" title="归一化指数层"></a>归一化指数层</h3><p>完成最后输出分类时 类别概率的计算 使得最后向量每个值加起来总和为1 每个单独的数值就是AI认为图像是该类别的概率</p>
+<h2 id="特征提取"><a href="#特征提取" class="headerlink" title="特征提取"></a>特征提取</h2><p>手写数字识别采用两层隐藏层来对图像特征进行提取 每一层以前一次提取作为输入 得到更复杂的特征</p>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>用带标签的样本数据进行学习 成为监督学习</p>
+<p>把输出与标签比对判断预测的准确性 用损失函数来定量计算</p>
+<p>损失函数 又叫代价函数 评估模型预测值与真实值误差大小</p>
+<p>神经网络训练过程就是最小化损失函数 不断优化网络参数 时预测更接近真实值</p>
+<p>0-1损失函数  （常用于分类 属于i是1 不属于i是0</p>
+<p>平方损失函数 L &#x3D; (Y - f(x))^2</p>
+<p>Y 真实值     F(x) 预测值</p>
+<h2 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h2><p>在确定损失函数后 优化网络交给优化器 </p>
+<p>优化器代表调整网络参数 使损失函数达到最小的过程 不同优化器有不同算法 改变损失函数的过程和效率也不同</p>
+<p>能否达到损失函数最小的地方？可行性分析</p>
+<p>能否最快的达到？效率分析</p>
+<h3 id="梯度"><a href="#梯度" class="headerlink" title="梯度"></a>梯度</h3><p>函数在某点变化最快的方向</p>
+<p>梯度下降算法  找到损失函数下降最快的地方进行迭代</p>
+<p>问题  可能会找到次优解 即局部最优解  而陷入局部最优之后 就难以跳出 而找不到全局最优  可以借助其他算法或进行认为调整</p>
+<p>不一定要 找到全局最优  只需要找到令人满意的误差</p>
+<h2 id="反向传播算法（BP）"><a href="#反向传播算法（BP）" class="headerlink" title="反向传播算法（BP）"></a>反向传播算法（BP）</h2><p>根据梯度下降的算法 将当前损失函数反馈给之前各层神经网络 并调整各层神经网络参数的权值 这个过程成为反向传播</p>
+<p>得到了不理想的结果 不能直接去调整这个结果 而是要去调整权值参数  使其调整后计算的结果接近正确结果</p>
+<p>一个神经元的输入输出类比多元一次方程</p>
+<p>y &#x3D; w1x1 + w2x2 + b</p>
+<p>通过调整wxb来调整y 优先选择梯度大的进行调整（对y影响大）</p>
+<p>w 调整激活值大的神经元的参数 较好</p>
+<p>x 增加原始参数w使正值的神经元的激活值 （幅度与w有关）</p>
+<p>无法直接改变每个神经元的激活值 于是       输出需要改变的大小 叠加之后 能够得到的 总变量（假设当前为输出层 损失函数误差过大 需要反向传播   就需要改变上一层的每个神经元的w  还需要调整激活值  再把总的改变量累加到一起  这样就有一个对前一层的期望总改变量   这就实现了最后一层到倒数第二层的改变量）然后不断向前传播  就是反向传播 </p>
+<h2 id="归纳神经网络深度学习的要素和整个过程"><a href="#归纳神经网络深度学习的要素和整个过程" class="headerlink" title="归纳神经网络深度学习的要素和整个过程"></a>归纳神经网络深度学习的要素和整个过程</h2><p>要素 数据</p>
+<p>神经网络深度学习的过程：输入原始数据–特征提取（卷积 全连接）–采样（池化）–活跃度（激活）–输出分类概率计算（归一化）–输出</p>
+<p>神经网络使深度学习的理论基础 人工神经元和神经网络都模仿人脑的神经结构 旨在让计算机有更强大的学习能力 神经网络主要学习机制为误差反向传播算法  不需要固定程序去学习的都比较适合深度学习</p>
+<h2 id="为什么说图像分类适合前向型-语音识别和自然语言处理适合反馈型"><a href="#为什么说图像分类适合前向型-语音识别和自然语言处理适合反馈型" class="headerlink" title="为什么说图像分类适合前向型 语音识别和自然语言处理适合反馈型"></a>为什么说图像分类适合前向型 语音识别和自然语言处理适合反馈型</h2><p>前馈型神经网络取连续或离散变量 一般不考虑输出和输入再时间上的滞后效应 只表达输入与输出的映射关系；反馈型神经网络可以用离散变量也可以用连续取值 考虑输入输出的时间延迟 需要动态方程描述系统的模型</p>
+<p>前馈型神经网络主要用误差修正算法 如BP计算 收敛较慢  反馈型神经网络主要用Hebb学习规则 一般收敛速度块  </p>
+<p>反馈网络也有类似前馈的应用并且再联想记忆和优化计算方面的应用更显特点</p>
+<h1 id="作业内容"><a href="#作业内容" class="headerlink" title="作业内容"></a>作业内容</h1><h3 id="什么是训练集"><a href="#什么是训练集" class="headerlink" title="什么是训练集"></a>什么是训练集</h3><p>训练集是机器学习模型用于训练和学习的数据集 通常情况下是原始数据集的一部分 用于训练模型的参数 包含了已知的标签</p>
+<p>类似于学习资料 提升学习能力</p>
+<h3 id="什么是测试集"><a href="#什么是测试集" class="headerlink" title="什么是测试集"></a>什么是测试集</h3><p>测试集用来检验最终选择出来的最优模型的性能如何 通常用来检验模型的准确度和泛化能力</p>
+<p>类似于考卷 检验学习成果</p>
+<h3 id="什么是损失函数"><a href="#什么是损失函数" class="headerlink" title="什么是损失函数"></a>什么是损失函数</h3><p>损失函数 又叫代价函数 是用来度量神经网络的性能的指标 评估模型预测值与真实值误差大小</p>
+<p>神经网络训练过程就是最小化损失函数 不断优化网络参数 使预测更接近真实值</p>
+<h3 id="手写数字识别的过程"><a href="#手写数字识别的过程" class="headerlink" title="手写数字识别的过程"></a>手写数字识别的过程</h3><h4 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h4><p>导入MNIST数据集 （每个图像已经做好相应的标签）</p>
+<p>对图像进行预处理 转化成28*28的矩阵</p>
+<h4 id="搭建网络-训练模型"><a href="#搭建网络-训练模型" class="headerlink" title="搭建网络 &amp; 训练模型"></a>搭建网络 &amp; 训练模型</h4><p>搭建神经网络 其中包含输入层 输出层和隐藏层 </p>
+<p>将输入的图片的转换成灰度值的矩阵 输入到输入层 做全连接线性计算 再套上激活函数传递给下一层 直到输出层 </p>
+<p>使用训练集进行训练 通过BP算法来不断更新参数 调整权重和偏置</p>
+<p>在每个epoch中计算损失函数的值  然后使用优化器最小化损失</p>
+<h4 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h4><p>训练结束后  用测试集测试  发现模型测试准确率高</p>
+<p>除了MNIST的测试集 还加入了自己手写的图片 测试效果良好</p>
+<p>以下为基于pytorch实现的手写数字识别代码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">from</span> torch.utils.data <span class="hljs-keyword">import</span> DataLoader<br><span class="hljs-keyword">from</span> torchvision <span class="hljs-keyword">import</span> transforms<br><span class="hljs-keyword">from</span> torchvision.datasets <span class="hljs-keyword">import</span> MNIST<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br>transform=transforms.Compose([<br>    transforms.ToTensor(),<br>    transforms.Normalize((<span class="hljs-number">0.1307</span>,),(<span class="hljs-number">0.3081</span>,))]<br>)<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Net</span>(torch.nn.Module):<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>(Net, self).__init__()<br>        self.fc1 = torch.nn.Linear(<span class="hljs-number">28</span> * <span class="hljs-number">28</span>, <span class="hljs-number">64</span>)  <span class="hljs-comment"># 输入 28 * 28像素的图像</span><br>        self.fc2 = torch.nn.Linear(<span class="hljs-number">64</span>, <span class="hljs-number">64</span>)<br>        self.fc3 = torch.nn.Linear(<span class="hljs-number">64</span>, <span class="hljs-number">64</span>)  <span class="hljs-comment"># 2个隐层</span><br>        self.fc4 = torch.nn.Linear(<span class="hljs-number">64</span>, <span class="hljs-number">10</span>)  <span class="hljs-comment"># 输出10维向量</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        x = torch.nn.functional.relu(self.fc1(x))<br>        x = torch.nn.functional.relu(self.fc2(x))<br>        x = torch.nn.functional.relu(<br>            self.fc3(x))  <span class="hljs-comment"># 前三层 每层先做全连接线性计算 即self.fc1(x) 再套上整流激活函数ReLU（torch.nn.functional.relu）</span><br>        x = torch.nn.functional.log_softmax(self.fc4(x), dim=<span class="hljs-number">1</span>)  <span class="hljs-comment"># 输出层通过softmax归一化（log_softmax是为了提高计算稳定性）</span><br>        <span class="hljs-keyword">return</span> x<br><br><br><span class="hljs-comment"># 转换数据</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_data_loader</span>(<span class="hljs-params">is_train</span>):<br>    to_tensor = transforms.Compose([transforms.ToTensor()])  <span class="hljs-comment"># tensor就是多维数组 也叫张量 这行是转换数据类型为高维向量</span><br>    data_set = MNIST(<span class="hljs-string">&quot;&quot;</span>, is_train, transform=to_tensor, download=<span class="hljs-literal">True</span>)  <span class="hljs-comment"># （“”下载目录 空表示当前目录 is_train表示输入训练集还是测试集）</span><br>    <span class="hljs-keyword">return</span> DataLoader(data_set, batch_size=<span class="hljs-number">15</span>, shuffle=<span class="hljs-literal">True</span>)  <span class="hljs-comment"># batch_size 表示一次输入15个数据 shuffle表示数据是随机打乱的  最后返回数据加载器</span><br><br><br><span class="hljs-comment"># 评估识别正确率</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">evaluate</span>(<span class="hljs-params">test_data, net</span>):<br>    n_correct = <span class="hljs-number">0</span><br>    n_total = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">with</span> torch.no_grad():<br>        <span class="hljs-comment"># 从测试集中按批次取出数据</span><br>        <span class="hljs-keyword">for</span> (x, y) <span class="hljs-keyword">in</span> test_data:<br>            outputs = net.forward(x.view(-<span class="hljs-number">1</span>, <span class="hljs-number">28</span> * <span class="hljs-number">28</span>))  <span class="hljs-comment"># 算神经网络的预测值</span><br>            <span class="hljs-comment"># 对批次中的每个结果进行比较 累加正确预测的数量</span><br>            <span class="hljs-keyword">for</span> i, outputs <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(outputs):<br>                <span class="hljs-keyword">if</span> torch.argmax(outputs) == y[i]:  <span class="hljs-comment"># argmax是算数列中最大值的序号</span><br>                    n_correct += <span class="hljs-number">1</span><br>                n_total += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> n_correct / n_total  <span class="hljs-comment"># 正确率</span><br><br><br><span class="hljs-comment"># 主函数</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-comment"># 初始化神经网络</span><br>    train_data = get_data_loader(is_train=<span class="hljs-literal">True</span>)<br>    test_data = get_data_loader(is_train=<span class="hljs-literal">False</span>)<br>    net = Net()<br>    <span class="hljs-comment"># 训练前 打印 初始网络正确率（大概1/10）</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;initial accuracy:&quot;</span>, evaluate(test_data, net))<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        以下为pytorch的固定写法</span><br><span class="hljs-string">        for epoch：（反复训练几次）</span><br><span class="hljs-string">            for 数据：</span><br><span class="hljs-string">                初始化</span><br><span class="hljs-string">                正向传播</span><br><span class="hljs-string">                计算损失函数</span><br><span class="hljs-string">                反向误差传播</span><br><span class="hljs-string">                优化网络参数</span><br><span class="hljs-string">            print（每个轮次结束后打印当前网络正确率 一般越来越高）</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    optimizer = torch.optim.Adam(net.parameters(), lr=<span class="hljs-number">0.001</span>)<br>    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>):<br>        <span class="hljs-keyword">for</span> (x, y) <span class="hljs-keyword">in</span> train_data:<br>            net.zero_grad()<br>            output = net.forward(x.view(-<span class="hljs-number">1</span>, <span class="hljs-number">28</span> * <span class="hljs-number">28</span>))<br>            loss = torch.nn.functional.nll_loss(output, y)  <span class="hljs-comment"># 采用nll_loss 对数损失函数 是为了匹配上面的log_softmax对数</span><br>            loss.backward()<br>            optimizer.step()<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;epoch&quot;</span>, epoch, <span class="hljs-string">&quot;accuracy:&quot;</span>, evaluate(test_data, net))<br><br>    <span class="hljs-comment"># 随机抽取三张图像 做测试</span><br>    <span class="hljs-keyword">for</span> (n, (x, _)) <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(test_data):<br>        <span class="hljs-keyword">if</span> n &gt; <span class="hljs-number">3</span>:<br>            <span class="hljs-keyword">break</span><br>        predict = torch.argmax(net.forward(x[<span class="hljs-number">0</span>].view(-<span class="hljs-number">1</span>, <span class="hljs-number">28</span> * <span class="hljs-number">28</span>)))<br>        plt.figure(n)<br>        plt.imshow(x[<span class="hljs-number">0</span>].view(<span class="hljs-number">28</span>, <span class="hljs-number">28</span>))<br>        plt.title(<span class="hljs-string">&quot;prediction: &quot;</span> + <span class="hljs-built_in">str</span>(<span class="hljs-built_in">int</span>(predict)))<br>    plt.show()<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    device = torch.device(<span class="hljs-string">&quot;cuda:0&quot;</span> <span class="hljs-keyword">if</span> torch.cuda.is_available() <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;cpu&quot;</span>)<br>    main()<br><br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../images/$%7Bfiilename%7D/image-20231030232144091.png" srcset="/img/loading.gif" lazyload alt="image-20231030232144091"></p>
+<p>可以发现 无论是两次循环的计算的准确率 还是实测的准确率都很高</p>
 
                 
               </div>
@@ -398,7 +593,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年10月23日</div>
+          <div>2023年11月20日</div>
         </div>
       
       

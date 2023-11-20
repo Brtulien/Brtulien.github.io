@@ -24,7 +24,7 @@
 <meta property="og:description" content="P1551 亲戚 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)并查集模板 看两个数是不是在一个集合 1234567891011121314151617181920212223n, m, p  &#x3D; map(int, input().split())fa &#x3D; [i for i in range(100010)]def find(x) -&gt; int:    if fa[x] &#x3D;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-30T07:08:28.000Z">
-<meta property="article:modified_time" content="2023-10-22T23:30:17.978Z">
+<meta property="article:modified_time" content="2023-11-20T12:31:00.485Z">
 <meta property="article:author" content="Brtulien">
 <meta property="article:tag" content="Ans">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.1k 字
+          4.9k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          35 分钟
+          41 分钟
         
       </span>
     
@@ -318,6 +318,13 @@
 <h1 id="P1892-BOI2003-团伙-洛谷-计算机科学教育新生态-luogu-com-cn"><a href="#P1892-BOI2003-团伙-洛谷-计算机科学教育新生态-luogu-com-cn" class="headerlink" title="[P1892 BOI2003] 团伙 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)"></a>[P1892 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1892">BOI2003] 团伙 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a></h1><p>记住只有两个集合里面放的操作  如果Enemy[A] 为0 那就把Enemy[A]赋值为B  不为0则合并Enemy[A] 和B</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">find</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">if</span> x == fa[x]:<br>        <span class="hljs-keyword">return</span> x<br>    fa[x] = find(fa[x])<br>    <span class="hljs-keyword">return</span> fa[x]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">union</span>(<span class="hljs-params">x, y</span>):<br>    fa[find(x)] = find(y)<br><br>n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>m = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>fa = [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">100010</span>)]<br>Enemy = [<span class="hljs-number">0</span>] * <span class="hljs-number">100010</span><br><span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m):<br>    op, a, b = <span class="hljs-built_in">input</span>().split()<br>    a = <span class="hljs-built_in">int</span>(a)<br>    b = <span class="hljs-built_in">int</span>(b)<br><br>    <span class="hljs-keyword">if</span> op == <span class="hljs-string">&#x27;E&#x27;</span>:<br>        <span class="hljs-keyword">if</span> Enemy[a] == <span class="hljs-number">0</span>:<br>            Enemy[a] = find(b)<br>        <span class="hljs-keyword">else</span>:<br>            union(Enemy[a], b)<br>        <span class="hljs-keyword">if</span> Enemy[b] == <span class="hljs-number">0</span>:<br>            Enemy[b] = find(a)<br>        <span class="hljs-keyword">else</span>:<br>            union(a, Enemy[b])<br>    <span class="hljs-keyword">if</span> op == <span class="hljs-string">&#x27;F&#x27;</span>:<br>        union(a,b)<br><br>count = [<span class="hljs-number">0</span>] * <span class="hljs-number">1001</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>    count[find(i)] = <span class="hljs-number">1</span><br><br>cnt= <span class="hljs-number">0</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>    cnt += count[i]<br><br><span class="hljs-built_in">print</span>(cnt)<br></code></pre></td></tr></table></figure>
 
+<h1 id="765-情侣牵手-力扣（LeetCode）"><a href="#765-情侣牵手-力扣（LeetCode）" class="headerlink" title="765. 情侣牵手 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/couples-holding-hands/description/?envType=daily-question&envId=2023-11-11">765. 情侣牵手 - 力扣（LeetCode）</a></h1><p>n对情侣要相邻 (0, 1)(2, 3)(4, 5)… 从 因此可以分组 01为第0组 23为第1组 45 为第2组… 恰好0 1 &#x2F; 2 &#x3D; 0  2 3 &#x2F; 2 &#x3D; 1  4 5 &#x2F; 2 &#x3D; 2 这样来分组   </p>
+<p>如果两组情侣坐错了 那只需要其中两个人互换一次就可以  三组情侣坐错 只需要互换两次就可以 即k对错误的情侣 需要k - 1次交换就可以</p>
+<p>注意 三个互相坐错 2次   若是两组 3个互相坐错就是 4次…（称为一个环）</p>
+<p>就寻找有几个相互坐错的环  每个环 求环的大小减1就行</p>
+<p>用并查集来写 坐错的就加到一个集合里 最后统计每个集合要交换的个数相加</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">minSwapsCouples</span>(<span class="hljs-params">self, row: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">find</span>(<span class="hljs-params">x</span>):<br>            <span class="hljs-keyword">if</span> x == fa[x]:<br>                <span class="hljs-keyword">return</span> x<br>           	fa[x] = find(fa[x])<br>            <span class="hljs-keyword">return</span> fa[x]<br>      	<br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">union</span>(<span class="hljs-params">x, y</span>):<br>            fa[find(x)] = find(y)<br>        <br>        <br>        n = <span class="hljs-built_in">len</span>(row)<br>        m = n // <span class="hljs-number">2</span><br>        fa = [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m)]<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, n, <span class="hljs-number">2</span>):<br>            <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">            0 1 union(0, 0) 就是把0 合到 0 不变 下面去比的时候 0 == find(0) 就是集合0 </span><br><span class="hljs-string">            若是0 3 union(0, 1) 即 集合1 合到集合1 那么find(1) = 0下面找 1 != find(1)那就不是</span><br><span class="hljs-string">            &quot;&quot;&quot;</span><br>            union(row[i] // <span class="hljs-number">2</span>, row[i + <span class="hljs-number">1</span>] // <span class="hljs-number">2</span>)<br>        <br>        cnt = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m):<br>            <span class="hljs-keyword">if</span> find(i) == i:<br>                cnt += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> m - cnt    <br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -361,7 +368,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年10月23日</div>
+          <div>2023年11月20日</div>
         </div>
       
       

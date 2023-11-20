@@ -1,0 +1,780 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Brtulien">
+  <meta name="keywords" content="blog">
+  
+    <meta name="description" content="斐波那契型一般是直观的状态转移  选或不选的问题dp[i] 表示前i个最多能有多少钱   每个选还是不选？因为选了这个 就不能选下一个 由此得出状态转移方程 dp[i] &#x3D; max(dp[i - 2] + cost[i], dp[i - 1])  选了这个 就需要加上这个的值（并且不能选i - 1） 不选这个 就直接从i - 1转移 初始化 视情况而定 一般初始化 dp[0] 、dp[1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划">
+<meta property="og:url" content="https://chasestar1.github.io/2023/10/23/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.html">
+<meta property="og:site_name" content="Brtulien">
+<meta property="og:description" content="斐波那契型一般是直观的状态转移  选或不选的问题dp[i] 表示前i个最多能有多少钱   每个选还是不选？因为选了这个 就不能选下一个 由此得出状态转移方程 dp[i] &#x3D; max(dp[i - 2] + cost[i], dp[i - 1])  选了这个 就需要加上这个的值（并且不能选i - 1） 不选这个 就直接从i - 1转移 初始化 视情况而定 一般初始化 dp[0] 、dp[1">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-10-23T08:49:12.000Z">
+<meta property="article:modified_time" content="2023-11-20T12:31:00.481Z">
+<meta property="article:author" content="Brtulien">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="Ans">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>动态规划 - Brtulien</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chasestar1.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="动态规划"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Brtulien
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-23 16:49" pubdate>
+          2023年10月23日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          74 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">动态规划</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="斐波那契型"><a href="#斐波那契型" class="headerlink" title="斐波那契型"></a>斐波那契型</h1><h2 id="一般是直观的状态转移-选或不选的问题"><a href="#一般是直观的状态转移-选或不选的问题" class="headerlink" title="一般是直观的状态转移  选或不选的问题"></a>一般是直观的状态转移  选或不选的问题</h2><p>dp[i] 表示前i个最多能有多少钱   每个选还是不选？因为选了这个 就不能选下一个 由此得出状态转移方程 dp[i] &#x3D; max(dp[i - 2] + cost[i], dp[i - 1])  选了这个 就需要加上这个的值（并且不能选i - 1） 不选这个 就直接从i - 1转移</p>
+<p>初始化 视情况而定 一般初始化 dp[0] 、dp[1] 等 前几个元素</p>
+<h3 id="198-打家劫舍-力扣（LeetCode）"><a href="#198-打家劫舍-力扣（LeetCode）" class="headerlink" title="198. 打家劫舍 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/house-robber/?envType=study-plan-v2&envId=dynamic-programming">198. 打家劫舍 - 力扣（LeetCode）</a></h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">rob</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        n = <span class="hljs-built_in">len</span>(nums)<br>        <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">3</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(nums)<br>        dp = [<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>)<br>        dp[<span class="hljs-number">0</span>] = nums[<span class="hljs-number">0</span>]<br>        dp[<span class="hljs-number">1</span>] = <span class="hljs-built_in">max</span>(nums[<span class="hljs-number">0</span>], nums[<span class="hljs-number">1</span>])<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, n):<br>            dp[i] = <span class="hljs-built_in">max</span>(dp[i - <span class="hljs-number">1</span>], dp[i - <span class="hljs-number">2</span>] + nums[i])<br>        <span class="hljs-keyword">return</span> dp[n - <span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
+
+<h3 id="740-删除并获得点数-力扣（LeetCode）-https-leetcode-cn-problems-delete-and-earn-envType-study-plan-v2-envId-dynamic-programming"><a href="#740-删除并获得点数-力扣（LeetCode）-https-leetcode-cn-problems-delete-and-earn-envType-study-plan-v2-envId-dynamic-programming" class="headerlink" title="740. 删除并获得点数 - 力扣（LeetCode）](https://leetcode.cn/problems/delete-and-earn/?envType=study-plan-v2&amp;envId=dynamic-programming)"></a>740. 删除并获得点数 - 力扣（LeetCode）](<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/delete-and-earn/?envType=study-plan-v2&envId=dynamic-programming">https://leetcode.cn/problems/delete-and-earn/?envType=study-plan-v2&amp;envId=dynamic-programming</a>)</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">deleteAndEarn</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        n = <span class="hljs-built_in">max</span>(nums)<br>        cost = [<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">for</span> i, x <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(nums):<br>            cost[x] += x<br>        dp = [<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>)<br>        dp[<span class="hljs-number">0</span>] = cost[<span class="hljs-number">0</span>]<br>        dp[<span class="hljs-number">1</span>] = cost[<span class="hljs-number">1</span>]<br>     <br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, n + <span class="hljs-number">1</span>):<br>            dp[i] = <span class="hljs-built_in">max</span>(dp[i - <span class="hljs-number">2</span>] + cost[i], dp[i - <span class="hljs-number">1</span>])<br>        <span class="hljs-keyword">return</span> dp[n]<br></code></pre></td></tr></table></figure>
+
+<h1 id="矩阵型"><a href="#矩阵型" class="headerlink" title="矩阵型"></a>矩阵型</h1><h2 id="一般是类似于走迷宫-用二维的-dp-i-j"><a href="#一般是类似于走迷宫-用二维的-dp-i-j" class="headerlink" title="一般是类似于走迷宫 用二维的 dp[i] [j]"></a>一般是类似于走迷宫 用二维的 dp[i] [j]</h2><p>i，j表示坐标   状态从上一坐标 转移而来  一般是相邻的位置 比如i - 1 j - 1 等</p>
+<p>注意 这类问题 一般需要判断该位置是否已经走过？  比如求最大值可以设初值为0 判断为0即未访问 求最小值设为inf等</p>
+<p>得到状态转移方程为  dp[i] [j] &#x3D; max(dp[i - 1] [j], dp[i] [j - 1]) + cost[]</p>
+<p>初始化一般是用于转移的前几个数</p>
+<p>由于数组的原因 下标经常从1开始 到n+1结束 相应的cost数组的下标也需要改变</p>
+<h3 id="62-不同路径-力扣（LeetCode）"><a href="#62-不同路径-力扣（LeetCode）" class="headerlink" title="62. 不同路径 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-paths/?envType=study-plan-v2&envId=dynamic-programming">62. 不同路径 - 力扣（LeetCode）</a></h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">uniquePaths</span>(<span class="hljs-params">self, m: <span class="hljs-built_in">int</span>, n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span> <span class="hljs-keyword">or</span> m == <span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>        dp = [[<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m + <span class="hljs-number">1</span>)]<br>        dp[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">0</span><br>        dp[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>] = dp[<span class="hljs-number">2</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">1</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>                <span class="hljs-keyword">if</span> dp[i][j] == <span class="hljs-number">0</span>:<br>                    dp[i][j] = dp[i - <span class="hljs-number">1</span>][j] + dp[i][j - <span class="hljs-number">1</span>]<br>        <span class="hljs-keyword">return</span> dp[m][n]<br></code></pre></td></tr></table></figure>
+
+<h3 id="64-最小路径和-力扣（LeetCode）"><a href="#64-最小路径和-力扣（LeetCode）" class="headerlink" title="64. 最小路径和 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-path-sum/?envType=study-plan-v2&envId=dynamic-programming">64. 最小路径和 - 力扣（LeetCode）</a></h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">minPathSum</span>(<span class="hljs-params">self, grid: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        m = <span class="hljs-built_in">len</span>(grid)<br>        n = <span class="hljs-built_in">len</span>(grid[<span class="hljs-number">0</span>])<br>        dp = [[<span class="hljs-number">10</span> ** <span class="hljs-number">9</span>] * (n + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m + <span class="hljs-number">1</span>)]<br>        dp[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>] = grid[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>                <span class="hljs-keyword">if</span> dp[i][j] == <span class="hljs-number">10</span> ** <span class="hljs-number">9</span>:<br>                    dp[i][j] = <span class="hljs-built_in">min</span>(dp[i - <span class="hljs-number">1</span>][j], dp[i][j - <span class="hljs-number">1</span>]) + grid[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>]<br>        <span class="hljs-keyword">return</span> dp[m][n]<br></code></pre></td></tr></table></figure>
+
+<h3 id="221-最大正方形-力扣（LeetCode）"><a href="#221-最大正方形-力扣（LeetCode）" class="headerlink" title="221. 最大正方形 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximal-square/description/?envType=study-plan-v2&envId=dynamic-programming">221. 最大正方形 - 力扣（LeetCode）</a></h3><p>这题同样是矩阵型 </p>
+<p>dp[i] [j] 表示以i j 为右下角的最大正方形的 边长 每次看他的上、左和上左 三个格子的最大边长  + 1</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">maximalSquare</span>(<span class="hljs-params">self, matrix: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        m = <span class="hljs-built_in">len</span>(matrix)<br>        n = <span class="hljs-built_in">len</span>(matrix[<span class="hljs-number">0</span>])<br>        dp = [[<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m + <span class="hljs-number">1</span>)]<br><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>                <span class="hljs-keyword">if</span> matrix[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;1&#x27;</span>:<br>                    dp[i][j] = <span class="hljs-built_in">min</span>(dp[i - <span class="hljs-number">1</span>][j], dp[i][j - <span class="hljs-number">1</span>], dp[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>]) + <span class="hljs-number">1</span><br>                ret = <span class="hljs-built_in">max</span>(ret, dp[i][j])<br>        <span class="hljs-keyword">return</span> ret ** <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="单字符串型"><a href="#单字符串型" class="headerlink" title="单字符串型"></a>单字符串型</h1><p>在单个字符串上进行操作  一般状态表示也是两个变量 i， j 然后取出一个区间   j 一般表示端点 s[i:j]或s[j: i]</p>
+<p>初始化 一般需要初始化大量的字符串  比如 回文串 需要初始化每个s[i:i] 为1 </p>
+<h3 id="5-最长回文子串-力扣（LeetCode）"><a href="#5-最长回文子串-力扣（LeetCode）" class="headerlink" title="5. 最长回文子串 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-palindromic-substring/?envType=study-plan-v2&envId=dynamic-programming">5. 最长回文子串 - 力扣（LeetCode）</a></h3><p>dp[i] [j] 表示i到j是否为回文串   状态转移为  看12…..21 比如 1 &#x3D;&#x3D; 1 那就看前面 一段2…..2是不是回文 </p>
+<p>如果1 !&#x3D; 1 那就直接false</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">longestPalindrome</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">str</span>:<br>        n = <span class="hljs-built_in">len</span>(s)<br>        <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">2</span>:<br>            <span class="hljs-keyword">return</span> s<br>       	begin = <span class="hljs-number">0</span><br>     	max_len = <span class="hljs-number">1</span><br>        dp = [[<span class="hljs-literal">False</span>] * n <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n)]<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>            dp[i][i] = <span class="hljs-literal">True</span><br>        <span class="hljs-comment"># 枚举长度L</span><br>        <span class="hljs-keyword">for</span> L <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, n + <span class="hljs-number">1</span>):<br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>                j = i + L - <span class="hljs-number">1</span><br>                <span class="hljs-keyword">if</span> j &gt;= n:<br>                    <span class="hljs-keyword">break</span><br>                <span class="hljs-keyword">if</span> s[i] != s[j]:<br>                    dp[i][j] = <span class="hljs-literal">False</span><br>                <span class="hljs-keyword">else</span>:<span class="hljs-comment"># s[i] = s[j]  那就看前一段是不是回文 </span><br>                    <span class="hljs-keyword">if</span> L &lt; <span class="hljs-number">3</span>:<br>                        dp[i][j] = <span class="hljs-literal">True</span><br>                    <span class="hljs-keyword">else</span>:<br>                    	dp[i][j] = dp[i + <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>]<br>                <span class="hljs-keyword">if</span> dp[i][j] <span class="hljs-keyword">and</span> j - i + <span class="hljs-number">1</span> &gt; max_len:<br>                    max_len = j - i + <span class="hljs-number">1</span><br>                    begin = i<br>        <span class="hljs-keyword">return</span> s[begin:begin + max_len]<br>                <br></code></pre></td></tr></table></figure>
+
+<h3 id="139-单词拆分-力扣（LeetCode）"><a href="#139-单词拆分-力扣（LeetCode）" class="headerlink" title="139. 单词拆分 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/word-break/description/?envType=study-plan-v2&envId=dynamic-programming">139. 单词拆分 - 力扣（LeetCode）</a></h3><p>跟前一题很像 用dp[i]表示 前i个能不能被word拼接  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">wordBreak</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, wordDict: <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]</span>) -&gt; <span class="hljs-built_in">bool</span>:<br>        n = <span class="hljs-built_in">len</span>(s)<br>        dp = [<span class="hljs-literal">False</span>] * (n + <span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i):<br>                <span class="hljs-keyword">if</span> dp[i] == <span class="hljs-literal">True</span>:<br>                    <span class="hljs-keyword">continue</span><br>                <span class="hljs-keyword">if</span> dp[j] == <span class="hljs-literal">False</span>:<br>                    <span class="hljs-keyword">continue</span><br>                <span class="hljs-comment"># 当前i个是False 并且前j个事True的时候  就要从j转移到i </span><br>                <span class="hljs-keyword">if</span> s[j:i] <span class="hljs-keyword">in</span> wordDict:<br>                    s[i] = <span class="hljs-literal">True</span><br>                    <span class="hljs-keyword">break</span><br>         <span class="hljs-keyword">return</span> dp[-<span class="hljs-number">1</span>]<br>                   <br></code></pre></td></tr></table></figure>
+
+<h3 id="516-最长回文子序列-力扣（LeetCode）"><a href="#516-最长回文子序列-力扣（LeetCode）" class="headerlink" title="516. 最长回文子序列 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-palindromic-subsequence/description/?envType=study-plan-v2&envId=dynamic-programming">516. 最长回文子序列 - 力扣（LeetCode）</a></h3><p>子序列问题 不连续 一般就要用i 和 j </p>
+<p>dp[i] [j] 表示i 到j 最长是多少</p>
+<p>当s[i] &#x3D;&#x3D; s[j]的时候 dp[i] [j] 就可以从dp[i + 1] [j - 1]更新来</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">longestPalindromeSubseq</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        n = <span class="hljs-built_in">len</span>(s)<br>        dp = [[<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n + <span class="hljs-number">1</span>)]<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>            dp[i][i] = <span class="hljs-number">1</span><br>        ret = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n - <span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i + <span class="hljs-number">1</span>):<br>                <span class="hljs-keyword">if</span> s[i] == s[j]:<br>                    dp[i][j] = dp[i + <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>] + <span class="hljs-number">2</span><br>                <span class="hljs-keyword">else</span>:<br>                    dp[i][j] = <span class="hljs-built_in">max</span>(dp[i + <span class="hljs-number">1</span>][j], dp[i][j - <span class="hljs-number">1</span>])<br>            ret = <span class="hljs-built_in">max</span>(ret, dp[i][j])<br>        <span class="hljs-keyword">return</span> ret<br></code></pre></td></tr></table></figure>
+
+<h1 id="双字符串型"><a href="#双字符串型" class="headerlink" title="双字符串型"></a>双字符串型</h1><p>双字符串的题一般要用dp[i] [j] 一个用来表示第一个字符串的 第i个 一个用来表示第2个字符串的前j个</p>
+<h3 id="72-编辑距离-力扣（LeetCode）"><a href="#72-编辑距离-力扣（LeetCode）" class="headerlink" title="72. 编辑距离 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/edit-distance/?envType=study-plan-v2&envId=dynamic-programming">72. 编辑距离 - 力扣（LeetCode）</a></h3><p>dp[i] [j] 表示第一个到i 第二个到j 相同的最小编辑次数</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">minDistance</span>(<span class="hljs-params">self, word1: <span class="hljs-built_in">str</span>, word2: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-string">&quot;&quot;&quot;def dfs(i, j):</span><br><span class="hljs-string">            if i &lt; 0:</span><br><span class="hljs-string">                return j + 1</span><br><span class="hljs-string">           	if j &lt; 0:</span><br><span class="hljs-string">                return i + 1</span><br><span class="hljs-string">           	if word1[i] == word2[j]:</span><br><span class="hljs-string">                return dfs(i - 1, j - 1)</span><br><span class="hljs-string">            return min(dfs(i - 1, j), dfs(i, j - 1), dfs(i - 1, j - 1)) + 1&quot;&quot;&quot;</span><br>        <span class="hljs-comment"># dfs 转 dp</span><br>        n, m = <span class="hljs-built_in">len</span>(word1), <span class="hljs-built_in">len</span>(word2)<br>        dp = [[<span class="hljs-number">0</span>] * (m + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n + <span class="hljs-number">1</span>)]<br>        dp[<span class="hljs-number">0</span>] = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(m + <span class="hljs-number">1</span>))<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>            dp[i + <span class="hljs-number">1</span>][<span class="hljs-number">0</span>] = i + <span class="hljs-number">1</span><br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m):<br>                <span class="hljs-keyword">if</span> word1[i] == word2[j]:<br>                    dp[i + <span class="hljs-number">1</span>][j + <span class="hljs-number">1</span>] = dp[i][j]<br>                <span class="hljs-keyword">else</span>:<br>                    dp[i + <span class="hljs-number">1</span>][j + <span class="hljs-number">1</span>] = <span class="hljs-built_in">min</span>(dp[i][j], dp[i][j + <span class="hljs-number">1</span>], dp[i + <span class="hljs-number">1</span>][j]) + <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> dp[n][m]<br>        <br></code></pre></td></tr></table></figure>
+
+<h3 id="115-不同的子序列-力扣（LeetCode）"><a href="#115-不同的子序列-力扣（LeetCode）" class="headerlink" title="115. 不同的子序列 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/distinct-subsequences/description/?envType=study-plan-v2&envId=dynamic-programming">115. 不同的子序列 - 力扣（LeetCode）</a></h3><p>这题与上一题不同 在于 上一题是修改s使其与 t相等  所以 不相等的时候只需要修改 就可以相等  然后位移指针</p>
+<p>但是这个题 是求t在x中出现的次数 也就是说t 必须全部匹配  所以t的指针j 只有在匹配的时候才能位移</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">numDistinct</span>(<span class="hljs-params">self, s: <span class="hljs-built_in">str</span>, t: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        <span class="hljs-string">&quot;&quot;&quot;def dfs(i, j):</span><br><span class="hljs-string">            if i &lt; 0:</span><br><span class="hljs-string">                return 0</span><br><span class="hljs-string">            if j &lt; 0:</span><br><span class="hljs-string">                return 1 # 表示已经匹配</span><br><span class="hljs-string">           	if s[i] == t[j]:</span><br><span class="hljs-string">                return dfs(i - 1, j - 1) + dfs(i - 1, j)  # 选或不选两种情况</span><br><span class="hljs-string">            return dfs(i - 1, j)</span><br><span class="hljs-string">       	&quot;&quot;&quot;</span><br>        n, m = <span class="hljs-built_in">len</span>(s), <span class="hljs-built_in">len</span>(t)<br>        dp = [[<span class="hljs-number">0</span>] * (m + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n + <span class="hljs-number">1</span>)]<br>        <br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m):<br>                <span class="hljs-keyword">if</span> j == <span class="hljs-number">0</span>:<br>                    dp[i][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span><br>                <span class="hljs-keyword">elif</span> s[i] == t[j]:<br>                    dp[i][j] = dp[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>] + dp[i - <span class="hljs-number">1</span>][j]<br>                <span class="hljs-keyword">else</span>:<br>                    dp[i][j] = dp[i - <span class="hljs-number">1</span>][j]<br>        <span class="hljs-keyword">return</span> dp[n][m]<br>                <br></code></pre></td></tr></table></figure>
+
+<h3 id="712-两个字符串的最小ASCII删除和-力扣（LeetCode）"><a href="#712-两个字符串的最小ASCII删除和-力扣（LeetCode）" class="headerlink" title="712. 两个字符串的最小ASCII删除和 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-ascii-delete-sum-for-two-strings/description/?envType=study-plan-v2&envId=dynamic-programming">712. 两个字符串的最小ASCII删除和 - 力扣（LeetCode）</a></h3><p>由于直接求最小不好求  可以选择 先求出两个字符串的ascll总和  然后求<strong>最长子序列</strong> 最后再减去最长子序列的ascll * 2 就是删除的最小和</p>
+<p>dp[i] [j] 表示最长子序列的ascll和  （即 到s1[i] s2[j]的ascll和）</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>: <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">minimumDeleteSum</span>(<span class="hljs-params">self, s1: <span class="hljs-built_in">str</span>, s2: <span class="hljs-built_in">str</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        n, m = <span class="hljs-built_in">len</span>(s1), <span class="hljs-built_in">len</span>(s2)<br>        dp = [[<span class="hljs-number">0</span>] * (m + <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n + <span class="hljs-number">1</span>)]<br>        s = <span class="hljs-built_in">sum</span>([<span class="hljs-built_in">ord</span>(s1[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n)])<br>        s += <span class="hljs-built_in">sum</span>([<span class="hljs-built_in">ord</span>(s2[i]) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m)])<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(m):<br>                <span class="hljs-keyword">if</span> s1[i] == s2[j]:<br>                    dp[i + <span class="hljs-number">1</span>][j + <span class="hljs-number">1</span>] = dp[i][j] + <span class="hljs-built_in">ord</span>(s1[i])<br>                <span class="hljs-keyword">else</span>:<br>                    dp[i + <span class="hljs-number">1</span>][j + <span class="hljs-number">1</span>] = <span class="hljs-built_in">max</span>(dp[i + <span class="hljs-number">1</span>][j], dp[i][j + <span class="hljs-number">1</span>])<br>        <span class="hljs-keyword">return</span> s - dp[n][m] * <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="673-最长递增子序列的个数-力扣（LeetCode）"><a href="#673-最长递增子序列的个数-力扣（LeetCode）" class="headerlink" title="673. 最长递增子序列的个数 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-longest-increasing-subsequence/?envType=study-plan-v2&envId=dynamic-programming">673. 最长递增子序列的个数 - 力扣（LeetCode）</a></h3><p>先是找最长的递增子序列 用maxn记录最长的长度 dp[i] 记录到i的最长子序列长度 （最长递增子序列） </p>
+<p>由于本题求得是个数 需要增加cnt[i] 表示 到i 的最长递增子序列的个数 </p>
+<p>对于每个i  遍历0 ~ i的每个j 如果nums[i] &gt; nums[j] 说明i 可以接在j后面形成递增子序列 </p>
+<p>如果dp[i] &lt; dp[j] + 1那么说明到i的最长递增子序列的长度需要更新  那么到i 的最长子序列的数量 可以直接更新(到j的数量 直接转移到 到i的数量 )</p>
+<p>如果dp[i] &#x3D;&#x3D; dp[j] + 1 那么说明到i这个地方 他的最长递增子序列（并非整个数组最长而是0~i最长）的数量+&#x3D; 到j的数量</p>
+<p>最后把到每个i 的等于maxn的数量加起来</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findNumberOfLIS</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        n = <span class="hljs-built_in">len</span>(nums)<br>        dp = [<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>)<br>        cnt = [<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>)<br>        maxn = -<span class="hljs-number">1</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>            dp[i] = <span class="hljs-number">1</span><br>            cnt[i] = <span class="hljs-number">1</span><br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i):<br>                <span class="hljs-keyword">if</span> nums[i] &gt; nums[j]:<br>                    <span class="hljs-keyword">if</span> dp[i] &lt; dp[j] + <span class="hljs-number">1</span>:<br>                        dp[i] = dp[j] + <span class="hljs-number">1</span><br>                        cnt[i] = cnt[j]<br>                    <span class="hljs-keyword">elif</span> dp[i] == dp[j] + <span class="hljs-number">1</span>:<br>                        cnt[i] += cnt[j]<br>            maxn = <span class="hljs-built_in">max</span>(maxn, dp[i])<br>        ret = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>            <span class="hljs-keyword">if</span> dp[i] == maxn:<br>                ret += cnt[i]<br>        <span class="hljs-keyword">return</span> ret<br>                        <br></code></pre></td></tr></table></figure>
+
+<h2 id="646-最长数对链-力扣（LeetCode）"><a href="#646-最长数对链-力扣（LeetCode）" class="headerlink" title="646. 最长数对链 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-length-of-pair-chain/description/?envType=study-plan-v2&envId=dynamic-programming">646. 最长数对链 - 力扣（LeetCode）</a></h2><p>模板题 最长上升子序列</p>
+<p>状态表示dp[i] 表示到i 到j 的最长链 </p>
+<p>状态转移 i + 1的l如果大于i的r</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">findLongestChain</span>(<span class="hljs-params">self, pairs: <span class="hljs-type">List</span>[<span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        n = <span class="hljs-built_in">len</span>(pairs)<br>        pairs.sort(key=<span class="hljs-keyword">lambda</span> x: (x[<span class="hljs-number">0</span>], x[<span class="hljs-number">1</span>]))<br>        dp = [<span class="hljs-number">0</span>] * (n + <span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>            dp[i] = <span class="hljs-number">1</span><br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>                <span class="hljs-keyword">if</span> pairs[j][<span class="hljs-number">1</span>] &lt; pairs[i][<span class="hljs-number">0</span>]:<br>                    dp[i] = <span class="hljs-built_in">max</span>(dp[j] + <span class="hljs-number">1</span>, dp[i])<br>                <br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(dp)<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="背包"><a href="#背包" class="headerlink" title="背包"></a>背包</h1><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-dice-rolls-with-target-sum/">1155. 掷骰子等于目标和的方法数 - 力扣（LeetCode）</a></p>
+<p>分组背包 总和为n 每个骰子只能有一个点数 选哪个的问题</p>
+<p>并且不是分组背包求最大值的问题  而是分组背包求固定和的问题  用的转移方程是  j - ds</p>
+<p>第三重循环枚举点数 即 从dp[i - 1] 转移到dp[i] 的情况  有dp[i - 1] [j - 1] + 1；dp[i -  1] [j - 2] + 2 ……dp[i - 1] [j - k] + k </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">numRollsToTarget</span>(<span class="hljs-params">self, n: <span class="hljs-built_in">int</span>, k: <span class="hljs-built_in">int</span>, target: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        mod = <span class="hljs-number">10</span> ** <span class="hljs-number">9</span> + <span class="hljs-number">7</span><br>		<span class="hljs-comment"># 注意数组的范围 由于可能遍历计算的最大值是超过target的 所以这里不能开target</span><br>        dp = [[<span class="hljs-number">0</span>] * (<span class="hljs-built_in">max</span>(target + <span class="hljs-number">1</span>, n * k + <span class="hljs-number">1</span>)) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n + <span class="hljs-number">1</span>)]<br>        <span class="hljs-comment"># 注意初始化 j = 0 的时候不可能 即种数为0 大于k的时候也为0 因为一个骰子最多是k（大于target不用算了 所以为0）</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">min</span>(target, k) + <span class="hljs-number">1</span>):<br>            dp[<span class="hljs-number">1</span>][i] = <span class="hljs-number">1</span><br>        <span class="hljs-comment"># 算到n * k因为n * k 可能小于target 这时候为0</span><br>        maxn = n * k<br>        <span class="hljs-comment"># 前两个循环 是枚举dp[i][j] 前i个骰子 和为j有几种情况</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, n + <span class="hljs-number">1</span>):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i, maxn + <span class="hljs-number">1</span>):<br>                <span class="hljs-comment"># 第三个循环 状态转移 枚举第n - 1个骰子的点数 转移到i</span><br>                ds = <span class="hljs-number">1</span><br>                <span class="hljs-keyword">while</span>  j - ds &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> ds &lt;= k:<br>                    dp[i][j] += dp[i - <span class="hljs-number">1</span>][j - ds]<br>                    dp[i][j] %= mod<br>                    ds += <span class="hljs-number">1</span><br>        <br>        <span class="hljs-keyword">return</span> dp[n][target]<br></code></pre></td></tr></table></figure>
+
+<h1 id="定差型"><a href="#定差型" class="headerlink" title="定差型"></a>定差型</h1><p>不是 i - 1 和i 的关系 而是 每次比较 i 和i - nums[i] 这样的 某个差值nums[i] 之间的关系</p>
+<h2 id="1218-最长定差子序列-力扣（LeetCode）"><a href="#1218-最长定差子序列-力扣（LeetCode）" class="headerlink" title="1218. 最长定差子序列 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-arithmetic-subsequence-of-given-difference/description/?envType=study-plan-v2&envId=dynamic-programming">1218. 最长定差子序列 - 力扣（LeetCode）</a></h2><p>每次到达dp[i] 的时候 就去 dp[i - difference] 找上一个相差difference的</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">longestSubsequence</span>(<span class="hljs-params">self, arr: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>], difference: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>        dp = defaultdict(<span class="hljs-built_in">int</span>)<br><br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> arr:<br>            dp[x] = dp[x - difference] + <span class="hljs-number">1</span><br>        <br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(dp.values())<br></code></pre></td></tr></table></figure>
+
+<h2 id="1027-最长等差数列-力扣（LeetCode）"><a href="#1027-最长等差数列-力扣（LeetCode）" class="headerlink" title="1027. 最长等差数列 - 力扣（LeetCode）"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-arithmetic-subsequence/description/?envType=study-plan-v2&envId=dynamic-programming">1027. 最长等差数列 - 力扣（LeetCode）</a></h2><p>与上题相同 但是difference需要自己找</p>
+<p>每个dp[i] 存储一个哈希表</p>
+<p>每个哈希表存储 i - 1 ~ 0 的所有数 和nums[i] 的差值（key）和这个差值d 的出现的次数</p>
+<p>比如9 4 7 2 10  到10 的时候 就往前找 2与10 差8 公差为8 的就是1个 再在2中找 公差为8的次数 0 ＋1&#x3D;1</p>
+<p>7 与10 差3 公差为3 在7中找公差为3的 为1 （7 和4） 总次数为2</p>
+<p>最后个数是次数+1</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">longestArithSeqLength</span>(<span class="hljs-params">self, nums: <span class="hljs-type">List</span>[<span class="hljs-built_in">int</span>]</span>) -&gt; <span class="hljs-built_in">int</span>:<br>        dp = [&#123;&#125; <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n)]<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i - <span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>               	d = nums[i] - nums[j]<br>                <span class="hljs-keyword">if</span> d <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> dp[i]:<br>                    dp[i][d] = dp[j].get(d, <span class="hljs-number">1</span>) + <span class="hljs-number">1</span><br>                    <br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(<span class="hljs-built_in">max</span>(d.values()) <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> dp[<span class="hljs-number">1</span>:])<br></code></pre></td></tr></table></figure>
+
+<h2 id="Problem-E-Codeforces"><a href="#Problem-E-Codeforces" class="headerlink" title="Problem - E - Codeforces"></a><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1881/problem/E">Problem - E - Codeforces</a></h2><p>从n向前寻找  当i + nums[i] &lt;&#x3D; n的时候  是可以形成 [长度+数组]的形式的  这时候就要检查这个地方是否需要选（可以选 也可以不选）</p>
+<p>就要判断选这个点的代价（因为选这个可能影响其他代价更小的点）选了就是 dp[i + nums[i] + 1] 就是 这个点清除掉之后 比如</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs txt">1 2 3 4 5 6 7<br>3 3 4 5 2 6 1<br></code></pre></td></tr></table></figure>
+
+<p>选了nums[1]的话 从1到n的代价就为 nums[5]的代价 因为1~4都被消除了</p>
+<p>如果不选i 的话  那就是dp[i + 1] + 1(即直接删除这个点)</p>
+<p>如果i + nums[i] &gt; n 不能形成 数组 那就需要删除 删除的话就是dp[i] &#x3D; dp[i + 1] + 1</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">using</span> ll = <span class="hljs-type">long</span> <span class="hljs-type">long</span>;<br><span class="hljs-keyword">using</span> PII = pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;;<br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> pb push_back</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> all(x) (x).begin(), (x).end()</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> fi first</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> se second</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> endl <span class="hljs-string">&#x27;\n&#x27;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> debug(x)                          \</span><br><span class="hljs-meta">    &#123;                                     \</span><br><span class="hljs-meta">        cerr &lt;&lt; #x &lt;&lt; <span class="hljs-string">&quot; = &quot;</span> &lt;&lt; x &lt;&lt; endl; \</span><br><span class="hljs-meta">    &#125;</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> debugfull(x)                                                      \</span><br><span class="hljs-meta">    &#123;                                                                     \</span><br><span class="hljs-meta">        cerr &lt;&lt; #x &lt;&lt; <span class="hljs-string">&quot; = &quot;</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">&quot; (line &quot;</span> &lt;&lt; __LINE__ &lt;&lt; <span class="hljs-string">&quot;)&quot;</span> &lt;&lt; endl; \</span><br><span class="hljs-meta">    &#125;</span><br><br><span class="hljs-comment">/*-------------------------------------------*/</span><br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">2e5</span> + <span class="hljs-number">10</span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> n;<br>    cin &gt;&gt; n;<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">nums</span><span class="hljs-params">(N)</span>, <span class="hljs-title">dp</span><span class="hljs-params">(n + <span class="hljs-number">5</span>, <span class="hljs-number">0</span>)</span></span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        cin &gt;&gt; nums[i];<br>    &#125;<br><br>    dp[n] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = n - <span class="hljs-number">1</span>; i &gt; <span class="hljs-number">0</span>; i--)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (nums[i] + i &gt; n)<br>            dp[i] = dp[i + <span class="hljs-number">1</span>] + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">else</span><br>            dp[i] = <span class="hljs-built_in">min</span>(dp[i + <span class="hljs-number">1</span>] + <span class="hljs-number">1</span>, dp[i + nums[i] + <span class="hljs-number">1</span>]);<br>    &#125;<br>    cout &lt;&lt; dp[<span class="hljs-number">1</span>] &lt;&lt; endl;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// clock_t st = clock(), ed;</span><br>    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-number">0</span>);<br>    cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-comment">// cout &lt;&lt; setprecision(15) &lt;&lt; fixed;</span><br>    <span class="hljs-type">int</span> T;<br>    cin &gt;&gt; T;<br>    <span class="hljs-keyword">while</span> (T--)<br>    &#123;<br>        <span class="hljs-built_in">solve</span>();<br>    &#125;<br><br>    <span class="hljs-comment">// ed = clock();</span><br>    <span class="hljs-comment">// double endtime = (double)(ed - st) / CLOCKS_PER_SEC;</span><br>    <span class="hljs-comment">// cout &lt;&lt; &quot;Total time: &quot; &lt;&lt; endtime &lt;&lt; endl;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/algorithm/" class="print-no-link">#algorithm</a>
+      
+        <a href="/tags/Ans/" class="print-no-link">#Ans</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>动态规划</div>
+      <div>https://chasestar1.github.io/2023/10/23/动态规划/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Brtulien</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年10月23日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年11月20日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/11/16/Trie%E6%A0%91/" title="Trie树">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Trie树</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/11/KMP/" title="KMP">
+                        <span class="hidden-mobile">KMP</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"chasestar1/chasestar1.github.io","repo-id":"R_kgDOJ-WRYw","category":"Announcements","category-id":"DIC_kwDOJ-WRY84CYKx3","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","shortname":"fluid"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":300,"height":600},"mobile":{"show":true},"rect":{"opacity":0.7},"log":false});</script></body>
+</html>
