@@ -34,3 +34,9 @@ conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit
 到底还有多少离谱的问题啊
 
 # 下不下来的包 居然可以直接复制粘贴文件夹吗？（😀
+
+
+
+vscode终端出问题。。一直以为是pytorch环境错了
+
+把终端换成（pytorch1）也就是conda的虚拟环境就可以了 而不能用PS的终端

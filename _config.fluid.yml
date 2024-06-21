@@ -32,7 +32,7 @@ live2d:
     width: 220
     height: 440
   mobile:
-    show: true   #是否在手机进行显示
+    show: false   #是否在手机进行显示
   react:
     opacity: 0.7
 
