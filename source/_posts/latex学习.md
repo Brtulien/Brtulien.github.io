@@ -2,6 +2,7 @@
 title: latex学习
 date: 2023-08-03 06:54:55
 tags: [study, latex]
+archive: true
 ---
 
 ## 格式

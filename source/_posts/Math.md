@@ -2,6 +2,8 @@
 title: Math
 date: 2023-09-11 22:09:41
 tags: [Math, algorithm]
+archive: true
+categories: algorithm
 ---
 
 # 线性筛

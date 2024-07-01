@@ -2,40 +2,36 @@
 title: pytorch环境
 date: 2023-10-07 17:24:35
 tags: pytorch
+categories: deep learning
 ---
 
 # 配个环境配了一天 人麻了
 
-不知道为什么只有这个版本可以用 下次重建conda虚拟环境的时候要用这个下载 
+pytorch+cuda环境配置
 
-并且在下载之前记得
-
-```
-conda install cpuonly
-conda uninstall cpuonly
-```
-
-
-
-```
-conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit=11.3 -c pytorch
+```cmd
+conda create -n {Env Name} python==3.10
+conda activate {Env Name}
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+pip install torch==2.0.0+cu118 torchvision==0.15.1+cu118 torchaudio==2.0.1+cu118 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
+注意使用清华源要关VPN 
 
+注意对应版本[PyTorch/Python/Cuda/torchvision/torchaudio版本对应和兼容性 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/694038606)
 
+实测下来下载速度非常快5~15MB/s 包大概是2~3GB 不超过十分钟下载好 如果不是这样大概率是网络有问题
 
+验证
 
-# 艹 在conda虚拟环境要用conda install  
+```
+import torch
+print(torch.cuda.is_available())
+```
 
-为什么我疯狂用pip install啊啊啊
+应该是True
 
-# pip开代理可能会出现路径错误
-
-到底还有多少离谱的问题啊
-
-# 下不下来的包 居然可以直接复制粘贴文件夹吗？（😀
-
-
+## 下不下来的包 居然可以直接复制粘贴文件夹吗？（😀
 
 vscode终端出问题。。一直以为是pytorch环境错了
 

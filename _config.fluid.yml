@@ -18,7 +18,7 @@
 
 ## Live2D看板娘
 live2d:
-  enable: true
+  enable: false
   scriptFrom: local
   pluginRootPath: live2dw/
   pluginJsPath: lib/
@@ -476,7 +476,7 @@ footer:
 index:
   # 首页 Banner 头图，可以是相对路径或绝对路径，以下相同
   # Path of Banner image, can be a relative path or an absolute path, the same on other pages
-  banner_img: /img/default.png
+  banner_img: \images\${fiilename}\main.png
 
   # 头图高度，屏幕百分比
   # Height ratio of banner image
@@ -548,7 +548,7 @@ index:
 # Post Page
 #---------------------------
 post:
-  banner_img: /img/default.png
+  banner_img: \images\${fiilename}\arti.png
   banner_img_height: 70
   banner_mask_alpha: 0.3
 
@@ -913,7 +913,7 @@ discuss:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: /img/default.png
+  banner_img: \images\${fiilename}\c.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -923,8 +923,8 @@ archive:
 # Category Page
 #---------------------------
 category:
-  enable: false
-  banner_img: /img/default.png
+  enable: true
+  banner_img: \images\${fiilename}\b.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -953,7 +953,7 @@ category:
 #---------------------------
 tag:
   enable: true
-  banner_img: /img/default.png
+  banner_img: \images\${fiilename}\d.png
   banner_img_height: 80
   banner_mask_alpha: 0.3
   tagcloud:
@@ -970,19 +970,25 @@ tag:
 #---------------------------
 about:
   enable: true
-  banner_img: /img/default.png
+  banner_img: \images\${fiilename}\home.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
-  avatar: /img/avatar.png
-  name: "Fluid"
-  intro: "An elegant theme for Hexo"
+  avatar: \images\${fiilename}\tx.png
+  name: "Brtulien"
+  intro: "An AI major university student"
   # 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找，`class` 代表图标的 css class，添加 `qrcode` 后，图标不再是链接而是悬浮二维码
   # More icons can be found from https://hexo.fluid-dev.com/docs/en/icon/  `class` is the css class of the icon. If adding `qrcode`, The icon is no longer a link, but a hovering QR code
   icons:
-    - { class: "iconfont icon-github-fill", link: "https://github.com", tip: "GitHub" }
-    - { class: "iconfont icon-douban-fill", link: "https://douban.com", tip: "豆瓣" }
-    - { class: "iconfont icon-wechat-fill", qrcode: "/img/favicon.png" }
-
+    - { class: "iconfont icon-github-fill", link: "https://github.com/Brtulien", tip: "GitHub" }
+    - { class: "iconfont icon-qq-fill", link: "1417931518@qq.com", tip: "QQ邮箱" }
+    - { class: "iconfont icon-google-fill", link: "Brtulien@gmail", tip: "gmail" }
+    
+  comments:
+    enable: true
+    # 指定的插件，需要同时设置对应插件的必要参数
+    # The specified plugin needs to set the necessary parameters at the same time
+    # Options: utterances | disqus | gitalk | valine | waline | changyan | livere | remark42 | twikoo | cusdis | giscus | discuss
+    type: giscus
 
 #---------------------------
 # 自定义页
@@ -992,7 +998,7 @@ about:
 # Custom Page through `hexo new page`
 #---------------------------
 page:
-  banner_img: /img/default.png
+  banner_img: \images\${fiilename}\b.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
 
@@ -1003,7 +1009,7 @@ page:
 #---------------------------
 page404:
   enable: true
-  banner_img: /img/default.png
+  banner_img: \images\${fiilename}\404.png
   banner_img_height: 85
   banner_mask_alpha: 0.3
   # 重定向到首页的延迟(毫秒)
@@ -1017,7 +1023,7 @@ page404:
 #---------------------------
 links:
   enable: true
-  banner_img: /img/default.png
+  banner_img: \images\${fiilename}\a.png
   banner_img_height: 60
   banner_mask_alpha: 0.3
   # 友链的成员项
@@ -1029,18 +1035,7 @@ links:
       link: "https://hexo.fluid-dev.com/",
       avatar: "/img/favicon.png"
     }
-    - {
-      title: "Fluid Docs",
-      intro: "主题使用指南",
-      link: "https://hexo.fluid-dev.com/docs/",
-      avatar: "/img/favicon.png"
-    }
-    - {
-      title: "Fluid Repo",
-      intro: "主题 GitHub 仓库",
-      link: "https://github.com/fluid-dev/hexo-theme-fluid",
-      avatar: "/img/favicon.png"
-    }
+    
 
   # 当成员头像加载失败时，替换为指定图片
   # When the member avatar fails to load, replace the specified image

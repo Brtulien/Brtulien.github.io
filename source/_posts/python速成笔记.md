@@ -2,6 +2,8 @@
 title: python速成笔记
 date: 2023-07-22 23:19:03
 tags: [study, python]
+archive: true
+categories: study
 ---
 
 # python速成的一些学习笔记

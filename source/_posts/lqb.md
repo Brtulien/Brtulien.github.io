@@ -2,6 +2,8 @@
 title: lqb
 date: 2024-02-06 16:25:42
 tags: Ans
+archive: true
+categories: algorithm
 ---
 
 # [1.平方差 - 蓝桥云课 (lanqiao.cn)](https://www.lanqiao.cn/problems/3213/learning/?subject_code=1&group_code=5&match_num=14&match_flow=1&origin=cup)

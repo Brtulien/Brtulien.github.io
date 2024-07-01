@@ -2,6 +2,8 @@
 title: LCA
 date: 2023-08-22 12:24:01
 tags: [algorithm, lca, Tree]
+archive: true
+categories: algorithm
 ---
 
 # 最近公共祖先 数组

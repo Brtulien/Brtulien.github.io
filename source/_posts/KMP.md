@@ -2,9 +2,9 @@
 title: KMP
 date: 2023-10-11 23:43:56
 tags: algorithm
+archive: true
+categories: algorithm
 ---
-
-j
 
 将模式串指针j的回溯 看作整个模式串向后移动来匹配主串
 

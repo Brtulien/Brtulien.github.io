@@ -2,6 +2,8 @@
 title: Trie树
 date: 2023-11-16 23:58:59
 tags: algorithm
+archive: true
+categories: algorithm
 ---
 
 # [2935. 找出强数对的最大异或值 II - 力扣（LeetCode）](https://leetcode.cn/problems/maximum-strong-pair-xor-ii/submissions/482713400/)
