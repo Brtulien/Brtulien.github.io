@@ -1,0 +1,769 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Brtulien">
+  <meta name="keywords" content="blog">
+  
+    <meta name="description" content="偷懒失败，还是写一下 概念知识蒸馏就是把一个大的模型当作教师模型，然后把他的知识教给较小的模型（学生模型）。   大的模型较臃肿，真正落地的中断算力有限，比如手表等，通过知识蒸馏把大模型变为小模型，再把小模型部署到终端。 模型soft target学生网络有两种标签，一种是教师网络的输出（Soft-target），一种是真实的标签（Hart-target）。 soft target就是常用的概率标">
+<meta property="og:type" content="article">
+<meta property="og:title" content="knowledge-distillation">
+<meta property="og:url" content="https://brtulien.github.io/2024/06/27/knowledge-distillation/index.html">
+<meta property="og:site_name" content="Brtulien">
+<meta property="og:description" content="偷懒失败，还是写一下 概念知识蒸馏就是把一个大的模型当作教师模型，然后把他的知识教给较小的模型（学生模型）。   大的模型较臃肿，真正落地的中断算力有限，比如手表等，通过知识蒸馏把大模型变为小模型，再把小模型部署到终端。 模型soft target学生网络有两种标签，一种是教师网络的输出（Soft-target），一种是真实的标签（Hart-target）。 soft target就是常用的概率标">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://brtulien.github.io/2024/06/27/images/$%7Bfiilename%7D/image-20240627105847582.png">
+<meta property="og:image" content="https://brtulien.github.io/images/$%7Bfiilename%7D/image-20240627111036662.png">
+<meta property="og:image" content="https://brtulien.github.io/2024/06/27/images/$%7Bfiilename%7D/640.webp">
+<meta property="og:image" content="https://brtulien.github.io/2024/06/27/images/$%7Bfiilename%7D/640-17194607142405.webp">
+<meta property="og:image" content="https://brtulien.github.io/2024/06/27/images/$%7Bfiilename%7D/308a7daaa10e42c6a2c6a2778eaddca7.png">
+<meta property="article:published_time" content="2024-06-27T02:54:11.000Z">
+<meta property="article:modified_time" content="2024-07-01T06:39:36.062Z">
+<meta property="article:author" content="Brtulien">
+<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="Attention">
+<meta property="article:tag" content="Transformer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://brtulien.github.io/2024/06/27/images/$%7Bfiilename%7D/image-20240627105847582.png">
+  
+  
+  
+  <title>knowledge-distillation - Brtulien</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"brtulien.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/%5Cimages%5C$%7Bfiilename%7D%5Carti.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="knowledge-distillation"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Brtulien
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-27 10:54" pubdate>
+          2024年6月27日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          20 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">knowledge-distillation</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><del>偷懒失败，还是写一下</del></p>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>知识蒸馏就是把一个大的模型当作教师模型，然后把他的知识教给较小的模型（学生模型）。</p>
+<img src="../images/$%7Bfiilename%7D/image-20240627105847582.png" srcset="/img/loading.gif" lazyload alt="image-20240627105847582" style="zoom:50%;" />
+
+<p>大的模型较臃肿，真正落地的中断算力有限，比如手表等，通过知识蒸馏把大模型变为小模型，再把小模型部署到终端。</p>
+<h1 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h1><h2 id="soft-target"><a href="#soft-target" class="headerlink" title="soft target"></a>soft target</h2><p>学生网络有两种标签，一种是<strong>教师网络的输出</strong>（Soft-target），一种是<strong>真实的标签</strong>（Hart-target）。</p>
+<p>soft target就是常用的概率标签，比如</p>
+<p><img src="/../images/$%7Bfiilename%7D/image-20240627111036662.png" srcset="/img/loading.gif" lazyload alt="image-20240627111036662"></p>
+<p>hard target 预测为马1 驴0 汽车0</p>
+<p>soft target 预测为马0.7 驴0.25 汽车0.05</p>
+<p>传统的神经网络的训练方法是定义一个损失函数，目标是使预测值尽可能接近于真实值，使用原始数据集标注的one-shot标签（也就是Hard-Target）。损失函数就是使神经网络的损失值的和尽可能小，这种训练过程是对ground truth(真实值)求极大似然.。</p>
+<p>但是知识蒸馏中使用的是Teacher模型softmax层输出的类别概率作为Soft-Target。因为Soft-target中包含了Teacher模型训练和推理的大量信息，比如某些负标签概率远大于其他负标签，说明该样本与该负标签之间有一定的相似性。因此知识蒸馏中每个样本带给Student模型的信息大于传统的训练方式。</p>
+<p>如在MNIST数据集中做手写体数字识别任务，假设某个输入的“2”更加形似”3”，softmax的输出值中”3”对应的概率会比其他负标签类别高；而另一个”2”更加形似”7”，则这个样本分配给”7”对应的概率会比其他负标签类别高。这两个”2”对应的Hard-target的值是相同的，但是它们的Soft-target却是不同的，由此我们可见Soft-target蕴含着比Hard-target更多的信息。</p>
+<img src="../images/$%7Bfiilename%7D/640.webp" srcset="/img/loading.gif" lazyload alt="图片" style="zoom:50%;" />
+
+<p>在使用 Soft-target 训练时，Student模型可以很快学习到 Teacher模型的推理过程；而传统的 Hard-target 的训练方式，所有的负标签都会被平等对待。因此，Soft-target 给 Student模型带来的信息量要大于 Hard-target，并且Soft-target分布的熵相对高时，其Soft-target蕴含的知识就更丰富。同时，使用 Soft-target 训练时，梯度的方差会更小，训练时可以使用更大的学习率，所需要的样本也更少。这也解释了为什么通过蒸馏的方法训练出的Student模型相比使用完全相同的模型结构和训练数据只使用Hard-target的训练方法得到的模型，拥有更好的泛化能力。</p>
+<h2 id="蒸馏温度"><a href="#蒸馏温度" class="headerlink" title="蒸馏温度"></a>蒸馏温度</h2><h3 id="Logits"><a href="#Logits" class="headerlink" title="Logits"></a>Logits</h3><p>比如图片分类，Logits就是最后输出的（softmax之前的）信息。softmax之后得到概率分布。</p>
+<p>通过蒸馏来调整输出的概率分布，因为当softmax输出的概率分布较小的时候，负标签的值都很接近0，对损失函数的贡献小到可以忽略，因此要通过<strong>蒸馏温度</strong>来调整softmax的输出。</p>
+<p>​				$$q_i&#x3D;\frac{exp(z_i&#x2F;T)}{\sum_{j}exp(z_j&#x2F;T)}$$</p>
+<p>T越高，softmax的输出就越趋于平滑，分布的熵就越大，负标签携带的信息也会被放大，模型训练就会更加关注负标签。</p>
+<p>加入T还有哪些作用：</p>
+<ol>
+<li><strong>抑制过拟合：</strong> 高蒸馏温度下的软目标概率分布更平滑，相比硬目标更容忍学生模型的小误差。这有助于防止学生模型在训练过程中对教师模型的一些噪声或细微差异过度拟合，提高了模型的泛化能力。</li>
+<li><strong>降低标签噪声的影响：</strong> 在训练数据中存在标签噪声或不确定性时，平滑的软目标可以减少这些噪声的影响。学生模型更倾向于关注教师模型输出的分布，而不是过于依赖单一的硬目标。</li>
+<li><strong>提高模型鲁棒性：</strong> 平滑的软目标有助于提高模型的鲁棒性，使其对输入数据的小变化更加稳定。这对于在实际应用中面对不同环境和数据分布时的模型性能至关重要。</li>
+</ol>
+<h2 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h2><p>知识蒸馏训练的具体方法如下图所示，主要包括以下几个步骤：</p>
+<ol>
+<li>训练好Teacher模型；</li>
+<li>利用高温$T_{high}$ 产生 Soft-target；</li>
+<li>使用${Soft-target,T_{high}}$ 和${Hard-target,T_{high}}$ 同时训练 Student模型；</li>
+<li>设置温度T&#x3D;1，Student模型线上做inference。</li>
+</ol>
+<img src="../images/$%7Bfiilename%7D/640-17194607142405.webp" srcset="/img/loading.gif" lazyload alt="图片" style="zoom:50%;" />
+
+
+
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>学生网络既要在蒸馏温度等于T时与教师网络的结果相接近。 也要保证不使用蒸馏温度时的结果与真实结果相接近。</p>
+<p>蒸馏损失（distill loss）：把教师网络用蒸馏温度T输出的结果与学生网络蒸馏温度为T的输出结果做损失，这个损失越小越好。$L_{soft}&#x3D;-\sum^{N}_{i}p_i^Tlog(q_i^T)$</p>
+<p>其中$p_i^T&#x3D;\frac{exp(v_i&#x2F;T)}{\sum_k^Nexp(v_k&#x2F;T)}$</p>
+<p>$q_i^T&#x3D;\frac{exp(z_i&#x2F;T)}{\sum_k^Nexp(z_k&#x2F;T)}$</p>
+<p>其实就是蒸馏温度T下教师和学生的损失。</p>
+<p>学生损失（Student loss）：学生网络蒸馏温度为1的预测结果和真实的标签做loss。</p>
+<p>$L_{hard&#x3D;-\sum_i^Nc_ilog(q_i^1)}$</p>
+<p>注意理解$L_{soft}和L_{hard}$的关系：log前面是标签  里面是蒸馏温度T的softmax。</p>
+<p>最后将二者加权求和$L&#x3D;\alpha L_{soft}+\beta L_{hard}$</p>
+<p>当$L_{hard}$权重较小的时候往往能取得较好的效果。</p>
+<h2 id="推理"><a href="#推理" class="headerlink" title="推理"></a>推理</h2><p>训练好后把X输入到学生网络进行推理。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU0MDQ1NjAzNg==&mid=2247527921&idx=2&sn=1894bde4de9ecdbb2b31fa2a64cc6551&chksm=fb3ac8facc4d41ec0ab8e9d0d865163524ad741ae9dc8b0e57c269e54894abbce0e0bcd37a3d&scene=27">深度学习中的知识蒸馏技术 (qq.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42864343/article/details/134693835">全网最细图解知识蒸馏(涉及知识点：知识蒸馏实现代码，知识蒸馏训练过程，推理过程，蒸馏温度，蒸馏损失函数)-CSDN博客</a></p>
+<p><em>扩展一下轻量化网络的四个方向</em></p>
+<img src="../images/$%7Bfiilename%7D/308a7daaa10e42c6a2c6a2778eaddca7.png" srcset="/img/loading.gif" lazyload alt="在这里插入图片描述" style="zoom:50%;" />
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/deep-learning/" class="print-no-link">#deep learning</a>
+      
+        <a href="/tags/Attention/" class="print-no-link">#Attention</a>
+      
+        <a href="/tags/Transformer/" class="print-no-link">#Transformer</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>knowledge-distillation</div>
+      <div>https://brtulien.github.io/2024/06/27/knowledge-distillation/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Brtulien</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年6月27日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年7月1日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/27/coding-knowledge-distillation/" title="coding-knowledge_distillation">
+                        <span class="hidden-mobile">coding-knowledge_distillation</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"chasestar1/chasestar1.github.io","repo-id":"R_kgDOJ-WRYw","category":"Announcements","category-id":"DIC_kwDOJ-WRY84CYKx3","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","shortname":"fluid"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":300,"height":600},"mobile":{"show":false},"rect":{"opacity":0.7},"log":false});</script></body>
+</html>

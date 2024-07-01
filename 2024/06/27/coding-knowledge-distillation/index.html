@@ -1,0 +1,822 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Brtulien">
+  <meta name="keywords" content="blog">
+  
+    <meta name="description" content="fairseq的命令行参数本次实验基于fairseq，目的是熟悉fairseq的命令行参数、实现损失函数 问题1.1Q: fairseq中，inference时默认是使用test数据集，如何改成train数据集：  方法一  直接修改命令行参数 1fairseq-generate data-bin --gen-subset train --path model.pt  参考   方法二  修改源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="coding-knowledge_distillation">
+<meta property="og:url" content="https://brtulien.github.io/2024/06/27/coding-knowledge-distillation/index.html">
+<meta property="og:site_name" content="Brtulien">
+<meta property="og:description" content="fairseq的命令行参数本次实验基于fairseq，目的是熟悉fairseq的命令行参数、实现损失函数 问题1.1Q: fairseq中，inference时默认是使用test数据集，如何改成train数据集：  方法一  直接修改命令行参数 1fairseq-generate data-bin --gen-subset train --path model.pt  参考   方法二  修改源码">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://brtulien.github.io/images/$%7Bfiilename%7D/image-20240627151341390.png">
+<meta property="og:image" content="https://brtulien.github.io/2024/06/27/images/$%7Bfiilename%7D/image-20240627172002354.png">
+<meta property="og:image" content="https://brtulien.github.io/2024/06/27/images/$%7Bfiilename%7D/image-20240627172054620.png">
+<meta property="article:published_time" content="2024-06-27T01:27:35.000Z">
+<meta property="article:modified_time" content="2024-07-01T06:39:36.062Z">
+<meta property="article:author" content="Brtulien">
+<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="coding">
+<meta property="article:tag" content="Knowledge_Distillation">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://brtulien.github.io/images/$%7Bfiilename%7D/image-20240627151341390.png">
+  
+  
+  
+  <title>coding-knowledge_distillation - Brtulien</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"brtulien.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/%5Cimages%5C$%7Bfiilename%7D%5Carti.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="coding-knowledge_distillation"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Brtulien
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-27 09:27" pubdate>
+          2024年6月27日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          54 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">coding-knowledge_distillation</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="fairseq的命令行参数"><a href="#fairseq的命令行参数" class="headerlink" title="fairseq的命令行参数"></a><a target="_blank" rel="noopener" href="https://fairseq.readthedocs.io/en/latest/command_line_tools.html">fairseq的命令行参数</a></h2><p>本次实验基于fairseq，目的是熟悉fairseq的命令行参数、实现损失函数</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="1-1"><a href="#1-1" class="headerlink" title="1.1"></a>1.1</h2><p>Q: fairseq中，inference时默认是使用test数据集，如何改成train数据集：</p>
+<ul>
+<li>方法一</li>
+</ul>
+<p>直接修改命令行参数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">fairseq-generate data-bin --gen-subset train --path model.pt<br></code></pre></td></tr></table></figure>
+
+<p>参考</p>
+<p><img src="/../images/$%7Bfiilename%7D/image-20240627151341390.png" srcset="/img/loading.gif" lazyload alt="image-20240627151341390"></p>
+<ul>
+<li>方法二</li>
+</ul>
+<p>修改源码</p>
+<p>fairseq的inference一般是在fairseq&#x2F;fairseq_cli&#x2F;generate.py中</p>
+<p>从入口函数__main__开始找 到cli_main</p>
+<p>cli_main中主要是定义命令行参数和调用main，传入参数args。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">cli_main</span>():<br>    parser = options.get_generation_parser()<br>    <span class="hljs-comment"># <span class="hljs-doctag">TODO:</span> replace this workaround with refactoring of `AudioPretraining`</span><br>    parser.add_argument(<br>        <span class="hljs-string">&quot;--arch&quot;</span>,<br>        <span class="hljs-string">&quot;-a&quot;</span>,<br>        metavar=<span class="hljs-string">&quot;ARCH&quot;</span>,<br>        default=<span class="hljs-string">&quot;wav2vec2&quot;</span>,<br>        <span class="hljs-built_in">help</span>=<span class="hljs-string">&quot;Model architecture. For constructing tasks that rely on &quot;</span><br>        <span class="hljs-string">&quot;model args (e.g. `AudioPretraining`)&quot;</span>,<br>    )<br>    args = options.parse_args_and_arch(parser)<br>    main(args)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>将传入main的参数args转为DictConfig对象，这意味着在命令行参数解析和转换过程中，<strong>所有命令行选项都会映射到cfg这个配置对象上</strong>。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>(<span class="hljs-params">cfg: DictConfig</span>):<br></code></pre></td></tr></table></figure>
+
+<p>所以说虽然main中cfg的某些参数在cli_main中没有定义，但是可以在通过命令行参数进行推理的时候，进行添加，比如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python generate.py --gen-subset train<br></code></pre></td></tr></table></figure>
+
+<p>这样就可以定义。</p>
+<p>具体修改在106行</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-comment"># loading the dataset should happen after the checkpoint has been loaded so we can give it the saved task config</span><br><span class="hljs-comment"># 在这里加上</span><br>cfg.dataset.gen_subset = <span class="hljs-string">&#x27;train&#x27;</span><br>task.load_dataset(cfg.dataset.gen_subset, task_cfg=saved_cfg.task)<br></code></pre></td></tr></table></figure>
+
+<h2 id="1-2"><a href="#1-2" class="headerlink" title="1.2"></a>1.2</h2><p>Q: fairseq中，inference生成的结果还包含其它信息，不能直接添加到原数据集中，如何处理为仅含源句&#x2F;目标句</p>
+<ul>
+<li>方法一</li>
+</ul>
+<p>可以在推理之后再用python文件操作处理</p>
+<ul>
+<li>方法二</li>
+</ul>
+<p>通过观察同文件中255行之后的代码可以发现，其中控制了输出的格式。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> cfg.common_eval.quiet:<br>    <span class="hljs-keyword">if</span> src_dict <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;S-&#123;&#125;\t&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(sample_id, src_str), file=output_file)<br>    <span class="hljs-keyword">if</span> has_target:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;T-&#123;&#125;\t&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(sample_id, target_str), file=output_file)<br><br><span class="hljs-comment"># Process top predictions</span><br><span class="hljs-keyword">for</span> j, hypo <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(hypos[i][: cfg.generation.nbest]):<br>    hypo_tokens, hypo_str, alignment = utils.post_process_prediction(<br>        hypo_tokens=hypo[<span class="hljs-string">&quot;tokens&quot;</span>].<span class="hljs-built_in">int</span>().cpu(),<br>        src_str=src_str,<br>        alignment=hypo[<span class="hljs-string">&quot;alignment&quot;</span>],<br>        align_dict=align_dict,<br>        tgt_dict=tgt_dict,<br>        remove_bpe=cfg.common_eval.post_process,<br>        extra_symbols_to_ignore=get_symbols_to_strip_from_output(generator),<br>    )<br>    detok_hypo_str = decode_fn(hypo_str)<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> cfg.common_eval.quiet:<br>        score = hypo[<span class="hljs-string">&quot;score&quot;</span>] / math.log(<span class="hljs-number">2</span>)  <span class="hljs-comment"># convert to base 2</span><br>        <span class="hljs-comment"># original hypothesis (after tokenization and BPE)</span><br>        <span class="hljs-built_in">print</span>(<br>            <span class="hljs-string">&quot;H-&#123;&#125;\t&#123;&#125;\t&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(sample_id, score, hypo_str),<br>            file=output_file,<br>        )<br>        <span class="hljs-comment"># detokenized hypothesis</span><br>        <span class="hljs-built_in">print</span>(<br>            <span class="hljs-string">&quot;D-&#123;&#125;\t&#123;&#125;\t&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(sample_id, score, detok_hypo_str),<br>            file=output_file,<br>        )<br>        <span class="hljs-built_in">print</span>(<br>            <span class="hljs-string">&quot;P-&#123;&#125;\t&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(<br>                sample_id,<br>                <span class="hljs-string">&quot; &quot;</span>.join(<br>                    <span class="hljs-built_in">map</span>(<br>                        <span class="hljs-keyword">lambda</span> x: <span class="hljs-string">&quot;&#123;:.4f&#125;&quot;</span>.<span class="hljs-built_in">format</span>(x),<br>                        <span class="hljs-comment"># convert from base e to base 2</span><br>                        hypo[<span class="hljs-string">&quot;positional_scores&quot;</span>]<br>                        .div_(math.log(<span class="hljs-number">2</span>))<br>                        .tolist(),<br>                    )<br>                ),<br>            ),<br>            file=output_file,<br>        )<br><br>        <span class="hljs-keyword">if</span> cfg.generation.print_alignment == <span class="hljs-string">&quot;hard&quot;</span>:<br>            <span class="hljs-built_in">print</span>(<br>                <span class="hljs-string">&quot;A-&#123;&#125;\t&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(<br>                    sample_id,<br>                    <span class="hljs-string">&quot; &quot;</span>.join(<br>                        [<br>                            <span class="hljs-string">&quot;&#123;&#125;-&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(src_idx, tgt_idx)<br>                            <span class="hljs-keyword">for</span> src_idx, tgt_idx <span class="hljs-keyword">in</span> alignment<br>                        ]<br>                    ),<br>                ),<br>                file=output_file,<br>            )<br>        <span class="hljs-keyword">if</span> cfg.generation.print_alignment == <span class="hljs-string">&quot;soft&quot;</span>:<br>            <span class="hljs-built_in">print</span>(<br>                <span class="hljs-string">&quot;A-&#123;&#125;\t&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(<br>                    sample_id,<br>                    <span class="hljs-string">&quot; &quot;</span>.join(<br>                        [<span class="hljs-string">&quot;,&quot;</span>.join(src_probs) <span class="hljs-keyword">for</span> src_probs <span class="hljs-keyword">in</span> alignment]<br>                    ),<br>                ),<br>                file=output_file,<br>            )<br><br>        <span class="hljs-keyword">if</span> cfg.generation.print_step:<br>            <span class="hljs-built_in">print</span>(<br>                <span class="hljs-string">&quot;I-&#123;&#125;\t&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(sample_id, hypo[<span class="hljs-string">&quot;steps&quot;</span>]),<br>                file=output_file,<br>            )<br><br>        <span class="hljs-keyword">if</span> cfg.generation.retain_iter_history:<br>            <span class="hljs-keyword">for</span> step, h <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(hypo[<span class="hljs-string">&quot;history&quot;</span>]):<br>                _, h_str, _ = utils.post_process_prediction(<br>                    hypo_tokens=h[<span class="hljs-string">&quot;tokens&quot;</span>].<span class="hljs-built_in">int</span>().cpu(),<br>                    src_str=src_str,<br>                    alignment=<span class="hljs-literal">None</span>,<br>                    align_dict=<span class="hljs-literal">None</span>,<br>                    tgt_dict=tgt_dict,<br>                    remove_bpe=<span class="hljs-literal">None</span>,<br>                )<br>                <span class="hljs-built_in">print</span>(<br>                    <span class="hljs-string">&quot;E-&#123;&#125;_&#123;&#125;\t&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(sample_id, step, h_str),<br>                    file=output_file,<br>                )<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">S</span>-<span class="hljs-number">0</span>	源句。<br><span class="hljs-attribute">T</span>-<span class="hljs-number">0</span>	目标句。<br><span class="hljs-attribute">H</span>-<span class="hljs-number">0</span>	-<span class="hljs-number">0</span>.<span class="hljs-number">123456789</span>	生成的句子。<br><span class="hljs-attribute">D</span>-<span class="hljs-number">0</span>	-<span class="hljs-number">0</span>.<span class="hljs-number">123456789</span>	生成的句子。<br><span class="hljs-attribute">P</span>-<span class="hljs-number">0</span>	-<span class="hljs-number">0</span>.<span class="hljs-number">1234</span> -<span class="hljs-number">0</span>.<span class="hljs-number">2345</span> -<span class="hljs-number">0</span>.<span class="hljs-number">3456</span>  得分<br><span class="hljs-attribute">A</span>-<span class="hljs-number">0</span>	<span class="hljs-number">0</span>-<span class="hljs-number">0</span> <span class="hljs-number">1</span>-<span class="hljs-number">1</span> <span class="hljs-number">2</span>-<span class="hljs-number">2</span>  对齐信息<br></code></pre></td></tr></table></figure>
+
+
+
+<p>因此可以通过修改命令行参数或者直接修改源码，控制输出为原句&#x2F;目标句。(S T)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">fairseq-generate --quiet False<br></code></pre></td></tr></table></figure>
+
+<img src="../images/$%7Bfiilename%7D/image-20240627172002354.png" srcset="/img/loading.gif" lazyload alt="image-20240627172002354" style="zoom:50%;" />
+
+<img src="../images/$%7Bfiilename%7D/image-20240627172054620.png" srcset="/img/loading.gif" lazyload alt="image-20240627172054620" style="zoom:50%;" />
+
+<p>但是观察代码发现，当输出S T的时候，设置命令行参数为quiet，这会导致H D P A 也同时被输出；–print-alignment不论设置soft还是hard 都会输出额外的信息；而其他的一些参数如 –retain_iter_history –print_step等 默认值就为不输出 所以无需设置。</p>
+<p>因此直接修改命令行参数可能无法达到预期效果，需要修改代码。</p>
+<h2 id="1-3"><a href="#1-3" class="headerlink" title="1.3"></a>1.3</h2><p>使用的是第一次代码训练中的transformer的训练结果。</p>
+<ul>
+<li>获取soft-target</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">fairseq-generate data-bin/iwslt14.tokenized.de-en --path checkpoints/checkpoint_best.pt --batch-size 128 --beam 5 --remove-bpe --gen-subset train --source-lang de --target-lang en --results-path distillation_output<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>训练学生模型</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">fairseq-train data-bin/iwslt14.tokenized.de-en --<span class="hljs-built_in">arch</span> transformer_iwslt_de_en --share-decoder-input-output-embed --optimizer adam --adam-betas <span class="hljs-string">&quot;(0.9,0.98)&quot;</span> --clip-norm 0.0 --lr 5e-4 --lr-scheduler inverse_sqrt --warmup-updates 4000 --dropout 0.3 --weight-decay 0.0001 --criterion label_smoothed_cross_entropy --label-smoothing 0.1 --max-tokens 4096 --source-lang de --target-lang en  --save-dir checkpoints/student<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>测试 生成翻译</li>
+</ul>
+<p>这里batch-size128太大了，gpu报错现存不足，改成64即可。改的太小也不行，会出现未定义错误，可能最小就是64。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">fairseq-generate data-bin/iwslt14.tokenized.de-en --path checkpoints/student/checkpoint_best.pt --batch-size 64 --beam 5 --remove-bpe --gen-subset <span class="hljs-built_in">test</span> --source-lang de --target-lang en --results-path test_output<br></code></pre></td></tr></table></figure>
+
+<p>训练完成后数据保存在test_output中。格式如下（没有按照上一问修改，确实有很多东西）。有用的就是生成句子和参考句子。用他们计算BLEU值。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">S</span>-<span class="hljs-number">260</span>	ein laser ist da anders .<br><span class="hljs-attribute">T</span>-<span class="hljs-number">260</span>	now a laser is different .<br><span class="hljs-attribute">H</span>-<span class="hljs-number">260</span>	-<span class="hljs-number">3</span>.<span class="hljs-number">3165059089660645</span>	. . . .<br><span class="hljs-attribute">D</span>-<span class="hljs-number">260</span>	-<span class="hljs-number">3</span>.<span class="hljs-number">3165059089660645</span>	. . . .<br><span class="hljs-attribute">P</span>-<span class="hljs-number">260</span>	-<span class="hljs-number">4</span>.<span class="hljs-number">3481</span> -<span class="hljs-number">2</span>.<span class="hljs-number">7208</span> -<span class="hljs-number">2</span>.<span class="hljs-number">7019</span> -<span class="hljs-number">2</span>.<span class="hljs-number">6929</span> -<span class="hljs-number">4</span>.<span class="hljs-number">1188</span><br></code></pre></td></tr></table></figure>
+
+<p>本地训练有点困难，训练的epoch不多，训练数据也只截取了一部分，可能不太准确。但是有提高一点点。</p>
+<h2 id="2-1"><a href="#2-1" class="headerlink" title="2.1"></a>2.1</h2><p>Q: KL散度是非常重要的函数，请学习其概念并说明其定义</p>
+<p>公式:</p>
+<p>$D_{KL}(P||Q)&#x3D;\sum_{x\in X}P(x)log\frac{p(x)}{Q(x)}$</p>
+<p>KL散度是用来衡量两个概率分布之间差异的一种度量方法。就是计算p，q之间的相对熵。按信息论的说法就是，某一个事件在系统q中的信息量和系统p中的信息量的差值，对这个差值求期望（平均）。</p>
+<p>$D_{KL}(P||Q)&#x3D;\sum_{i&#x3D;1}^{m}p_i(f_Q(q_i)-f_P(p_i))$</p>
+<p>由这个公式可以推导出最上面的KL散度的公式，这个公式意义可能好理解一些，就是事件$q_i$在P、Q两个概率分布中的差异。</p>
+<p>衡量分布Q生成的数据相对于分布P生成的数据的额外信息量，也就是使用Q做近似分布时失去的信息。</p>
+<p>可以用作<strong>损失函数</strong>或者<strong>相似性函数</strong>。</p>
+<h2 id="2-2"><a href="#2-2" class="headerlink" title="2.2"></a>2.2</h2><p>–arch是Fairseq的一个命令行参数，用于指定训练模型时使用的模型架构。使用方法如下：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-comment">--arch transformer_iwslt_de_en</span><br></code></pre></td></tr></table></figure>
+
+<p>在Fairseq的代码中，模型架构通常使用@register_model_architecture来注册，模型用@register_model来注册。</p>
+<p>在训练时，通过–arch来获取所需的教师模型。比如本次使用transformer进行训练，就用如上的代码获取transformer模型。</p>
+<h2 id="2-3"><a href="#2-3" class="headerlink" title="2.3"></a>2.3</h2><p>调参是训练过程中的重要环节，但是有时候需要保持某些参数不变，这时候就要冻结模型参数。一般来说冻结模型参数是为了保存已有的特征提取能力，防止因为数据改变倒是模型性能下降。</p>
+<p>可以用下列代码冻结全部参数。也可以设置条件冻结部分参数。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">for</span> param <span class="hljs-keyword">in</span> model.parameters():<br>        param.requires_grad = <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+
+<p>获取教师模型的概率分布</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_teacher_probs</span>(<span class="hljs-params">teacher_model, input_data</span>):<br>    <span class="hljs-keyword">with</span> torch.no_grad():  <br>        logits = teacher_model(input_data)   <br>        probs = F.softmax(logits, dim=-<span class="hljs-number">1</span>)  <br>    <span class="hljs-keyword">return</span> probs<br></code></pre></td></tr></table></figure>
+
+<p>KL散度</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">distillation_loss</span>(<span class="hljs-params">student_logits, teacher_probs, temperature=<span class="hljs-number">1.0</span></span>):<br>    log_student_probs = F.log_softmax(student_logits / temperature, dim=-<span class="hljs-number">1</span>)<br>    teacher_probs = F.softmax(teacher_probs / temperature, dim=-<span class="hljs-number">1</span>)<br>    loss = F.kl_div(log_student_probs, teacher_probs, reduction=<span class="hljs-string">&#x27;batchmean&#x27;</span>) * (temperature ** <span class="hljs-number">2</span>)<br>    <span class="hljs-keyword">return</span> loss<br></code></pre></td></tr></table></figure>
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/deep-learning/" class="print-no-link">#deep learning</a>
+      
+        <a href="/tags/coding/" class="print-no-link">#coding</a>
+      
+        <a href="/tags/Knowledge-Distillation/" class="print-no-link">#Knowledge_Distillation</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>coding-knowledge_distillation</div>
+      <div>https://brtulien.github.io/2024/06/27/coding-knowledge-distillation/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Brtulien</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年6月27日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年7月1日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/06/27/knowledge-distillation/" title="knowledge-distillation">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">knowledge-distillation</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/25/coding-Transformer/" title="coding-Transformer">
+                        <span class="hidden-mobile">coding-Transformer</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"chasestar1/chasestar1.github.io","repo-id":"R_kgDOJ-WRYw","category":"Announcements","category-id":"DIC_kwDOJ-WRY84CYKx3","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","shortname":"fluid"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":300,"height":600},"mobile":{"show":false},"rect":{"opacity":0.7},"log":false});</script></body>
+</html>

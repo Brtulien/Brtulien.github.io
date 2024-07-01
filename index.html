@@ -195,7 +195,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/%5Cimages%5C$%7Bfiilename%7D%5Cmain.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -239,15 +239,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2024/05/13/5%E6%9C%88/" target="_self">
-          5月
+        <a href="/2024/06/27/knowledge-distillation/" target="_self">
+          knowledge-distillation
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/05/13/5%E6%9C%88/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/27/knowledge-distillation/" target="_self">
         <div>
-          回溯xmuoj | 最小化蒙德城的旅行者队伍相同的车队是一个等差数列 要最小化车队的数量 就要找出等差数列包含尽可能多的车队 可以先预处理出所有可能的行进路线。将问题转化为在合法的线路中找出多少条才能覆盖所有的车队。 由于可能有同时到达的，且所有的车队都在0~59之间到达，因此可以用哈希表来存储，符合要求时-1表示已经属于某个车队。当全部为0时表示覆盖了所有车队。 预处理线路 1234567891
+          偷懒失败，还是写一下 概念知识蒸馏就是把一个大的模型当作教师模型，然后把他的知识教给较小的模型（学生模型）。   大的模型较臃肿，真正落地的中断算力有限，比如手表等，通过知识蒸馏把大模型变为小模型，再把小模型部署到终端。 模型soft target学生网络有两种标签，一种是教师网络的输出（Soft-target），一种是真实的标签（Hart-target）。 soft target就是常用的概率标
         </div>
       </a>
 
@@ -255,17 +255,42 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2024-05-13 18:57" pubdate>
-              2024-05-13
+            <time datetime="2024-06-27 10:54" pubdate>
+              2024-06-27
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Ans/">#Ans</a>
+              <a href="/tags/deep-learning/">#deep learning</a>
+            
+              <a href="/tags/Attention/">#Attention</a>
+            
+              <a href="/tags/Transformer/">#Transformer</a>
             
           </div>
         
@@ -279,15 +304,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2024/03/31/4%E6%9C%88/" target="_self">
-          4月
+        <a href="/2024/06/27/coding-knowledge-distillation/" target="_self">
+          coding-knowledge_distillation
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/31/4%E6%9C%88/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/27/coding-knowledge-distillation/" target="_self">
         <div>
-          DP53. 最大子数组和 - 力扣（LeetCode） 4&#x2F;1    最大子段和 动态规划写法状态表示到i为止最大的字段和  如果和左边拼起来 那就是f[i] &#x3D; f[i - 1] + nums[i] 如果不和左边拼起来 那就是 f[i] &#x3D; nums[i] 状态计算：f[i] &#x3D; max(f[i - 1], 0) + nums[i] 发现只用到了f[i]
+          fairseq的命令行参数本次实验基于fairseq，目的是熟悉fairseq的命令行参数、实现损失函数 问题1.1Q: fairseq中，inference时默认是使用test数据集，如何改成train数据集：  方法一  直接修改命令行参数 1fairseq-generate data-bin --gen-subset train --path model.pt  参考   方法二  修改源码
         </div>
       </a>
 
@@ -295,17 +320,42 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2024-04-01 07:32" pubdate>
-              2024-04-01
+            <time datetime="2024-06-27 09:27" pubdate>
+              2024-06-27
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A/">#课程报告</a>
+              <a href="/tags/deep-learning/">#deep learning</a>
+            
+              <a href="/tags/coding/">#coding</a>
+            
+              <a href="/tags/Knowledge-Distillation/">#Knowledge_Distillation</a>
             
           </div>
         
@@ -319,15 +369,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2024/03/20/%E4%BA%8C%E5%88%86%E5%9B%BE/" target="_self">
-          二分图
+        <a href="/2024/06/25/coding-Transformer/" target="_self">
+          coding-Transformer
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/20/%E4%BA%8C%E5%88%86%E5%9B%BE/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/25/coding-Transformer/" target="_self">
         <div>
-          定义结点由两个集合组成 两个集合内部没有边的图 也就是 存在一种方案 将结点划分成满足以上两个性质的集合 就是集合中的点都染成黑白 可以发现二分图中每条边都链接一个白点一个黑点 二分图不存在长为奇数的环（每条边都从一个集合走到另一个集合 偶数次才能回到同一个集合） 判断二分图：遍历：发现奇环就不是 否则是 二分图最大匹配P3386 【模板】二分图最大匹配 - 洛谷 | 计算机科学教育新生态 (lu
+          不想打公式 直接截图了（苦鲁西 代码目录：&#x2F;fairseq&#x2F;models&#x2F;transformer&#x2F; transformer_legacy.py226行注册了transformer_model_architecture，可以自定义配置。 同文件22行注册了transformer。继承TransformerModelBase。 77行init，先从Config中
         </div>
       </a>
 
@@ -335,19 +385,44 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2024-03-20 19:51" pubdate>
-              2024-03-20
+            <time datetime="2024-06-25 14:19" pubdate>
+              2024-06-25
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/algorithm/">#algorithm</a>
+              <a href="/tags/deep-learning/">#deep learning</a>
             
-              <a href="/tags/Bipartite-graph/">#Bipartite graph</a>
+              <a href="/tags/Attention/">#Attention</a>
+            
+              <a href="/tags/Transformer/">#Transformer</a>
+            
+              <a href="/tags/coding/">#coding</a>
             
           </div>
         
@@ -361,15 +436,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2024/03/07/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" target="_self">
-          线段树&amp;树状数组
+        <a href="/2024/06/24/Transformer/" target="_self">
+          Transformer
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/07/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/24/Transformer/" target="_self">
         <div>
-          树状数组树状数组板子  注意在主函数中使用的时候 假设数组为n 需要写为BiTree(n + 1) 因为树状数组范围是1~n 123456789101112131415161718192021222324252627282930313233343536typedef long long ll;class BiTree&#123;    int MAXN;    vector&lt;int&gt;t
+          Attention心理学基础动物在复杂环境下关注值得注意的带你 人类能够根据随意线索和不随意线索选择注意点 注意力机制的发展首先是从传统的RNN模型得来的Encoder-Decoder（两个RNN）模型，是包含时序的（$s_0$-&gt;$s_1$…）但是由于前面的所有输入$X_i$，无论多长都只能压缩成统一长度的编码c，导致翻译的精度下降。   而Attention机制通过在不同时间输入不同的c
         </div>
       </a>
 
@@ -377,19 +452,42 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2024-03-07 22:35" pubdate>
-              2024-03-07
+            <time datetime="2024-06-24 11:43" pubdate>
+              2024-06-24
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Ans/">#Ans</a>
+              <a href="/tags/deep-learning/">#deep learning</a>
             
-              <a href="/tags/algorithm/">#algorithm</a>
+              <a href="/tags/Attention/">#Attention</a>
+            
+              <a href="/tags/Transformer/">#Transformer</a>
             
           </div>
         
@@ -403,15 +501,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2024/02/27/3%E6%9C%88/" target="_self">
-          3月
+        <a href="/2024/06/24/Meta-learning/" target="_self">
+          Meta-Learning
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/27/3%E6%9C%88/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/24/Meta-learning/" target="_self">
         <div>
-          PS： 3月刷题的总结  acwing、codeforces、洛谷 都没办法看当月提交的数量以及难易度 因此没有做ac截图  但是所有的题都做好了思路整理和答题总结 并附上相关代码  codeforces甚至没有难度 有点难数 填表的时候会按报告整理的题目数量来填 codeforces的难度按当时做题的感受来填 有些过于简单的题目 出现于力扣的每日一题，力扣、codeforces的竞赛靠前的题目
+          先看一下Meta-Learning和Machine-Learning的区别  主要区别就是Meta-Learning是为了让机器学会学习，也就是通过一系列任务的训练，获取一组更好的模型初始化参数（让模型学会初始化），使其能够在小规模数据上迅速收敛并完成Fine-Tune。而传统的机器学习就是寻找当前任务的参数。 数据元学习中要准备许多任务进行学习，每个任务都有自己的训练集和测试集。 以下为一个任务
         </div>
       </a>
 
@@ -419,17 +517,40 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2024-02-27 14:28" pubdate>
-              2024-02-27
+            <time datetime="2024-06-24 08:31" pubdate>
+              2024-06-24
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A/">#课程报告</a>
+              <a href="/tags/deep-learning/">#deep learning</a>
+            
+              <a href="/tags/Meta-Learning/">#Meta-Learning</a>
             
           </div>
         
@@ -443,15 +564,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2024/02/21/%E9%80%92%E5%BD%92/" target="_self">
-          递归
+        <a href="/2024/06/22/GNN/" target="_self">
+          GNN
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/21/%E9%80%92%E5%BD%92/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/22/GNN/" target="_self">
         <div>
-          92. 递归实现指数型枚举 - AcWing题库 每个位置 选或不选  不选的话就直接dfs(u + 1)过去 选的话 就标记一下vis 12345678910111213141516171819202122232425262728293031323334#include &lt;iostream&gt;using namespace std;int a[20];int vis[20];int n
+          GNN应用领域图可以标识事物之间的相关关系，图在场景分析问题推理、推荐系统、风控 甚至无人汽车等多方面都有很大作用。 基本组成点：是特征，由特征向量表示 边：表示点之间的关系，也有特征。所有的边类型相同 图：全局的图，是向量 输入时要输入点的特征和邻接矩阵，邻接矩阵表示关系。  优势传统神经网络输入的规模固定（比如CNN输入图像一般都是256或512），在实际应用时，分子结构、或交通道路等点和边个
         </div>
       </a>
 
@@ -459,19 +580,42 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2024-02-21 10:10" pubdate>
-              2024-02-21
+            <time datetime="2024-06-22 09:05" pubdate>
+              2024-06-22
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/algorithm/">#algorithm</a>
+              <a href="/tags/GNN/">#GNN</a>
             
-              <a href="/tags/lqb/">#lqb</a>
+              <a href="/tags/GCN/">#GCN</a>
+            
+              <a href="/tags/deep-learning/">#deep learning</a>
             
           </div>
         
@@ -485,15 +629,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2024/02/06/%E5%9B%9E%E6%BA%AF&amp;%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C(%E5%89%AA%E6%9E%9D)/" target="_self">
-          回溯&amp;分支限界(剪枝)
+        <a href="/2023/10/11/%E8%AF%BE%E9%A2%98%E7%BB%84%E5%AD%A6%E4%B9%A0/" target="_self">
+          课题组学习
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/06/%E5%9B%9E%E6%BA%AF&amp;%E5%88%86%E6%94%AF%E9%99%90%E7%95%8C(%E5%89%AA%E6%9E%9D)/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/10/11/%E8%AF%BE%E9%A2%98%E7%BB%84%E5%AD%A6%E4%B9%A0/" target="_self">
         <div>
-          回溯子集型（选或不选）6.买瓜 - 蓝桥云课 (lanqiao.cn)DFS+剪枝 主要有几种情况 不需要继续进行搜索 当sum &gt; m的时候 必定不相等 当cnt &gt; mcnt的时候 不会是最小 比较难想的是 对所有的瓜进行排序 当买到第i个的时候 如果后面所有瓜加起来都不能到m 那也是必定不相等的 这个就相当于往后多看了一步 就不用去走了 123456789101112131415
+          
         </div>
       </a>
 
@@ -501,17 +645,92 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2024-02-06 21:44" pubdate>
-              2024-02-06
+            <time datetime="2023-10-11 19:06" pubdate>
+              2023-10-11
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/10/07/pytorch%E7%8E%AF%E5%A2%83/" target="_self">
+          pytorch环境
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/10/07/pytorch%E7%8E%AF%E5%A2%83/" target="_self">
+        <div>
+          配个环境配了一天 人麻了pytorch+cuda环境配置 1234conda create -n &#123;Env Name&#125; python==3.10conda activate &#123;Env Name&#125;pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simplepip install
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-10-07 17:24" pubdate>
+              2023-10-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/algorithm/">#algorithm</a>
+              <a href="/tags/pytorch/">#pytorch</a>
             
           </div>
         
@@ -525,15 +744,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2024/02/06/lqb/" target="_self">
-          lqb
+        <a href="/2023/07/27/Our-Game/" target="_self">
+          Our Game!
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/06/lqb/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/27/Our-Game/" target="_self">
         <div>
-          1.平方差 - 蓝桥云课 (lanqiao.cn)1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980#include&lt;iostream&gt;
+          我们的游戏做完啦！&emsp;好激动，四周的时间过的好快，好像昨天还在讨论游戏的原型设计。现在居然已经完成了所有的工作。感谢tllwtg和wegret的付出，我们三个真强（哈哈哈）。希望zlgg和xyjj不要嫌我菜。 这里是我们的游戏，点点star（可怜） 没错 就是开放世界冒险游戏（没有虚假宣传。。。开放、世界、冒险都有） 做游戏的过程还是很开心的（可能是给我的活太少了），感觉自己没做什么，还好
         </div>
       </a>
 
@@ -541,17 +760,38 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2024-02-06 16:25" pubdate>
-              2024-02-06
+            <time datetime="2023-07-27 12:33" pubdate>
+              2023-07-27
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/life/" class="category-chain-item">life</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Ans/">#Ans</a>
+              <a href="/tags/life/">#life</a>
             
           </div>
         
@@ -565,15 +805,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2024/02/06/%E5%8F%8D%E6%82%94%E8%B4%AA%E5%BF%83/" target="_self">
-          反悔贪心
+        <a href="/2023/07/22/My-first-blog/" target="_self">
+          My first blog
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/06/%E5%8F%8D%E6%82%94%E8%B4%AA%E5%BF%83/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/22/My-first-blog/" target="_self">
         <div>
-          概念反悔贪心 就是 贪心 + 优先队列  重点是找到 把什么放进优先队列中 LCP 30. 魔塔游戏 - 力扣（LeetCode）每次都把扣的血直接扣掉 加的血直接加上 扣的血加入优先队列中（因为最好我只用移动扣血量最大的 移动一个就可以少移几个血量小的） 直到扣的血超过当前血量的时候 反悔 此时把 扣血最多的移动到最后（不用真的移动）然后把血加上 继续向后 本题放入优先队列的就是 扣血量 因为一
+          第一篇博客做这个网站真的做了好久，教程确实很详细了，但是还是有些地方默认读者已经会了（我现在确实会了）。感谢tllwtg的帮助，没有tllwtg，就没有这个网站，呜呜。tllwtg告诉我教程之后还帮我调了两次（&#x2F;跪谢）。 之后自己做的过程中也好多次感觉根本搞不出来，不想搞了。但是但是，这个好有意思，最后还是做出来了。tllwtg还跟我说做两三天是很正常的，我真的哭死。做完还是很开心的。我
         </div>
       </a>
 
@@ -581,57 +821,38 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2024-02-06 10:32" pubdate>
-              2024-02-06
+            <time datetime="2023-07-22 11:48" pubdate>
+              2023-07-22
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/life/" class="category-chain-item">life</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/algorithm/">#algorithm</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/02/04/%E5%AD%97%E7%AC%A6%E4%B8%B2/" target="_self">
-          字符串
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/04/%E5%AD%97%E7%AC%A6%E4%B8%B2/" target="_self">
-        <div>
-          Z函数1234567891011121314vector&lt;int&gt; z_function(string s) &#123;  int n = (int)s.length();  vector&lt;int&gt; z(n);  for (int i = 1, l = 0, r = 0; i &lt; n; ++i) &#123;    if (i &lt;= r &amp;&amp;
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-02-04 12:58" pubdate>
-              2024-02-04
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/algorithm/">#algorithm</a>
+              <a href="/tags/life/">#life</a>
             
           </div>
         
@@ -643,7 +864,7 @@
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

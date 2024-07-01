@@ -1,0 +1,903 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Brtulien">
+  <meta name="keywords" content="blog">
+  
+    <meta name="description" content="不想打公式 直接截图了（苦鲁西 代码目录：&#x2F;fairseq&#x2F;models&#x2F;transformer&#x2F; transformer_legacy.py226行注册了transformer_model_architecture，可以自定义配置。 同文件22行注册了transformer。继承TransformerModelBase。 77行init，先从Config中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="coding-Transformer">
+<meta property="og:url" content="https://brtulien.github.io/2024/06/25/coding-Transformer/index.html">
+<meta property="og:site_name" content="Brtulien">
+<meta property="og:description" content="不想打公式 直接截图了（苦鲁西 代码目录：&#x2F;fairseq&#x2F;models&#x2F;transformer&#x2F; transformer_legacy.py226行注册了transformer_model_architecture，可以自定义配置。 同文件22行注册了transformer。继承TransformerModelBase。 77行init，先从Config中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://brtulien.github.io/2024/06/25/images/$%7Bfiilename%7D/626346-20171016222256849-1802531988.png">
+<meta property="og:image" content="https://brtulien.github.io/images/$%7Bfiilename%7D/image-20240626192902992.png">
+<meta property="og:image" content="https://brtulien.github.io/2024/06/25/images/$%7Bfiilename%7D/image-20240626194522680.png">
+<meta property="og:image" content="https://brtulien.github.io/2024/06/25/images/$%7Bfiilename%7D/image-20240626194923426.png">
+<meta property="og:image" content="https://brtulien.github.io/images/$%7Bfiilename%7D/image-20240626195444349.png">
+<meta property="article:published_time" content="2024-06-25T06:19:15.000Z">
+<meta property="article:modified_time" content="2024-07-01T06:39:36.062Z">
+<meta property="article:author" content="Brtulien">
+<meta property="article:tag" content="deep learning">
+<meta property="article:tag" content="Attention">
+<meta property="article:tag" content="Transformer">
+<meta property="article:tag" content="coding">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://brtulien.github.io/2024/06/25/images/$%7Bfiilename%7D/626346-20171016222256849-1802531988.png">
+  
+  
+  
+  <title>coding-Transformer - Brtulien</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"brtulien.github.io","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/%5Cimages%5C$%7Bfiilename%7D%5Carti.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="coding-Transformer"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        Brtulien
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-25 14:19" pubdate>
+          2024年6月25日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          98 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">coding-Transformer</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><del>不想打公式 直接截图了（苦鲁西</del></p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>目录：&#x2F;fairseq&#x2F;models&#x2F;transformer&#x2F;</p>
+<h3 id="transformer-legacy-py"><a href="#transformer-legacy-py" class="headerlink" title="transformer_legacy.py"></a>transformer_legacy.py</h3><p>226行注册了transformer_model_architecture，可以自定义配置。</p>
+<p>同文件22行注册了transformer。继承TransformerModelBase。</p>
+<p>77行init，先从Config中读取配置，再从基类初始化，最后初始化参数args</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, args, encoder, decoder</span>):<br>        cfg = TransformerConfig.from_namespace(args)<br>        <span class="hljs-built_in">super</span>().__init__(cfg, encoder, decoder)<br>        self.args = args<br></code></pre></td></tr></table></figure>
+
+<p>92行build_model主要是根据参数配置：</p>
+<p>encoder decoder层的数量；</p>
+<p>source和target的最大编码长度；</p>
+<p>检查和设置共享嵌入</p>
+<p>之后的方法都直接调用基类。</p>
+<h3 id="Transformer-config-py"><a href="#Transformer-config-py" class="headerlink" title="Transformer_config.py"></a>Transformer_config.py</h3><p>一些参数配置</p>
+<h3 id="Transformer-base-py"><a href="#Transformer-base-py" class="headerlink" title="Transformer_base.py"></a>Transformer_base.py</h3><p>forward中为整体的流程：调用encoder和decoder最后输出decoder_out</p>
+<h3 id="transformer-encoder-py"><a href="#transformer-encoder-py" class="headerlink" title="transformer_encoder.py"></a>transformer_encoder.py</h3><p>init中需要初始化一系列参数 比如embed_positions，layernorm_embedding等</p>
+<p>build_encoder_layer建立encoder层发现要跳转道Transformer Encoder Layer Base</p>
+<p>forward_embedding进行一系列嵌入（包括位置嵌入）</p>
+<p>max_position为设置的最大输入长度</p>
+<h2 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h2><p>在&#x2F;fairseq&#x2F;modules&#x2F;transformer_layer.py</p>
+<h3 id="forward"><a href="#forward" class="headerlink" title="forward"></a>forward</h3><p>首先设置注意力掩码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">if</span> attn_mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            attn_mask = attn_mask.masked_fill(<br>                attn_mask.to(torch.<span class="hljs-built_in">bool</span>), -<span class="hljs-number">1e8</span> <span class="hljs-keyword">if</span> x.dtype == torch.float32 <span class="hljs-keyword">else</span> -<span class="hljs-number">1e4</span><br>            )<br><span class="hljs-comment"># 保存残差</span><br>residual = x<br></code></pre></td></tr></table></figure>
+
+<p>然后是自注意力层</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">if</span> self.normalize_before:<br>            x = self.self_attn_layer_norm(x)<br>        x, _ = self.self_attn(<br>            query=x,<br>            key=x,<br>            value=x,<br>            key_padding_mask=encoder_padding_mask,<br>            need_weights=<span class="hljs-literal">False</span>,<br>            attn_mask=attn_mask,<br>        )<br></code></pre></td></tr></table></figure>
+
+<p>dropout正则化 防止过拟合</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs py">x = self.dropout_module(x)<br></code></pre></td></tr></table></figure>
+
+<p>Add &amp; Norm层</p>
+<p>Add层参考残差网络 防止退化</p>
+<p>Norm层归一化</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-comment"># 残差连接 将原来的残差与新的x相加</span><br>x = self.residual_connection(x, residual)<br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.normalize_before:<br>    x = self.self_attn_layer_norm(x)<br><span class="hljs-comment"># 保存残差</span><br>residual = x<br><span class="hljs-comment"># 归一化</span><br><span class="hljs-keyword">if</span> self.normalize_before:<br>    x = self.final_layer_norm(x)<br></code></pre></td></tr></table></figure>
+
+<p>激活函数和全连接层</p>
+<p>再做一次Add &amp; Norm层</p>
+<p>并返回结果</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs py">x = self.activation_fn(self.fc1(x))<br>x = self.activation_dropout_module(x)<br><span class="hljs-comment"># 全连接</span><br>x = self.fc2(x)<br><span class="hljs-comment"># 保存全连接层输出</span><br>fc_result = x<br><span class="hljs-comment"># 再做一次Add &amp; Norm</span><br>x = self.dropout_module(x)<br>x = self.residual_connection(x, residual)<br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.normalize_before:<br>    x = self.final_layer_norm(x)<br><br>        <span class="hljs-keyword">if</span> self.return_fc <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> torch.jit.is_scripting():<br>            <span class="hljs-keyword">return</span> x, fc_result<br>        <span class="hljs-keyword">return</span> x<br></code></pre></td></tr></table></figure>
+
+<p>用到的一些函数如下：</p>
+<h3 id="全连接层"><a href="#全连接层" class="headerlink" title="全连接层"></a>全连接层</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">build_fc2</span>(<span class="hljs-params">self, input_dim, output_dim, q_noise, qn_block_size</span>):<br>    <span class="hljs-keyword">return</span> quant_noise(<br>        nn.Linear(input_dim, output_dim), p=q_noise, block_size=qn_block_size<br>    )<br></code></pre></td></tr></table></figure>
+
+<h3 id="自注意力层"><a href="#自注意力层" class="headerlink" title="自注意力层"></a>自注意力层</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">build_self_attention</span>(<span class="hljs-params">self, embed_dim, cfg</span>):<br>    <span class="hljs-keyword">return</span> MultiheadAttention(<br>        embed_dim,<br>        cfg.encoder.attention_heads,<br>        dropout=cfg.attention_dropout,<br>        self_attention=<span class="hljs-literal">True</span>,<br>        q_noise=self.quant_noise,<br>        qn_block_size=self.quant_noise_block_size,<br>        xformers_att_config=cfg.encoder.xformers_att_config,<br>    )<br></code></pre></td></tr></table></figure>
+
+<h3 id="残差连接"><a href="#残差连接" class="headerlink" title="残差连接"></a>残差连接</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">def</span> <span class="hljs-title function_">residual_connection</span>(<span class="hljs-params">self, x, residual</span>):<br>    <span class="hljs-keyword">return</span> residual + x<br></code></pre></td></tr></table></figure>
+
+<h2 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h2><h3 id="forward-1"><a href="#forward-1" class="headerlink" title="forward"></a>forward</h3><p>先设置自注意力的状态和输入缓冲</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">if</span> prev_self_attn_state <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>    prev_key, prev_value = prev_self_attn_state[:<span class="hljs-number">2</span>]<br>    saved_state: <span class="hljs-type">Dict</span>[<span class="hljs-built_in">str</span>, <span class="hljs-type">Optional</span>[Tensor]] = &#123;<br>        <span class="hljs-string">&quot;prev_key&quot;</span>: prev_key,<br>        <span class="hljs-string">&quot;prev_value&quot;</span>: prev_value,<br>    &#125;<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(prev_self_attn_state) &gt;= <span class="hljs-number">3</span>:<br>        saved_state[<span class="hljs-string">&quot;prev_key_padding_mask&quot;</span>] = prev_self_attn_state[<span class="hljs-number">2</span>]<br>    <span class="hljs-keyword">assert</span> incremental_state <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span><br>    self.self_attn._set_input_buffer(incremental_state, saved_state)<br>_self_attn_input_buffer = self.self_attn._get_input_buffer(incremental_state)<br></code></pre></td></tr></table></figure>
+
+<p>设置掩码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">if</span> self.cross_self_attention <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> (<br>    incremental_state <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span><br>    <span class="hljs-keyword">and</span> _self_attn_input_buffer <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span><br>    <span class="hljs-keyword">and</span> <span class="hljs-string">&quot;prev_key&quot;</span> <span class="hljs-keyword">in</span> _self_attn_input_buffer<br>):<br>    <span class="hljs-keyword">if</span> self_attn_mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>        <span class="hljs-keyword">assert</span> encoder_out <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span><br>        self_attn_mask = torch.cat(<br>            (x.new_zeros(x.size(<span class="hljs-number">0</span>), encoder_out.size(<span class="hljs-number">0</span>)), self_attn_mask), dim=<span class="hljs-number">1</span><br>        )<br>    <span class="hljs-keyword">if</span> self_attn_padding_mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>        <span class="hljs-keyword">if</span> encoder_padding_mask <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">assert</span> encoder_out <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span><br>            encoder_padding_mask = self_attn_padding_mask.new_zeros(<br>                encoder_out.size(<span class="hljs-number">1</span>), encoder_out.size(<span class="hljs-number">0</span>)<br>            )<br>        self_attn_padding_mask = torch.cat(<br>            (encoder_padding_mask, self_attn_padding_mask), dim=<span class="hljs-number">1</span><br>        )<br>    <span class="hljs-keyword">assert</span> encoder_out <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span><br>    y = torch.cat((encoder_out, x), dim=<span class="hljs-number">0</span>)<br><span class="hljs-keyword">else</span>:<br>    y = x<br><br></code></pre></td></tr></table></figure>
+
+<p>自注意力</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs py">x, attn = self.self_attn(<br>    query=x,<br>    key=y,<br>    value=y,<br>    key_padding_mask=self_attn_padding_mask,<br>    incremental_state=incremental_state,<br>    need_weights=<span class="hljs-literal">False</span>,<br>    attn_mask=self_attn_mask,<br>)<br></code></pre></td></tr></table></figure>
+
+<p>Add &amp; Norm</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs py">x = self.dropout_module(x)<br>x = self.residual_connection(x, residual)<br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> self.normalize_before:<br>    x = self.self_attn_layer_norm(x)<br></code></pre></td></tr></table></figure>
+
+<p>Encoder_attn层 也是多头自注意力但是输入是前一层的输出和Encoder的输出结合</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">if</span> self.encoder_attn <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> encoder_out <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>    residual = x<br>    <span class="hljs-keyword">if</span> self.normalize_before:<br>        x = self.encoder_attn_layer_norm(x)<br>    <span class="hljs-keyword">if</span> prev_attn_state <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>        prev_key, prev_value = prev_attn_state[:<span class="hljs-number">2</span>]<br>        saved_state: <span class="hljs-type">Dict</span>[<span class="hljs-built_in">str</span>, <span class="hljs-type">Optional</span>[Tensor]] = &#123;<br>            <span class="hljs-string">&quot;prev_key&quot;</span>: prev_key,<br>            <span class="hljs-string">&quot;prev_value&quot;</span>: prev_value,<br>        &#125;<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(prev_attn_state) &gt;= <span class="hljs-number">3</span>:<br>            saved_state[<span class="hljs-string">&quot;prev_key_padding_mask&quot;</span>] = prev_attn_state[<span class="hljs-number">2</span>]<br>        <span class="hljs-keyword">assert</span> incremental_state <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span><br>        self.encoder_attn._set_input_buffer(incremental_state, saved_state)<br><br>    x, attn = self.encoder_attn(<br>        query=x,<br>        key=encoder_out,<br>        value=encoder_out,<br>        key_padding_mask=encoder_padding_mask,<br>        incremental_state=incremental_state,<br>        static_kv=<span class="hljs-literal">True</span>,<br>        need_weights=need_attn <span class="hljs-keyword">or</span> (<span class="hljs-keyword">not</span> self.training <span class="hljs-keyword">and</span> self.need_attn),<br>        need_head_weights=need_head_weights,<br>    )<br></code></pre></td></tr></table></figure>
+
+<p>最后Add&amp;Norm激活全连接归一化返回结果</p>
+<h2 id="Multi-Head-Attention"><a href="#Multi-Head-Attention" class="headerlink" title="Multi-Head Attention"></a>Multi-Head Attention</h2><p>在module的Multi-Head Attention中 <del>太长了看不懂 先鸽了</del></p>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><h2 id="BPE"><a href="#BPE" class="headerlink" title="BPE"></a>BPE</h2><p>BPE（Byte Pair Encoding）是字节对编码，在固定大小的 词表中实现可变长度的子词。将词分成单个字符，然后依次用另一个字符替换频率最高的一对字符，直到循环次数结束。</p>
+<p>算法流程：</p>
+<ol>
+<li><p>准备语料库  确定期望的subword词表大小等参数</p>
+</li>
+<li><p>在每个单词末尾添加后缀</w> 统计词频 如“l o w</w>”:5</p>
+</li>
+<li><p>将所有<strong>单词拆分成单个字符</strong> 用所有单个字符建立最初的词典 并统计单个字符的频率</p>
+</li>
+<li><p>挑出频次最高的符号对 比如t h组成th 将新字符加入词表 然后merge 将所有的t h变为th（有点类似哈夫曼树）</p>
+</li>
+</ol>
+<p>重复 上述操作 直到词表中单词数达到设定量或下一个最高频数为1 达到设定量后其余词汇直接丢弃</p>
+<p>BPE可以有效地平衡词典大小和编码步骤数。</p>
+<p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/a1097304791/article/details/122068153">BPE 算法原理及使用指南【深入浅出】-CSDN博客</a></p>
+<h2 id="Embedding"><a href="#Embedding" class="headerlink" title="Embedding"></a>Embedding</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">class</span> <span class="hljs-title class_">PositionalEncoding</span>(nn.Module):<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, d_model, dropout, max_len=<span class="hljs-number">5000</span></span>):<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">:param d_model: pe编码维度，一般与word embedding相同，方便相加</span><br><span class="hljs-string">:param dropout: dorp out</span><br><span class="hljs-string">:param max_len: 语料库中最长句子的长度，即word embedding中的L</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-built_in">super</span>(PositionalEncoding, self).__init__()<br><span class="hljs-comment"># 定义drop out</span><br>self.dropout = nn.Dropout(p=dropout)<br><span class="hljs-comment"># 计算pe编码</span><br>pe = torch.zeros(max_len, d_model) <span class="hljs-comment"># 建立空表，每行代表一个词的位置，每列代</span><br>表一个编码位<br>position = torch.arange(<span class="hljs-number">0</span>, max_len).unsqueeze(<span class="hljs-number">1</span>) <span class="hljs-comment"># 建个arrange表示词的</span><br>位置以便公式计算，size=(max_len,<span class="hljs-number">1</span>)<br>div_term = torch.exp(torch.arange(<span class="hljs-number">0</span>, d_model, <span class="hljs-number">2</span>) * <span class="hljs-comment"># 计算公式中</span><br><span class="hljs-number">10000</span>**（2i/d_model)<br>-(math.log(<span class="hljs-number">10000.0</span>) / d_model))<br>pe[:, <span class="hljs-number">0</span>::<span class="hljs-number">2</span>] = torch.sin(position * div_term) <span class="hljs-comment"># 计算偶数维度的pe值</span><br>pe[:, <span class="hljs-number">1</span>::<span class="hljs-number">2</span>] = torch.cos(position * div_term) <span class="hljs-comment"># 计算奇数维度的pe值</span><br>pe = pe.unsqueeze(<span class="hljs-number">0</span>) <span class="hljs-comment"># size=(1, L, d_model)，为了后续与word_embedding</span><br>相加,意为batch维度下的操作相同<br>self.register_buffer(<span class="hljs-string">&#x27;pe&#x27;</span>, pe) <span class="hljs-comment"># pe值是不参加训练的</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br><span class="hljs-comment"># 输入的最终编码 = word_embedding + positional_embedding</span><br>x = x + Variable(self.pe[:, :x.size(<span class="hljs-number">1</span>)],requires_grad=<span class="hljs-literal">False</span>) <span class="hljs-comment">#size =</span><br>[batch, L, d_model]<br><span class="hljs-keyword">return</span> self.dropout(x) <span class="hljs-comment"># size = [batch, L, d_model]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Cross-attention和Self-attention的区别"><a href="#Cross-attention和Self-attention的区别" class="headerlink" title="Cross-attention和Self-attention的区别"></a>Cross-attention和Self-attention的区别</h2><p>Cross-attention也就是代码中的encoder-decoder-attention</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">if</span> self.self_attention:<br>    q = self.q_proj(query)<br>    k = self.k_proj(query)<br>    v = self.v_proj(query)<br><span class="hljs-keyword">elif</span> self.encoder_decoder_attention:<br>    <span class="hljs-comment"># encoder-decoder attention</span><br>    q = self.q_proj(query)<br>    <span class="hljs-keyword">if</span> key <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        <span class="hljs-keyword">assert</span> value <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span><br>        k = v = <span class="hljs-literal">None</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">if</span> self.beam_size &gt; <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> bsz == key.size(<span class="hljs-number">1</span>):<br>            <span class="hljs-comment"># key is [T, bsz*beam_size, C], reduce to [T, bsz, C]</span><br>            key = key.view(key.size(<span class="hljs-number">0</span>), -<span class="hljs-number">1</span>, self.beam_size, key.size(<span class="hljs-number">2</span>))[<br>                :, :, <span class="hljs-number">0</span>, :<br>            ]<br>            <span class="hljs-keyword">if</span> key_padding_mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>                key_padding_mask = key_padding_mask.view(<br>                    -<span class="hljs-number">1</span>, self.beam_size, key_padding_mask.size(<span class="hljs-number">1</span>)<br>                )[:, <span class="hljs-number">0</span>, :]<br>        k = self.k_proj(key)<br>        v = self.v_proj(key)<br><br></code></pre></td></tr></table></figure>
+
+<p>交叉注意力用于decoder中使其当前状态和encoder的output交互。decoder作为Q encoder_output为K、V</p>
+<h2 id="BLEU指标"><a href="#BLEU指标" class="headerlink" title="BLEU指标"></a>BLEU指标</h2><h3 id="N-gram"><a href="#N-gram" class="headerlink" title="N-gram"></a>N-gram</h3><p>BLEU指标采用N-gram的匹配机制，就是比较译文和参考译文之间n组词之间相似的一个占比。</p>
+<img src="../images/$%7Bfiilename%7D/626346-20171016222256849-1802531988.png" srcset="/img/loading.gif" lazyload alt="img" style="zoom:;" />
+
+<p>译文分为4个3-gram词组 有2个命中参考译文 则该译文的3-gram匹配度为2&#x2F;4</p>
+<h3 id="召回率"><a href="#召回率" class="headerlink" title="召回率"></a>召回率</h3><p>机器译文：the the the the </p>
+<p>人工译文：The cat is standing on the ground</p>
+<p>1-gram的匹配度为1但是the在参考译文只出现了2次，如果匹配度直接用1很显然是不合理的。</p>
+<p>$Count_{clip}&#x3D;min(Count,Max_Ref_Count)$前者为译文中出现的次数，后者为参考译文中的最大次数，取最小值限制上文的情况（即最多不超过参考译文中该单词的频率）</p>
+<p>计算每个N-gram的公式如下：</p>
+<p>人工译文$s_j$</p>
+<p>机器译文$c_i$</p>
+<p>$h_k(c_i)$表示第k个词组在翻译译文$c_i$出现的次数</p>
+<p>$h_k(s_{i,j})$表示第k个词组在标准答案$s_{i,j}$出现的次数$</p>
+<p><img src="/../images/$%7Bfiilename%7D/image-20240626192902992.png" srcset="/img/loading.gif" lazyload alt="image-20240626192902992"></p>
+<h3 id="惩罚因子"><a href="#惩罚因子" class="headerlink" title="惩罚因子"></a>惩罚因子</h3><p>N-gram的匹配度可能会随着句子长度变短而变好，因此会存在一个问题，一个翻译引擎只翻译出部分句子且比较准确，那么匹配度依然很高。因此要引入长度惩罚因子</p>
+<img src="../images/$%7Bfiilename%7D/image-20240626194522680.png" srcset="/img/loading.gif" lazyload alt="image-20240626194522680" style="zoom: 50%;" />
+
+<p>$l_c$代表机器译文的长度</p>
+<p>$l_s$代表参考译文的有效长度</p>
+<p>当机器译文较长的时候不惩罚</p>
+<p>最终公式</p>
+<img src="../images/$%7Bfiilename%7D/image-20240626194923426.png" srcset="/img/loading.gif" lazyload alt="image-20240626194923426" style="zoom:50%;" />
+
+<p>BLEU采用均匀加权 $W_n&#x3D;1&#x2F;N$</p>
+<p>N最大为4 即最多4-gram</p>
+<p>参考ca<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30232405/article/details/104219396">BLEU算法（例子和公式解释）-CSDN博客</a></p>
+<h2 id="beam"><a href="#beam" class="headerlink" title="beam"></a>beam</h2><p>Beam Search</p>
+<p>Greedy Search问题在于在每一步它只选择得分最高的top 1单词，假设被它忽略的top 2单词带来的后面一系列单词使得整个序列的得分反而更高，则Greedy Search就不会得到最合理的解码结果。<br>Beam Search集束搜索是Greedy Search的改进版，它拓展了Greedy Search在每一步的搜索空间，每一步保留当前最优的K个候选，一定程度上缓解了Greedy Search的问题，令K为Beam Size代表束宽，Beam Size是一个超参数，它决定搜索空间的大小，<strong>越大搜索结果越接近最优，但是搜索的复杂度也越高</strong>，当Beam Size等于1的时候，Beam Search退化为Greedy Search。</p>
+<p>Beam Search单条候选序列停止条件细分有两种情况，分别是</p>
+<ul>
+<li>候选序列解码到停止</li>
+<li>早停，候选序列得分已经低于已解码完的当前最优序列</li>
+</ul>
+<p><img src="/../images/$%7Bfiilename%7D/image-20240626195444349.png" srcset="/img/loading.gif" lazyload alt="image-20240626195444349"></p>
+<h1 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h1><ol>
+<li>首先配置环境、下载fairseq</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmd">conda create -n &#123;YOUR_ENV_NAME&#125; python=<span class="hljs-number">3</span>.<span class="hljs-number">9</span><br>conda activate &#123;YOUR_ENV_NAME&#125;<br>git clone https://github.com/pytorch/fairseq<br><span class="hljs-built_in">cd</span> fairseq<br>pip install --editable ./<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>下载数据并预处理 注意bash命令需要在git bash中找到对应的目录运行，遇到了下载失败的问题，<a href="###bash%E5%91%BD%E4%BB%A4%E7%9A%84%E9%97%AE%E9%A2%98">解决方案</a></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Download and prepare the data</span><br><span class="hljs-built_in">cd</span> examples/translation/<br>bash prepare-iwslt14.sh<br><span class="hljs-built_in">cd</span> ../..<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>数据下载完成后 使用如下命令进行数据处理，要将$TEXT替换为TEXT的值</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">TEXT=examples/translation/iwslt14.tokenized.de-en<br>fairseq-preprocess --source-lang de --target-lang en --trainpref examples/translation/iwslt14.tokenized.de-en/train2k --validpref examples/translation/iwslt14.tokenized.de-en/valid --testpref examples/translation/iwslt14.tokenized.de-en/test --destdir data-bin/iwslt14.tokenized.de-en --workers 20<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>为了节省时间，只抽取两千数据训练。然后运行下列命令进行训练</li>
+</ol>
+<p>注意用set命令设置CUDA</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmd"><span class="hljs-built_in">set</span> CUDA_VISIBLE_DEVICES=<span class="hljs-number">0</span> <br>fairseq-train data-bin/iwslt14.tokenized.de-en --arch transformer_iwslt_de_en --share-decoder-input-output-embed --optimizer adam --adam-betas &quot;(<span class="hljs-number">0</span>.<span class="hljs-number">9</span>, <span class="hljs-number">0</span>.<span class="hljs-number">98</span>)&quot; --clip-norm <span class="hljs-number">0</span>.<span class="hljs-number">0</span> --lr <span class="hljs-number">5</span>e-<span class="hljs-number">4</span> --lr-scheduler inverse_sqrt --warmup-updates <span class="hljs-number">4000</span> --dropout <span class="hljs-number">0</span>.<span class="hljs-number">3</span> --weight-decay <span class="hljs-number">0</span>.<span class="hljs-number">0001</span> --max-tokens <span class="hljs-number">4096</span> --eval-bleu --eval-bleu-args &quot;&#123;\&quot;beam\&quot;: <span class="hljs-number">5</span>, \&quot;max_len_a\&quot;: <span class="hljs-number">1</span>.<span class="hljs-number">2</span>, \&quot;max_len_b\&quot;: <span class="hljs-number">10</span>&#125;&quot; --eval-bleu-detok moses --eval-bleu-remove-bpe --eval-bleu-<span class="hljs-built_in">print</span>-samples --best-checkpoint-metric bleu --maximize-best-checkpoint-metric<br></code></pre></td></tr></table></figure>
+
+<p>遇到了Cython组件出错的问题，<a href="###Cython%E9%97%AE%E9%A2%98">解决方案</a></p>
+<ol start="5">
+<li>进行推理</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">fairseq-generate data-bin/iwslt14.tokenized.de-en --<span class="hljs-built_in">path</span> checkpoints/checkpoint_best.pt --batch-size <span class="hljs-number">128</span> --beam <span class="hljs-number">5</span> --remove-bpe<br></code></pre></td></tr></table></figure>
+
+<p>遇到了Mask类型未定义问题，<a href="###Mask%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89%E9%97%AE%E9%A2%98">解决方案</a></p>
+<ol start="6">
+<li>得到结果</li>
+</ol>
+<p>BLEU4为得分</p>
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><h3 id="bash命令的问题"><a href="#bash命令的问题" class="headerlink" title="bash命令的问题"></a>bash命令的问题</h3><p>wget无法使用，通过下文下载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/aidijava/article/details/127114543">【Git】解决Git Bash无法使用tree、zip、wget等命令_git bash zip-CSDN博客</a></p>
+<p>修改prepare-iwslt14.sh，运行后可以正常下载数据。</p>
+<p> 6-10 13-17有添加 46有修改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs bash"><br><br><span class="hljs-comment">#!/usr/bin/env bash</span><br><span class="hljs-comment"># Adapted from https://github.com/facebookresearch/MIXER/blob/master/prepareData.sh</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;Cloning Moses github repository (for tokenization scripts)...&#x27;</span><br><span class="hljs-keyword">if</span> [ ! -d <span class="hljs-string">&quot;mosesdecoder&quot;</span> ]; <span class="hljs-keyword">then</span><br>  git <span class="hljs-built_in">clone</span> https://github.com/moses-smt/mosesdecoder.git<br><span class="hljs-keyword">else</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Moses directory already exists. Skipping clone.&quot;</span><br><span class="hljs-keyword">fi</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;Cloning Subword NMT repository (for BPE pre-processing)...&#x27;</span><br><span class="hljs-keyword">if</span> [ ! -d <span class="hljs-string">&quot;subword-nmt&quot;</span> ]; <span class="hljs-keyword">then</span><br>  git <span class="hljs-built_in">clone</span> https://github.com/rsennrich/subword-nmt.git<br><span class="hljs-keyword">else</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Subword NMT directory already exists. Skipping clone.&quot;</span><br><span class="hljs-keyword">fi</span><br><br>SCRIPTS=mosesdecoder/scripts<br>TOKENIZER=<span class="hljs-variable">$SCRIPTS</span>/tokenizer/tokenizer.perl<br>LC=<span class="hljs-variable">$SCRIPTS</span>/tokenizer/lowercase.perl<br>CLEAN=<span class="hljs-variable">$SCRIPTS</span>/training/clean-corpus-n.perl<br>BPEROOT=subword-nmt/subword_nmt<br>BPE_TOKENS=10000<br><br>URL=<span class="hljs-string">&quot;http://dl.fbaipublicfiles.com/fairseq/data/iwslt14/de-en.tgz&quot;</span><br>GZ=de-en.tgz<br><br><span class="hljs-keyword">if</span> [ ! -d <span class="hljs-string">&quot;<span class="hljs-variable">$SCRIPTS</span>&quot;</span> ]; <span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Please set SCRIPTS variable correctly to point to Moses scripts.&quot;</span><br>    <span class="hljs-built_in">exit</span><br><span class="hljs-keyword">fi</span><br><br>src=de<br>tgt=en<br>lang=de-en<br>prep=iwslt14.tokenized.de-en<br>tmp=<span class="hljs-variable">$prep</span>/tmp<br>orig=orig<br><br><span class="hljs-built_in">mkdir</span> -p <span class="hljs-variable">$orig</span> <span class="hljs-variable">$tmp</span> <span class="hljs-variable">$prep</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Downloading data from <span class="hljs-variable">$&#123;URL&#125;</span>...&quot;</span><br><span class="hljs-built_in">cd</span> <span class="hljs-variable">$orig</span><br>wget <span class="hljs-string">&quot;<span class="hljs-variable">$URL</span>&quot;</span> -O <span class="hljs-variable">$GZ</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Cython问题"><a href="#Cython问题" class="headerlink" title="Cython问题"></a>Cython问题</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmd"># 无法调用numpy<br><span class="hljs-function">ImportError: <span class="hljs-title">numpy.core.multiarray</span> <span class="hljs-title">failed</span> <span class="hljs-title">to</span> <span class="hljs-title">import</span> (<span class="hljs-title">auto</span>-<span class="hljs-title">generated</span> <span class="hljs-title">because</span> <span class="hljs-title">you</span> <span class="hljs-title">didn</span>&#x27;<span class="hljs-title">t</span> <span class="hljs-title">call</span> &#x27;<span class="hljs-title">numpy.import_array</span>()&#x27; <span class="hljs-title">after</span> <span class="hljs-title">cimporting</span> <span class="hljs-title">numpy</span>; <span class="hljs-title">use</span> &#x27;&lt;<span class="hljs-title">void</span>&gt;<span class="hljs-title">numpy._import_array</span>&#x27; <span class="hljs-title">to</span> <span class="hljs-title">disable</span> <span class="hljs-title">if</span> <span class="hljs-title">you</span> <span class="hljs-title">are</span> <span class="hljs-title">certain</span> <span class="hljs-title">you</span> <span class="hljs-title">don</span>&#x27;<span class="hljs-title">t</span> <span class="hljs-title">need</span> <span class="hljs-title">it</span>).</span><br><span class="hljs-function"># <span class="hljs-title">cython</span>组件出错</span><br><span class="hljs-function"><span class="hljs-title">ImportError</span>: <span class="hljs-title">Please</span> <span class="hljs-title">build</span> <span class="hljs-title">Cython</span> <span class="hljs-title">components</span> <span class="hljs-title">with</span>: <span class="hljs-title">python</span> <span class="hljs-title">setup.py</span> <span class="hljs-title">build_ext</span> --<span class="hljs-title">inplace</span></span><br></code></pre></td></tr></table></figure>
+
+<p>解决方案</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">pip install <span class="hljs-comment">--upgrade cython</span><br>cd <span class="hljs-type">path</span>/<span class="hljs-keyword">to</span>/fairseq<br>python setup.py build_ext <span class="hljs-comment">--inplace</span><br></code></pre></td></tr></table></figure>
+
+<p>同时在\fairseq\fairseq\data\data_utils_fast.pyx中添加手动引用np</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs py">cimport numpy <span class="hljs-keyword">as</span> np<br>np.import_array()<br></code></pre></td></tr></table></figure>
+
+<h3 id="Mask类型定义问题"><a href="#Mask类型定义问题" class="headerlink" title="Mask类型定义问题"></a>Mask类型定义问题</h3><p>关键报错如下：</p>
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs wren"><span class="hljs-title class_">File</span> <span class="hljs-string">&quot;D:<span class="hljs-char escape_">\a</span>naconda3<span class="hljs-char escape_">\e</span>nvs<span class="hljs-char escape_">\t</span>ransformer\lib\site-packages<span class="hljs-char escape_">\f</span>airseq\modules<span class="hljs-char escape_">\t</span>ransformer_layer.py&quot;</span>, <span class="hljs-variable">line</span> <span class="hljs-number">319</span>, <span class="hljs-keyword">in</span> forward<br>    <span class="hljs-variable">output</span> <span class="hljs-operator">=</span> <span class="hljs-variable">torch</span>.<span class="hljs-variable">_transformer_encoder_layer_fwd</span>(<br><span class="hljs-title class_">RuntimeError</span>: <span class="hljs-title class_">Mask</span> <span class="hljs-title class_">Type</span> <span class="hljs-variable">should</span> <span class="hljs-variable">be</span> <span class="hljs-variable">defined</span><br></code></pre></td></tr></table></figure>
+
+<p>解决方法</p>
+<p>找到\anaconda3\envs\transformer\lib\site-packages\fairseq\modules\transformer_layer.py</p>
+<p>在forward中加入</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs py">self.can_use_fastpath=<span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+
+<p>有点作弊的方法，如果有其他方法不建议使用这个。但是在google colab上可以正常运行，本地可能是环境的问题。</p>
+<p>然后又遇到了输出的类型不对的问题</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">AssertionError</span>: expecting key_padding_mask shape of (<span class="hljs-number">5</span>, <span class="hljs-number">128</span>), but got torch.Size([<span class="hljs-number">128</span>, <span class="hljs-number">5</span>])<br></code></pre></td></tr></table></figure>
+
+<p>解决方法 在self.can_use_fastpath&#x3D;False之后 会转到else中运行，在else中加入</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-keyword">if</span> encoder_padding_mask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> encoder_padding_mask.shape != (x.size(<span class="hljs-number">1</span>), x.size(<span class="hljs-number">0</span>)):<br>            encoder_padding_mask = encoder_padding_mask.transpose(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/deep-learning/" class="category-chain-item">deep learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/deep-learning/" class="print-no-link">#deep learning</a>
+      
+        <a href="/tags/Attention/" class="print-no-link">#Attention</a>
+      
+        <a href="/tags/Transformer/" class="print-no-link">#Transformer</a>
+      
+        <a href="/tags/coding/" class="print-no-link">#coding</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>coding-Transformer</div>
+      <div>https://brtulien.github.io/2024/06/25/coding-Transformer/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Brtulien</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年6月25日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年7月1日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/06/27/coding-knowledge-distillation/" title="coding-knowledge_distillation">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">coding-knowledge_distillation</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/24/Transformer/" title="Transformer">
+                        <span class="hidden-mobile">Transformer</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"chasestar1/chasestar1.github.io","repo-id":"R_kgDOJ-WRYw","category":"Announcements","category-id":"DIC_kwDOJ-WRY84CYKx3","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":1,"emit-metadata":0,"input-position":"top","lang":"zh-CN","shortname":"fluid"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":300,"height":600},"mobile":{"show":false},"rect":{"opacity":0.7},"log":false});</script></body>
+</html>
